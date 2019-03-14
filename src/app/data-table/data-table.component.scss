@@ -12,18 +12,15 @@ table.dataTable {
   text-align: center;
   border-collapse: collapse;
   td, th{
-    border: 1px solid #FFFFFF;
     padding: 3px 4px;
-
   }
 
   tbody{
     tr{
-      border: 2px solid #BDC3C7;
+      border: 1px solid #BDC3C7;
     }
     td {
       line-height: 26px;
-      border: 1px solid transparent;
       padding-left: 11px;
       padding-right: 11px;
       font-size: 12px;

@@ -2,16 +2,18 @@ import {Component, OnInit} from '@angular/core';
 
 //
 interface CellRenderer {
-  cellRender?(row:number, column:number, data:any, columnDefs:Column[]):string
+  cellRender?(row: number, column: number, data: any, columnDefs: Column[]): string
 }
+
 //interface for columns
 interface Column extends CellRenderer {
   headerName: string;
   field: string;
-  sortState?:boolean;
-  sort?:boolean;
-  filter?:boolean;
+  sortState?: boolean;
+  sort?: boolean;
+  filter?: boolean;
 }
+
 // interface for each table row
 interface TableRow extends CellRenderer {
   filtered: boolean;
@@ -25,14 +27,14 @@ interface TableRow extends CellRenderer {
 })
 export class DataTableComponent implements OnInit {
 
-  TableRows:TableRow[] = [];
+  TableRows: TableRow[] = [];
 
-  FilterRowCount:number;
-  columnDefs:Column[] = [
+  FilterRowCount: number;
+  columnDefs: Column[] = [
     {
-      headerName: 'Model', field: 'model', sort: true, filter: true, cellRender: function (row, column, data, def) {
-      return '<a href="#">' + data + '</a>'
-    }
+      headerName: 'Model', field: 'model', sort: true, filter: true, cellRender: (row, column, data, def) =>{
+        return '<a href="#">' + data + '</a>';
+      }
     },
     {headerName: 'Make', field: 'make', filter: true},
     {headerName: 'Price', field: 'price'}
@@ -60,7 +62,7 @@ export class DataTableComponent implements OnInit {
         + Object.keys(this.rowData[0]).length);
     }
     for (let j = 0; j < this.rowData.length; ++j) {
-      let row:TableRow = {data: [], filtered: false};
+      let row: TableRow = {data: [], filtered: false};
 
       for (let i = 0; i < this.columnDefs.length; ++i) {
 
@@ -72,8 +74,8 @@ export class DataTableComponent implements OnInit {
     }
   }
 
-  private cellRenderer(row:number, column:number, data:any, columnDefs:Column[]) {
-    if (columnDefs[column].cellRender === undefined && (typeof (columnDefs[column].cellRender) !== "function")) {
+  private cellRenderer(row: number, column: number, data: any, columnDefs: Column[]) {
+    if (columnDefs[column].cellRender === undefined && (typeof (columnDefs[column].cellRender) !== 'function')) {
       return data;
     }
     else {
@@ -83,11 +85,10 @@ export class DataTableComponent implements OnInit {
 
 // Filters data based on CONTAINS.
   filter(column, text) {
-
     this.FilterRowCount = 0;
     for (let i = 0; i < this.TableRows.length; ++i) {
-      this.TableRows[i].filtered = !this.TableRows[i].data[column].includes(text);
-      if(!this.TableRows[i].filtered) this.FilterRowCount++;
+      this.TableRows[i].filtered = !this.TableRows[i].data[column].toLowerCase().includes(text.toLowerCase());
+      if (!this.TableRows[i].filtered) this.FilterRowCount++;
     }
   }
 
@@ -102,7 +103,7 @@ export class DataTableComponent implements OnInit {
     }
 
     // cache the sort state
-    let sortState:boolean = this.columnDefs[column].sortState;
+    let sortState: boolean = this.columnDefs[column].sortState;
     if (sortState == null) {
       this.columnDefs[column].sortState = true;
     }

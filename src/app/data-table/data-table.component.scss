@@ -1,23 +1,30 @@
-.container{
+.container {
   width: 80%;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 30% auto;
 }
 
-
 table.dataTable {
+  background-color: white;
+  color: #000;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
   border: 1px solid #BDC3C7;
   width: 100%;
-  text-align: center;
+  text-align: left;
   border-collapse: collapse;
-  td, th{
+  td, th {
     padding: 3px 4px;
   }
 
-  tbody{
-    tr{
+  tbody {
+    tr {
       border: 1px solid #BDC3C7;
+    }
+    tr:hover {
+      background-color: #ECF0F1;
     }
     td {
       line-height: 26px;
@@ -25,38 +32,49 @@ table.dataTable {
       padding-right: 11px;
       font-size: 12px;
     }
+    td:focus, td:hover {
+      /*border: 1px solid #0091EA;*/
+    }
   }
 
-  thead th {
-    font-size: 13px;
-    font-weight: bold;
-    color: rgba(0, 0, 0, 0.54);
-    text-align: center;
-    border: 0 solid #BDC3C7;
-    border-bottom-width: 1px;
-    border-right: 1px solid rgba(189, 195, 199, 0.5);
-    line-height: 32px;
-    padding-left: 12px;
-    padding-right: 12px;
-    min-width: 300px;
-    i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc{
-      padding-right: 10px;
-    }
-    i.fa.fa-filter{
-      padding-left: 10px;
-    }
-    span {
-      padding: 5px;
-      position: absolute;
-      top: 35px;
-      background: #FFFFFF;
-      border:1px solid rgba(189, 195, 199, 0.5)
-    }
-  }
+
   thead {
     background: #f5f7f7;
+    th {
+      font-size: 13px;
+      font-weight: bold;
+      color: rgba(0, 0, 0, 0.54);
+      text-align: left;
+      border: 0 solid #BDC3C7;
+      border-right: 1px solid rgba(189, 195, 199, 0.5);
+      line-height: 20px;
+      padding-left: 12px;
+      padding-right: 12px;
+      min-width: 300px;
+      i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
+        padding-right: 10px;
+        cursor: pointer;
+      }
+      i.fa.fa-filter {
+        padding-left: 10px;
+        cursor: pointer;
+      }
+    }
     th:first-child {
       border-left: none;
+    }
+    th:last-child {
+      border-right: none;
+    }
+    tr.header {
+      border: 0 solid #BDC3C7;
+      border-bottom-width: 1px;
+    }
+    tr.filter {
+      input {
+        height: 19px;
+        margin: 0;
+      }
     }
   }
   tfoot {

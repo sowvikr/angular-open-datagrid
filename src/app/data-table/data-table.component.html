@@ -1,24 +1,42 @@
 <table class="dataTable">
   <thead>
-    <tr>
-      <th *ngFor="let item of columnDefs ; let i = index" >
-        <i (click)="sortColumn(i)" class="fa fa-sort" *ngIf="item.sortState == null && item.sort" aria-hidden="true"> </i>
-        <i (click)="sortColumn(i)" class="fa fa-sort-asc" *ngIf="item.sortState && item.sort" aria-hidden="true"> </i>
-        <i (click)="sortColumn(i)" class="fa fa-sort-desc" *ngIf="!item.sortState && !(item.sortState == null) && item.sort" aria-hidden="true"> </i>
-        {{item.headerName}}
-        <span [hidden]="!item.showFilter" *ngIf="item.filter">
-          <input (keyup)="filter(i,$event.target.value)" type="text"  height="10"/>
-        </span>
-        <i class="fa fa-filter" (click)="item.showFilter = !item.showFilter" *ngIf="item.filter" aria-hidden="true"> </i>
-      </th>
-    </tr>
+  <tr class="header">
+    <th *ngFor="let item of columnDefs ; let i = index">
+      <i (click)="sortColumn(i)" class="fa fa-sort" *ngIf="item.sortState == null && item.sort" aria-hidden="true"> </i>
+      <i (click)="sortColumn(i)" class="fa fa-sort-asc" *ngIf="item.sortState && item.sort" aria-hidden="true"> </i>
+      <i (click)="sortColumn(i)" class="fa fa-sort-desc"
+         *ngIf="!item.sortState && !(item.sortState == null) && item.sort" aria-hidden="true"> </i>
+      {{item.headerName}}
+      <!--
+              <span [hidden]="!item.showFilter" *ngIf="item.filter">
+                <input (keyup)="filter(i,$event.target.value)" type="text"  height="10"/>
+              </span>
+              <i class="fa fa-filter" (click)="item.showFilter = !item.showFilter" *ngIf="item.filter" aria-hidden="true"> </i>
+      -->
+    </th>
+  </tr>
+  <tr class="filter">
+    <th *ngFor="let item of columnDefs ; let i = index">
+      <input *ngIf="item.filter" (keyup)="filter(i,$event.target.value)" type="text" height="10"/>
+      <i class="fa fa-filter" *ngIf="item.filter" aria-hidden="true"> </i>
+    </th>
+  </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let row of TableRows; let rowCount = index" [hidden]="row.filtered">
-      <td *ngFor="let cell of row.data; let columnCount = index" [innerHtml]="row.cellRender(rowCount, columnCount, cell, columnDefs)">
-      </td>
-    </tr>
+  <tr *ngFor="let row of TableRows; let rowCount = index" [hidden]="row.filtered">
+    <td *ngFor="let cell of row.data; let columnCount = index"
+        [innerHtml]="row.cellRender(rowCount, columnCount, cell, columnDefs)">
+    </td>
+  </tr>
   </tbody>
+  <tbody *ngIf="FilterRowCount === 0">
+  <tr>
+    <td [attr.colspan]="columnDefs.length" style="text-align: center">
+      No Data
+    </td>
+  </tr>
+  </tbody>
+
   <tfoot>
   Pagination will go here.
   </tfoot>

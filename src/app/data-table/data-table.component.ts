@@ -27,6 +27,7 @@ export class DataTableComponent implements OnInit {
 
   TableRows:TableRow[] = [];
 
+  FilterRowCount:number;
   columnDefs:Column[] = [
     {
       headerName: 'Model', field: 'model', sort: true, filter: true, cellRender: function (row, column, data, def) {
@@ -72,7 +73,7 @@ export class DataTableComponent implements OnInit {
   }
 
   private cellRenderer(row:number, column:number, data:any, columnDefs:Column[]) {
-    if(columnDefs[column].cellRender === undefined && (typeof (columnDefs[column].cellRender) !== "function") ) {
+    if (columnDefs[column].cellRender === undefined && (typeof (columnDefs[column].cellRender) !== "function")) {
       return data;
     }
     else {
@@ -83,8 +84,10 @@ export class DataTableComponent implements OnInit {
 // Filters data based on CONTAINS.
   filter(column, text) {
 
+    this.FilterRowCount = 0;
     for (let i = 0; i < this.TableRows.length; ++i) {
-      this.TableRows[i].filtered = !this.TableRows[i].data[column].includes(text)
+      this.TableRows[i].filtered = !this.TableRows[i].data[column].includes(text);
+      if(!this.TableRows[i].filtered) this.FilterRowCount++;
     }
   }
 

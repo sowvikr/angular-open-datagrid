@@ -14,9 +14,8 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let row of TableRows" [hidden]="row.filtered">
-      <td *ngFor="let cell of row.data">
-        {{cell}}
+    <tr *ngFor="let row of TableRows; let rowCount = index" [hidden]="row.filtered">
+      <td *ngFor="let cell of row.data; let columnCount = index" [innerHtml]="row.cellRender(rowCount, columnCount, cell, columnDefs)">
       </td>
     </tr>
   </tbody>

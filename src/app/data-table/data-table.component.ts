@@ -1,16 +1,19 @@
 import {Component, OnInit} from '@angular/core';
 
-// interface for columns
-interface Column {
+//
+interface CellRenderer {
+  cellRender?(row:number, column:number, data:any, columnDefs:Column[]):string
+}
+//interface for columns
+interface Column extends CellRenderer {
   headerName: string;
   field: string;
-  sortState?: boolean;
-  sort?: boolean;
-  filter?: boolean;
+  sortState?:boolean;
+  sort?:boolean;
+  filter?:boolean;
 }
-
 // interface for each table row
-interface TableRow {
+interface TableRow extends CellRenderer {
   filtered: boolean;
   data: Array<any>;
 }
@@ -22,9 +25,14 @@ interface TableRow {
 })
 export class DataTableComponent implements OnInit {
 
+  TableRows:TableRow[] = [];
 
-  columnDefs: Column[] = [
-    {headerName: 'Model', field: 'model', sort: true, filter: true},
+  columnDefs:Column[] = [
+    {
+      headerName: 'Model', field: 'model', sort: true, filter: true, cellRender: function (row, column, data, def) {
+      return '<a href="#">' + data + '</a>'
+    }
+    },
     {headerName: 'Make', field: 'make', filter: true},
     {headerName: 'Price', field: 'price'}
   ];
@@ -44,15 +52,6 @@ export class DataTableComponent implements OnInit {
     {make: 'Porsche', model: 'Boxter', price: 72000}
   ];
 
-  TableRows: TableRow[] = [];
-
-
-  constructor() {
-
-    let that = this;
-    this.createTableData();
-  }
-
   // Convert row data to a 2D array.
   createTableData() {
     if (this.columnDefs.length !== Object.keys(this.rowData[0]).length) {
@@ -60,14 +59,24 @@ export class DataTableComponent implements OnInit {
         + Object.keys(this.rowData[0]).length);
     }
     for (let j = 0; j < this.rowData.length; ++j) {
-      let row: TableRow = {data: [], filtered: false};
+      let row:TableRow = {data: [], filtered: false};
 
       for (let i = 0; i < this.columnDefs.length; ++i) {
 
         this.columnDefs[i].sortState = null;
+        row.cellRender = this.cellRenderer;
         row.data.push(this.rowData[j][this.columnDefs[i].field])
       }
       this.TableRows.push(row);
+    }
+  }
+
+  private cellRenderer(row:number, column:number, data:any, columnDefs:Column[]) {
+    if(columnDefs[column].cellRender === undefined && (typeof (columnDefs[column].cellRender) !== "function") ) {
+      return data;
+    }
+    else {
+      return columnDefs[column].cellRender(row, column, data, columnDefs);
     }
   }
 
@@ -90,7 +99,7 @@ export class DataTableComponent implements OnInit {
     }
 
     // cache the sort state
-    let sortState: boolean = this.columnDefs[column].sortState;
+    let sortState:boolean = this.columnDefs[column].sortState;
     if (sortState == null) {
       this.columnDefs[column].sortState = true;
     }
@@ -116,6 +125,13 @@ export class DataTableComponent implements OnInit {
     else {
       return (a.data[columnValue] > b.data[columnValue]) ? -1 : 1;
     }
+  }
+
+
+  constructor() {
+
+    let that = this;
+    this.createTableData();
   }
 
   ngOnInit() {

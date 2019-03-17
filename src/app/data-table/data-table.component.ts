@@ -16,7 +16,7 @@ interface Column extends CellRenderer {
 
 // interface for each table row
 interface TableRow extends CellRenderer {
-  filtered: boolean;
+  filteredOut: boolean;
   pageNo?: number;
   data: Array<any>;
 }
@@ -75,7 +75,7 @@ export class DataTableComponent implements OnInit {
         + Object.keys(this.rowData[0]).length);
     }
     for (let j = 0; j < this.rowData.length; ++j) {
-      let row: TableRow = {data: [], filtered: false};
+      let row: TableRow = {data: [], filteredOut: false};
       for (let i = 0; i < this.columnDefs.length; ++i) {
         this.columnDefs[i].sortState = null;
         row.cellRender = this.cellRenderer;
@@ -91,7 +91,7 @@ export class DataTableComponent implements OnInit {
     let j: number = 0;
     for (let i = 0; i < this.TableRows.length; ++i) {
       let row: TableRow = this.TableRows[i];
-      if (row.filtered) {
+      if (row.filteredOut) {
         row.pageNo = 0;
         continue;
       }
@@ -128,13 +128,24 @@ export class DataTableComponent implements OnInit {
     this.FilterRowCount = 0;
     this.FilterData[column] = text;
     for (let i = 0; i < this.TableRows.length; ++i) {
-      this.TableRows[i].filtered = !this.TableRows[i].data[column].toLowerCase().includes(text.toLowerCase());
-      if (!this.TableRows[i].filtered) this.FilterRowCount++;
-    }
-    /*for (let i = 0; i < this.FilterData.length; ++i) {
-      if (this.FilterData[i] !== undefined && i !== column) {
-        this.TableRows[i].filtered = this.TableRows[i].filtered && !this.TableRows[i].data[i].toLowerCase().includes(this.FilterData[i].toLowerCase());
+      let isFiltered: boolean;
+      for (let j = 0; j < this.FilterData.length; ++j) {
+        if (this.FilterData[j] !== undefined) {
+          if (j === 0) {
+            isFiltered = this.TableRows[i].data[j].toLowerCase().includes(this.FilterData[j].toLowerCase());
+          } else {
+            isFiltered = isFiltered && this.TableRows[i].data[j].toLowerCase().includes(this.FilterData[j].toLowerCase());
+          }
+        }
       }
+      console.log("Message:" + this.TableRows[i].data[0] + " Filter: " + !isFiltered);
+      this.TableRows[i].filteredOut = !isFiltered;
+      if (!this.TableRows[i].filteredOut) this.FilterRowCount++;
+    }
+    console.log("=================================================================");
+
+
+    /*
     }*/
 
     this.pagedRows();
@@ -213,7 +224,9 @@ export class DataTableComponent implements OnInit {
   }
 
 // Sort function
-  private sortFunction(a, b, columnValue, isAsc) {
+  private
+
+  sortFunction(a, b, columnValue, isAsc) {
     if (a.data[columnValue] === b.data[columnValue]) {
       return 0;
     } else if (isAsc) {

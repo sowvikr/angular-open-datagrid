@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 
-//
+//Cell renderer interface.
 interface CellRenderer {
   cellRender?(row: number, column: number, data: any, columnDefs: Column[]): string
 }
@@ -64,6 +64,8 @@ export class DataTableComponent implements OnInit {
   private InvalidPage: number = 0;
   private FromRecord: number = 1;
   private ToRecord: number = this.pageSize;
+  private FilterData: Array<any> = [];
+  private TotalRows: number = this.rowData.length;
 
 
   // Convert row data to a 2D array.
@@ -124,12 +126,32 @@ export class DataTableComponent implements OnInit {
 // Filters data based on CONTAINS.
   filter(column, text) {
     this.FilterRowCount = 0;
+    this.FilterData[column] = text;
     for (let i = 0; i < this.TableRows.length; ++i) {
       this.TableRows[i].filtered = !this.TableRows[i].data[column].toLowerCase().includes(text.toLowerCase());
       if (!this.TableRows[i].filtered) this.FilterRowCount++;
     }
+    /*for (let i = 0; i < this.FilterData.length; ++i) {
+      if (this.FilterData[i] !== undefined && i !== column) {
+        this.TableRows[i].filtered = this.TableRows[i].filtered && !this.TableRows[i].data[i].toLowerCase().includes(this.FilterData[i].toLowerCase());
+      }
+    }*/
+
     this.pagedRows();
     this.setPagedRow(1);
+    this.updateTotalPageCount();
+  }
+
+
+  updateTotalPageCount() {
+    this.TotalPages = Math.ceil(this.FilterRowCount / this.pageSize);
+    this.FromRecord = 1;
+    this.TotalRows = this.FilterRowCount;
+    if (this.FilterRowCount < this.pageSize) {
+      this.ToRecord = this.FilterRowCount;
+    } else {
+      this.ToRecord = this.pageSize;
+    }
   }
 
   //Nevigate to Next Page

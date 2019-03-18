@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-
+import {moveItemInArray} from '@angular/cdk/drag-drop';
 //Cell renderer interface.
 interface CellRenderer {
   cellRender?(row: number, column: number, data: any, columnDefs: Column[]): string
@@ -232,7 +232,10 @@ export class DataTableComponent implements OnInit {
     }
   }
 
-
+  drop(event) {
+    moveItemInArray(this.columnDefs, event.previousIndex, event.currentIndex);
+    this.createTableData();
+  }
   constructor() {
     this.createTableData();
     this.TotalPages = Math.ceil(this.rowData.length / this.pageSize);

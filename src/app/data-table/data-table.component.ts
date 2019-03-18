@@ -57,7 +57,7 @@ export class DataTableComponent implements OnInit {
 
 
   private TableRows: TableRow[] = [];
-  private FilterRowCount: number;
+  private FilterRowCount: number = this.rowData.length;
   private TotalPages: number;
   private PagedRows: TableRow[] = [];
   private CurrentPage: number = 1;
@@ -107,7 +107,7 @@ export class DataTableComponent implements OnInit {
   private setPagedRow(pageNo: number) {
     this.PagedRows = [];
     for (let j = 0; j < this.TableRows.length; ++j) {
-      let row: TableRow = this.TableRows[j];
+      let row:TableRow = this.TableRows[j];
       if (row.pageNo === this.InvalidPage) continue;
       if (row.pageNo === pageNo) {
         this.PagedRows.push(row);
@@ -142,12 +142,6 @@ export class DataTableComponent implements OnInit {
       this.TableRows[i].filteredOut = !isFiltered;
       if (!this.TableRows[i].filteredOut) this.FilterRowCount++;
     }
-    console.log("=================================================================");
-
-
-    /*
-    }*/
-
     this.pagedRows();
     this.setPagedRow(1);
     this.updateTotalPageCount();
@@ -186,12 +180,16 @@ export class DataTableComponent implements OnInit {
 
   //Nevigate to Last page
   lastPage() {
+    this.ToRecord = this.FilterRowCount;
     this.CurrentPage = this.TotalPages;
     this.setPagedRow(this.CurrentPage);
+    this.FromRecord = this.FilterRowCount - this.PagedRows.length + 1;
   }
 
   //Nevigate to First page
   firstPage() {
+    this.FromRecord = 1;
+    this.ToRecord = this.pageSize;
     this.CurrentPage = 1;
     this.setPagedRow(this.CurrentPage);
   }
@@ -224,9 +222,7 @@ export class DataTableComponent implements OnInit {
   }
 
 // Sort function
-  private
-
-  sortFunction(a, b, columnValue, isAsc) {
+  private  sortFunction(a, b, columnValue, isAsc) {
     if (a.data[columnValue] === b.data[columnValue]) {
       return 0;
     } else if (isAsc) {

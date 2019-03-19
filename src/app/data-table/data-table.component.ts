@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {moveItemInArray} from '@angular/cdk/drag-drop';
-//Cell renderer interface.
+
+// Cell renderer interface.
 interface CellRenderer {
-  cellRender?(row: number, column: number, data: any, columnDefs: Column[]): string
+  cellRender?(row: number, column: number, data: any, columnDefs: Column[]): string;
 }
 
-//interface for columns
+// interface for columns
 interface Column extends CellRenderer {
   headerName: string;
   field: string;
@@ -28,8 +29,8 @@ interface TableRow extends CellRenderer {
 })
 export class DataTableComponent implements OnInit {
 
-  pagination: boolean = true;
-  pageSize: number = 5;
+  pagination = true;
+  pageSize = 5;
 
   columnDefs: Column[] = [
     {
@@ -60,22 +61,23 @@ export class DataTableComponent implements OnInit {
   private FilterRowCount: number = this.rowData.length;
   private TotalPages: number;
   private PagedRows: TableRow[] = [];
-  private CurrentPage: number = 1;
-  private InvalidPage: number = 0;
-  private FromRecord: number = 1;
+  private CurrentPage = 1;
+  private InvalidPage = 0;
+  private FromRecord = 1;
   private ToRecord: number = this.pageSize;
-  private FilterData: Array<any> = [];
+  private FilterData: Array<any> = new Array<any>(this.columnDefs.length);
   private TotalRows: number = this.rowData.length;
 
 
   // Convert row data to a 2D array.
-  createTableData() {
+  createTableData(filteredData?: Array<any>, currentPage?: number) {
+    this.TableRows = new Array<any>();
     if (this.columnDefs.length !== Object.keys(this.rowData[0]).length) {
       console.warn('Invalid data: Total Column in def: ' + this.columnDefs.length + 'Total Columns in data:'
         + Object.keys(this.rowData[0]).length);
     }
     for (let j = 0; j < this.rowData.length; ++j) {
-      let row: TableRow = {data: [], filteredOut: false};
+      const row: TableRow = {data: [], filteredOut: false};
       for (let i = 0; i < this.columnDefs.length; ++i) {
         this.columnDefs[i].sortState = null;
         row.cellRender = this.cellRenderer;
@@ -83,14 +85,25 @@ export class DataTableComponent implements OnInit {
       }
       this.TableRows.push(row);
     }
-    this.pagedRows();
-    this.setPagedRow(1);
+
+    if (filteredData && filteredData.length !== 0 && currentPage > 0) {
+      this.applyFilter(this.FilterData);
+      this.setPagedRow(currentPage);
+      for (let i = 0; i < this.columnDefs.length; ++i) {
+        if (this.columnDefs[i].sortState != null) {
+          this.applySort(i, this.columnDefs[i].sortState);
+        }
+      }
+    } else {
+      this.pagedRows();
+      this.setPagedRow(1);
+    }
   }
 
   private pagedRows() {
-    let j: number = 0;
+    let j = 0;
     for (let i = 0; i < this.TableRows.length; ++i) {
-      let row: TableRow = this.TableRows[i];
+      const row: TableRow = this.TableRows[i];
       if (row.filteredOut) {
         row.pageNo = 0;
         continue;
@@ -107,8 +120,10 @@ export class DataTableComponent implements OnInit {
   private setPagedRow(pageNo: number) {
     this.PagedRows = [];
     for (let j = 0; j < this.TableRows.length; ++j) {
-      let row:TableRow = this.TableRows[j];
-      if (row.pageNo === this.InvalidPage) continue;
+      const row: TableRow = this.TableRows[j];
+      if (row.pageNo === this.InvalidPage) {
+        continue;
+      }
       if (row.pageNo === pageNo) {
         this.PagedRows.push(row);
       }
@@ -125,22 +140,38 @@ export class DataTableComponent implements OnInit {
 
 // Filters data based on CONTAINS.
   filter(column, text) {
-    this.FilterRowCount = 0;
     this.FilterData[column] = text;
+    this.applyFilter(this.FilterData);
+  }
+
+  private applyFilter(filterData: Array<any>) {
+    this.FilterRowCount = 0;
     for (let i = 0; i < this.TableRows.length; ++i) {
-      let isFiltered: boolean;
+      let isFiltered: boolean = null;
       for (let j = 0; j < this.FilterData.length; ++j) {
-        if (this.FilterData[j] !== undefined) {
-          if (j === 0) {
+        if (this.FilterData[j] === undefined) {
+          if (isFiltered === null) {
+            isFiltered = this.TableRows[i].data[j].toString().toLowerCase().includes('');
+          } else {
+            isFiltered = isFiltered && this.TableRows[i].data[j].toString().toLowerCase().includes('');
+          }
+          continue;
+        }
+        if (j === 0) {
+          if (isFiltered === null) {
             isFiltered = this.TableRows[i].data[j].toLowerCase().includes(this.FilterData[j].toLowerCase());
           } else {
             isFiltered = isFiltered && this.TableRows[i].data[j].toLowerCase().includes(this.FilterData[j].toLowerCase());
           }
+        } else {
+          isFiltered = isFiltered && this.TableRows[i].data[j].toLowerCase().includes(this.FilterData[j].toLowerCase());
         }
       }
-      console.log("Message:" + this.TableRows[i].data[0] + " Filter: " + !isFiltered);
+      console.log('Message:' + this.TableRows[i].data[0] + ' Filter: ' + !isFiltered);
       this.TableRows[i].filteredOut = !isFiltered;
-      if (!this.TableRows[i].filteredOut) this.FilterRowCount++;
+      if (!this.TableRows[i].filteredOut) {
+        this.FilterRowCount++;
+      }
     }
     this.pagedRows();
     this.setPagedRow(1);
@@ -159,7 +190,7 @@ export class DataTableComponent implements OnInit {
     }
   }
 
-  //Nevigate to Next Page
+  // Nevigate to Next Page
   nextPage() {
     this.CurrentPage++;
     this.FromRecord += this.pageSize;
@@ -170,7 +201,7 @@ export class DataTableComponent implements OnInit {
     this.setPagedRow(this.CurrentPage);
   }
 
-  //Nevigate to Previous page
+  // Nevigate to Previous page
   previousPage() {
     this.CurrentPage--;
     this.FromRecord -= this.pageSize;
@@ -178,7 +209,7 @@ export class DataTableComponent implements OnInit {
     this.setPagedRow(this.CurrentPage);
   }
 
-  //Nevigate to Last page
+  // Nevigate to Last page
   lastPage() {
     this.ToRecord = this.FilterRowCount;
     this.CurrentPage = this.TotalPages;
@@ -186,7 +217,7 @@ export class DataTableComponent implements OnInit {
     this.FromRecord = this.FilterRowCount - this.PagedRows.length + 1;
   }
 
-  //Nevigate to First page
+  // Nevigate to First page
   firstPage() {
     this.FromRecord = 1;
     this.ToRecord = this.pageSize;
@@ -197,10 +228,14 @@ export class DataTableComponent implements OnInit {
   // Sort columns
   sortColumn(column) {
     // check whether it is sortable.
-    if (!this.columnDefs[column].sort) return;
+    if (!this.columnDefs[column].sort) {
+      return;
+    }
     // Reset all other sort
     for (let i = 0; i < this.columnDefs.length; ++i) {
-      if (i === column) continue;
+      if (i === column) {
+        continue;
+      }
       this.columnDefs[i].sortState = null;
     }
 
@@ -212,17 +247,21 @@ export class DataTableComponent implements OnInit {
       this.columnDefs[column].sortState = !this.columnDefs[column].sortState;
     }
     sortState = this.columnDefs[column].sortState;
-    let that = this;
+    this.applySort(column, sortState);
+  }
+
+  //
+  private applySort(column: number, sortState: boolean) {
+    const that: this = this;
     // Sort te table.
-    this.TableRows.sort(function (a, b) {
-      return that.sortFunction(a, b, column, sortState);
-    });
+    this.TableRows.sort((a, b) => that.sortFunction(a, b, column, sortState));
     this.pagedRows();
     this.setPagedRow(this.CurrentPage);
+
   }
 
 // Sort function
-  private  sortFunction(a, b, columnValue, isAsc) {
+  private sortFunction(a, b, columnValue, isAsc) {
     if (a.data[columnValue] === b.data[columnValue]) {
       return 0;
     } else if (isAsc) {
@@ -234,8 +273,10 @@ export class DataTableComponent implements OnInit {
 
   drop(event) {
     moveItemInArray(this.columnDefs, event.previousIndex, event.currentIndex);
-    this.createTableData();
+    moveItemInArray(this.FilterData, event.previousIndex, event.currentIndex)
+    this.createTableData(this.FilterData, this.CurrentPage);
   }
+
   constructor() {
     this.createTableData();
     this.TotalPages = Math.ceil(this.rowData.length / this.pageSize);

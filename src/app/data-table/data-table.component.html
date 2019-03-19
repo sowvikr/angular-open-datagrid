@@ -1,6 +1,6 @@
 <table class="dataTable">
   <thead>
-  <tr class="header" cdkDropList cdkDropListOrientation="horizontal" class="example-list" (cdkDropListDropped)="drop($event)">
+  <tr class="header" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)">
     <th *ngFor="let item of columnDefs ; let i = index" cdkDrag>
       <i (click)="sortColumn(i)" class="fa fa-sort" *ngIf="item.sortState == null && item.sort" aria-hidden="true"> </i>
       <i (click)="sortColumn(i)" class="fa fa-sort-asc" *ngIf="item.sortState && item.sort" aria-hidden="true"> </i>

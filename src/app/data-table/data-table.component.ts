@@ -3,7 +3,7 @@ import {moveItemInArray} from '@angular/cdk/drag-drop';
 
 // Cell renderer interface.
 interface CellRenderer {
-  cellRender?(row: number, column: number, data: any, columnDefs: Column[]): string;
+  cellRender?(row:number, column:number, data:any, columnDefs:Column[]): string;
 }
 
 // interface for columns
@@ -32,11 +32,11 @@ export class DataTableComponent implements OnInit {
   pagination = true;
   pageSize = 5;
 
-  columnDefs: Column[] = [
+  columnDefs:Column[] = [
     {
       headerName: 'Model', field: 'model', sort: true, filter: true, cellRender: (row, column, data, def) => {
-        return '<a href="#">' + data + '</a>';
-      }
+      return '<a href="#">' + data + '</a>';
+    }
     },
     {headerName: 'Make', field: 'make', filter: true},
     {headerName: 'Price', field: 'price'}
@@ -57,29 +57,31 @@ export class DataTableComponent implements OnInit {
   ];
 
 
-  private TableRows: TableRow[] = [];
-  private FilterRowCount: number = this.rowData.length;
-  private TotalPages: number;
-  private PagedRows: TableRow[] = [];
+  private TableRows:TableRow[] = [];
+  private FilterRowCount:number = this.rowData.length;
+  private TotalPages:number;
+  private PagedRows:TableRow[] = [];
   private CurrentPage = 1;
   private InvalidPage = 0;
   private FromRecord = 1;
-  private ToRecord: number = this.pageSize;
-  private FilterData: Array<any> = new Array<any>(this.columnDefs.length);
-  private TotalRows: number = this.rowData.length;
+  private ToRecord:number = this.pageSize;
+  private FilterData:Array<any> = new Array<any>(this.columnDefs.length);
+  private TotalRows:number = this.rowData.length;
 
 
   // Convert row data to a 2D array.
-  createTableData(filteredData?: Array<any>, currentPage?: number) {
+  createTableData(filteredData?:Array<any>, currentPage?:number) {
     this.TableRows = new Array<any>();
     if (this.columnDefs.length !== Object.keys(this.rowData[0]).length) {
       console.warn('Invalid data: Total Column in def: ' + this.columnDefs.length + 'Total Columns in data:'
         + Object.keys(this.rowData[0]).length);
     }
     for (let j = 0; j < this.rowData.length; ++j) {
-      const row: TableRow = {data: [], filteredOut: false};
+      const row:TableRow = {data: [], filteredOut: false};
       for (let i = 0; i < this.columnDefs.length; ++i) {
-        this.columnDefs[i].sortState = null;
+        if (!(filteredData && filteredData.length !== 0 && currentPage > 0)) {
+          this.columnDefs[i].sortState = null;
+        }
         row.cellRender = this.cellRenderer;
         row.data.push(this.rowData[j][this.columnDefs[i].field]);
       }
@@ -90,7 +92,7 @@ export class DataTableComponent implements OnInit {
       this.applyFilter(this.FilterData);
       this.setPagedRow(currentPage);
       for (let i = 0; i < this.columnDefs.length; ++i) {
-        if (this.columnDefs[i].sortState != null) {
+        if (this.columnDefs[i].sortState !== null) {
           this.applySort(i, this.columnDefs[i].sortState);
         }
       }
@@ -103,7 +105,7 @@ export class DataTableComponent implements OnInit {
   private pagedRows() {
     let j = 0;
     for (let i = 0; i < this.TableRows.length; ++i) {
-      const row: TableRow = this.TableRows[i];
+      const row:TableRow = this.TableRows[i];
       if (row.filteredOut) {
         row.pageNo = 0;
         continue;
@@ -117,10 +119,10 @@ export class DataTableComponent implements OnInit {
     }
   }
 
-  private setPagedRow(pageNo: number) {
+  private setPagedRow(pageNo:number) {
     this.PagedRows = [];
     for (let j = 0; j < this.TableRows.length; ++j) {
-      const row: TableRow = this.TableRows[j];
+      const row:TableRow = this.TableRows[j];
       if (row.pageNo === this.InvalidPage) {
         continue;
       }
@@ -130,7 +132,7 @@ export class DataTableComponent implements OnInit {
     }
   }
 
-  private cellRenderer(row: number, column: number, data: any, columnDefs: Column[]) {
+  private cellRenderer(row:number, column:number, data:any, columnDefs:Column[]) {
     if (columnDefs[column].cellRender === undefined && (typeof (columnDefs[column].cellRender) !== 'function')) {
       return data;
     } else {
@@ -144,30 +146,17 @@ export class DataTableComponent implements OnInit {
     this.applyFilter(this.FilterData);
   }
 
-  private applyFilter(filterData: Array<any>) {
+  private applyFilter(filterData:Array<any>) {
     this.FilterRowCount = 0;
     for (let i = 0; i < this.TableRows.length; ++i) {
-      let isFiltered: boolean = null;
+      let isFiltered:boolean = true;
       for (let j = 0; j < this.FilterData.length; ++j) {
         if (this.FilterData[j] === undefined) {
-          if (isFiltered === null) {
-            isFiltered = this.TableRows[i].data[j].toString().toLowerCase().includes('');
-          } else {
-            isFiltered = isFiltered && this.TableRows[i].data[j].toString().toLowerCase().includes('');
-          }
+          isFiltered = isFiltered && this.TableRows[i].data[j].toString().toLowerCase().includes('');
           continue;
         }
-        if (j === 0) {
-          if (isFiltered === null) {
-            isFiltered = this.TableRows[i].data[j].toLowerCase().includes(this.FilterData[j].toLowerCase());
-          } else {
-            isFiltered = isFiltered && this.TableRows[i].data[j].toLowerCase().includes(this.FilterData[j].toLowerCase());
-          }
-        } else {
-          isFiltered = isFiltered && this.TableRows[i].data[j].toLowerCase().includes(this.FilterData[j].toLowerCase());
-        }
+        isFiltered = isFiltered && this.TableRows[i].data[j].toLowerCase().includes(this.FilterData[j].toLowerCase());
       }
-      console.log('Message:' + this.TableRows[i].data[0] + ' Filter: ' + !isFiltered);
       this.TableRows[i].filteredOut = !isFiltered;
       if (!this.TableRows[i].filteredOut) {
         this.FilterRowCount++;
@@ -240,7 +229,7 @@ export class DataTableComponent implements OnInit {
     }
 
     // cache the sort state
-    let sortState: boolean = this.columnDefs[column].sortState;
+    let sortState:boolean = this.columnDefs[column].sortState;
     if (sortState == null) {
       this.columnDefs[column].sortState = true;
     } else {
@@ -251,8 +240,8 @@ export class DataTableComponent implements OnInit {
   }
 
   //
-  private applySort(column: number, sortState: boolean) {
-    const that: this = this;
+  private applySort(column:number, sortState:boolean) {
+    const that:this = this;
     // Sort te table.
     this.TableRows.sort((a, b) => that.sortFunction(a, b, column, sortState));
     this.pagedRows();
@@ -273,7 +262,7 @@ export class DataTableComponent implements OnInit {
 
   drop(event) {
     moveItemInArray(this.columnDefs, event.previousIndex, event.currentIndex);
-    moveItemInArray(this.FilterData, event.previousIndex, event.currentIndex)
+    moveItemInArray(this.FilterData, event.previousIndex, event.currentIndex);
     this.createTableData(this.FilterData, this.CurrentPage);
   }
 

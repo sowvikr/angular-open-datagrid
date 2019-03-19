@@ -39,6 +39,24 @@ table.dataTable {
 
   thead {
     background: #f5f7f7;
+    .cdk-drag-preview {
+      box-sizing: border-box;
+      border-radius: 4px;
+      box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+      0 8px 10px 1px rgba(0, 0, 0, 0.14),
+      0 3px 14px 2px rgba(0, 0, 0, 0.12);
+    }
+
+    .cdk-drag-placeholder {
+      opacity: 0;
+    }
+
+    .cdk-drag-animating {
+      transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+    }
+    .header.cdk-drop-list-dragging th:not(.cdk-drag-placeholder) {
+      transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+    }
     th {
       font-size: 13px;
       font-weight: bold;
@@ -70,9 +88,15 @@ table.dataTable {
       border-bottom-width: 1px;
     }
     tr.filter {
-      input {
+      input[type=text] {
         height: 19px;
         margin: 0;
+      }
+      div.filterPanel {
+        position: absolute;
+        padding: 10px;
+        background: whitesmoke;
+        border: 1px solid #BDC3C7;
       }
     }
   }
@@ -83,7 +107,7 @@ table.dataTable {
     height: 32px;
     justify-content: flex-end;
     padding: 0 12px;
-    tr{
+    tr {
       text-align: right;
     }
     button {
@@ -94,29 +118,32 @@ table.dataTable {
     button :focus {
       border: none;
     }
-    button:disabled{
+    button:disabled {
       cursor: default;
     }
   }
 
-  .cdk-drag-preview {
-    box-sizing: border-box;
-    border-radius: 4px;
-    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-    0 8px 10px 1px rgba(0, 0, 0, 0.14),
-    0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  label {
+    display: block;
+    padding: 10px 10px 10px 15px;
+    text-indent: -15px;
+    font-size: 12px;
+    font-weight: 400;
+    span{
+      margin-left: 10px;
+    }
+  }
+  input[type=checkbox] {
+    width: 13px;
+    height: 13px;
+    padding: 0;
+    margin:0;
+    vertical-align: bottom;
+    position: relative;
+    top: -2px;
+    *overflow: hidden;
   }
 
-  .cdk-drag-placeholder {
-    opacity: 0;
-  }
-
-  .cdk-drag-animating {
-    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-  }
-  .header.cdk-drop-list-dragging th:not(.cdk-drag-placeholder) {
-    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-  }
 }
 
 

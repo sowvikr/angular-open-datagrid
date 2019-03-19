@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {moveItemInArray} from '@angular/cdk/drag-drop';
+import {filter} from "rxjs/internal/operators/filter";
 
 // Cell renderer interface.
 interface CellRenderer {
@@ -13,8 +14,17 @@ interface Column extends CellRenderer {
   sortState?: boolean;
   sort?: boolean;
   filter?: boolean;
+  columnFilter?:boolean;
+  uniqueFilterValues?:Array<any>;
+  selectAll?:boolean;
+  selectOne?:boolean;
 }
 
+interface FilterOptions {
+  operator:string;
+  values:string[];
+  comparator:string;
+}
 // interface for each table row
 interface TableRow extends CellRenderer {
   filteredOut: boolean;
@@ -34,11 +44,15 @@ export class DataTableComponent implements OnInit {
 
   columnDefs:Column[] = [
     {
-      headerName: 'Model', field: 'model', sort: true, filter: true, cellRender: (row, column, data, def) => {
-      return '<a href="#">' + data + '</a>';
-    }
+      headerName: 'Model',
+      field: 'model',
+      sort: true,
+      filter: true,
+      cellRender: (row, column, data, def) => {
+        return '<a href="#">' + data + '</a>';
+      }
     },
-    {headerName: 'Make', field: 'make', filter: true},
+    {headerName: 'Make', field: 'make', filter: true, columnFilter: true},
     {headerName: 'Price', field: 'price'}
   ];
   rowData = [
@@ -65,8 +79,9 @@ export class DataTableComponent implements OnInit {
   private InvalidPage = 0;
   private FromRecord = 1;
   private ToRecord:number = this.pageSize;
-  private FilterData:Array<any> = new Array<any>(this.columnDefs.length);
+  private FilterData:Array<FilterOptions> = new Array<FilterOptions>(this.columnDefs.length);
   private TotalRows:number = this.rowData.length;
+  private FilteredRows:TableRow[] = [];
 
 
   // Convert row data to a 2D array.
@@ -86,7 +101,10 @@ export class DataTableComponent implements OnInit {
         row.data.push(this.rowData[j][this.columnDefs[i].field]);
       }
       this.TableRows.push(row);
+      this.FilteredRows.push(row);
     }
+
+    this.generateUniqueFilters();
 
     if (filteredData && filteredData.length !== 0 && currentPage > 0) {
       this.applyFilter(this.FilterData);
@@ -101,6 +119,32 @@ export class DataTableComponent implements OnInit {
       this.setPagedRow(1);
     }
   }
+
+  private generateUniqueFilters() {
+    for (let i = 0; i < this.columnDefs.length; ++i) {
+      this.createColumnFilter(this.columnDefs[i], this.TableRows, i);
+    }
+  }
+
+  private createColumnFilter(column:Column, rows:Array<TableRow>, columnNumber:number) {
+    let uniqueItems = [];
+    column.selectAll = true;
+    column.selectOne = true;
+    if (!column.columnFilter) return;
+    for (let i = 0; i < rows.length; ++i) {
+      if (rows[i].filteredOut) continue;
+      let columnValue = rows[i].data[columnNumber];
+      if (uniqueItems.indexOf(columnValue) < 0) {
+        uniqueItems.push(columnValue);
+        if (!this.FilterData[columnNumber]) {
+          this.FilterData[columnNumber] = {comparator: "includes", operator: "or", values: []}
+        }
+        this.FilterData[columnNumber].values.push(columnValue.toLowerCase());
+      }
+    }
+    column.uniqueFilterValues = uniqueItems;
+  }
+
 
   private pagedRows() {
     let j = 0;
@@ -142,11 +186,23 @@ export class DataTableComponent implements OnInit {
 
 // Filters data based on CONTAINS.
   filter(column, text) {
-    this.FilterData[column] = text;
+    this.FilterData[column] = {operator: "or", values: [text], comparator: "includes"};
     this.applyFilter(this.FilterData);
   }
 
-  private applyFilter(filterData:Array<any>) {
+  private getFilteredValue(column:number, filterOptions:Array<FilterOptions>, data:string) {
+    let filtered:boolean = false;
+    for (let i = 0; i < filterOptions[column].values.length; ++i) {
+      if (filterOptions[column].comparator === "includes") {
+        if (filterOptions[column].operator == "or") {
+          filtered = filtered || data.toLowerCase().includes(filterOptions[column].values[i]);
+        }
+      }
+    }
+    return filtered;
+  }
+
+  private applyFilter(filterData:Array<FilterOptions>) {
     this.FilterRowCount = 0;
     for (let i = 0; i < this.TableRows.length; ++i) {
       let isFiltered:boolean = true;
@@ -155,7 +211,7 @@ export class DataTableComponent implements OnInit {
           isFiltered = isFiltered && this.TableRows[i].data[j].toString().toLowerCase().includes('');
           continue;
         }
-        isFiltered = isFiltered && this.TableRows[i].data[j].toLowerCase().includes(this.FilterData[j].toLowerCase());
+        isFiltered = isFiltered && this.getFilteredValue(j, filterData, this.TableRows[i].data[j].toString().toLowerCase());
       }
       this.TableRows[i].filteredOut = !isFiltered;
       if (!this.TableRows[i].filteredOut) {
@@ -167,6 +223,33 @@ export class DataTableComponent implements OnInit {
     this.updateTotalPageCount();
   }
 
+  checkedColumnFilter(column:number, value:string, event) {
+    if (value === 'Select All' && event.target.checked) {
+      this.FilterData[column].values = [];
+      this.columnDefs[column].selectOne = true;
+      for (let i = 0; i < this.columnDefs[column].uniqueFilterValues.length; ++i) {
+        this.FilterData[column].values.push(this.columnDefs[column].uniqueFilterValues[i].toLowerCase());
+      }
+    }
+    else if (value === 'Select All' && !event.target.checked) {
+      this.FilterData[column].values = [];
+      this.columnDefs[column].selectOne = false;
+    }
+    else if (event.target.checked) {
+      this.FilterData[column].values.push(value.toLowerCase());
+      if(this.FilterData[column].values.length === this.columnDefs[column].uniqueFilterValues.length){
+        this.columnDefs[column].selectAll = true;
+      }
+    }
+    else if (!event.target.checked) {
+      let index = this.FilterData[column].values.indexOf(value.toLowerCase());
+      this.columnDefs[column].selectAll = false;
+      if (index >= 0) {
+        this.FilterData[column].values.splice(index, 1);
+      }
+    }
+    this.applyFilter(this.FilterData);
+  }
 
   updateTotalPageCount() {
     this.TotalPages = Math.ceil(this.FilterRowCount / this.pageSize);

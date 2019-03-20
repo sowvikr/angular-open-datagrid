@@ -40,7 +40,7 @@
     <tr *ngFor="let row of PagedRows; let rowCount = index" [hidden]="row.filteredOut">
       <td *ngFor="let cell of row.data; let columnCount = index">
           <!--[innerHtml]="row.cellRender(rowCount, columnCount, cell, columnDefs)|  safePipe: 'html'"-->
-      <app-inline-edit [row]="rowCount" [column]="columnCount" [cellValue]="cell" [cellData]="columnDefs[columnCount].uniqueFilterValues"></app-inline-edit>
+      <app-inline-edit (changed)="valueChanged($event)"  [row]="rowCount" [column]="columnCount" [cellValue]="cell" [cellData]="columnDefs[columnCount].uniqueFilterValues"></app-inline-edit>
       </td>
     </tr>
     </tbody>

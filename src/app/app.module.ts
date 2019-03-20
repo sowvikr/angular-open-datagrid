@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AgGridModule } from 'ag-grid-angular';
 import { DataTableComponent } from './data-table/data-table.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { InlineEditComponent } from './inline-edit/inline-edit.component';

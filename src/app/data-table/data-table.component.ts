@@ -4,7 +4,7 @@ import {filter} from "rxjs/internal/operators/filter";
 
 // Cell renderer interface.
 interface CellRenderer {
-  cellRender?(row:number, column:number, data:any, columnDefs:Column[]): string;
+  cellRender?(row: number, column: number, data: any, columnDefs: Column[]): string;
 }
 
 // interface for columns
@@ -14,17 +14,18 @@ interface Column extends CellRenderer {
   sortState?: boolean;
   sort?: boolean;
   filter?: boolean;
-  columnFilter?:boolean;
-  uniqueFilterValues?:Array<any>;
-  selectAll?:boolean;
-  selectOne?:boolean;
+  columnFilter?: boolean;
+  uniqueFilterValues?: Array<any>;
+  selectAll?: boolean;
+  selectOne?: boolean;
 }
 
 interface FilterOptions {
-  operator:string;
-  values:string[];
-  comparator:string;
+  operator: string;
+  values: string[];
+  comparator: string;
 }
+
 // interface for each table row
 interface TableRow extends CellRenderer {
   filteredOut: boolean;
@@ -42,7 +43,7 @@ export class DataTableComponent implements OnInit {
   pagination = true;
   pageSize = 5;
 
-  @Input() columnDefs:Column[] = [
+  @Input() columnDefs: Column[] = [
     {
       headerName: 'Model',
       field: 'model',
@@ -71,28 +72,28 @@ export class DataTableComponent implements OnInit {
   ];
 
 
-  private TableRows:TableRow[] = [];
-  private FilterRowCount:number = this.rowData.length;
-  private TotalPages:number;
-  private PagedRows:TableRow[] = [];
+  private TableRows: TableRow[] = [];
+  private FilterRowCount: number = this.rowData.length;
+  private TotalPages: number;
+  private PagedRows: TableRow[] = [];
   private CurrentPage = 1;
   private InvalidPage = 0;
   private FromRecord = 1;
-  private ToRecord:number = this.pageSize;
-  private FilterData:Array<FilterOptions> = new Array<FilterOptions>(this.columnDefs.length);
-  private TotalRows:number = this.rowData.length;
-  private FilteredRows:TableRow[] = [];
+  private ToRecord: number = this.pageSize;
+  private FilterData: Array<FilterOptions> = new Array<FilterOptions>(this.columnDefs.length);
+  private TotalRows: number = this.rowData.length;
+  private FilteredRows: TableRow[] = [];
 
 
   // Convert row data to a 2D array.
-  createTableData(filteredData?:Array<any>, currentPage?:number) {
+  createTableData(filteredData?: Array<any>, currentPage?: number) {
     this.TableRows = new Array<any>();
     if (this.columnDefs.length !== Object.keys(this.rowData[0]).length) {
       console.warn('Invalid data: Total Column in def: ' + this.columnDefs.length + 'Total Columns in data:'
         + Object.keys(this.rowData[0]).length);
     }
     for (let j = 0; j < this.rowData.length; ++j) {
-      const row:TableRow = {data: [], filteredOut: false};
+      const row: TableRow = {data: [], filteredOut: false};
       for (let i = 0; i < this.columnDefs.length; ++i) {
         if (!(filteredData && filteredData.length !== 0 && currentPage > 0)) {
           this.columnDefs[i].sortState = null;
@@ -126,7 +127,7 @@ export class DataTableComponent implements OnInit {
     }
   }
 
-  private createColumnFilter(column:Column, rows:Array<TableRow>, columnNumber:number) {
+  private createColumnFilter(column: Column, rows: Array<TableRow>, columnNumber: number) {
     let uniqueItems = [];
     column.selectAll = true;
     column.selectOne = true;
@@ -149,7 +150,7 @@ export class DataTableComponent implements OnInit {
   private pagedRows() {
     let j = 0;
     for (let i = 0; i < this.TableRows.length; ++i) {
-      const row:TableRow = this.TableRows[i];
+      const row: TableRow = this.TableRows[i];
       if (row.filteredOut) {
         row.pageNo = 0;
         continue;
@@ -163,10 +164,10 @@ export class DataTableComponent implements OnInit {
     }
   }
 
-  private setPagedRow(pageNo:number) {
+  private setPagedRow(pageNo: number) {
     this.PagedRows = [];
     for (let j = 0; j < this.TableRows.length; ++j) {
-      const row:TableRow = this.TableRows[j];
+      const row: TableRow = this.TableRows[j];
       if (row.pageNo === this.InvalidPage) {
         continue;
       }
@@ -176,7 +177,7 @@ export class DataTableComponent implements OnInit {
     }
   }
 
-  private cellRenderer(row:number, column:number, data:any, columnDefs:Column[]) {
+  private cellRenderer(row: number, column: number, data: any, columnDefs: Column[]) {
     if (columnDefs[column].cellRender === undefined && (typeof (columnDefs[column].cellRender) !== 'function')) {
       return data;
     } else {
@@ -190,8 +191,8 @@ export class DataTableComponent implements OnInit {
     this.applyFilter(this.FilterData);
   }
 
-  private getFilteredValue(column:number, filterOptions:Array<FilterOptions>, data:string) {
-    let filtered:boolean = false;
+  private getFilteredValue(column: number, filterOptions: Array<FilterOptions>, data: string) {
+    let filtered: boolean = false;
     for (let i = 0; i < filterOptions[column].values.length; ++i) {
       if (filterOptions[column].comparator === "includes") {
         if (filterOptions[column].operator == "or") {
@@ -202,10 +203,10 @@ export class DataTableComponent implements OnInit {
     return filtered;
   }
 
-  private applyFilter(filterData:Array<FilterOptions>) {
+  private applyFilter(filterData: Array<FilterOptions>) {
     this.FilterRowCount = 0;
     for (let i = 0; i < this.TableRows.length; ++i) {
-      let isFiltered:boolean = true;
+      let isFiltered: boolean = true;
       for (let j = 0; j < this.FilterData.length; ++j) {
         if (this.FilterData[j] === undefined) {
           isFiltered = isFiltered && this.TableRows[i].data[j].toString().toLowerCase().includes('');
@@ -223,25 +224,22 @@ export class DataTableComponent implements OnInit {
     this.updateTotalPageCount();
   }
 
-  checkedColumnFilter(column:number, value:string, event) {
+  checkedColumnFilter(column: number, value: string, event) {
     if (value === 'Select All' && event.target.checked) {
       this.FilterData[column].values = [];
       this.columnDefs[column].selectOne = true;
       for (let i = 0; i < this.columnDefs[column].uniqueFilterValues.length; ++i) {
         this.FilterData[column].values.push(this.columnDefs[column].uniqueFilterValues[i].toLowerCase());
       }
-    }
-    else if (value === 'Select All' && !event.target.checked) {
+    } else if (value === 'Select All' && !event.target.checked) {
       this.FilterData[column].values = [];
       this.columnDefs[column].selectOne = false;
-    }
-    else if (event.target.checked) {
+    } else if (event.target.checked) {
       this.FilterData[column].values.push(value.toLowerCase());
-      if(this.FilterData[column].values.length === this.columnDefs[column].uniqueFilterValues.length){
+      if (this.FilterData[column].values.length === this.columnDefs[column].uniqueFilterValues.length) {
         this.columnDefs[column].selectAll = true;
       }
-    }
-    else if (!event.target.checked) {
+    } else if (!event.target.checked) {
       let index = this.FilterData[column].values.indexOf(value.toLowerCase());
       this.columnDefs[column].selectAll = false;
       if (index >= 0) {
@@ -312,7 +310,7 @@ export class DataTableComponent implements OnInit {
     }
 
     // cache the sort state
-    let sortState:boolean = this.columnDefs[column].sortState;
+    let sortState: boolean = this.columnDefs[column].sortState;
     if (sortState == null) {
       this.columnDefs[column].sortState = true;
     } else {
@@ -323,8 +321,8 @@ export class DataTableComponent implements OnInit {
   }
 
   //
-  private applySort(column:number, sortState:boolean) {
-    const that:this = this;
+  private applySort(column: number, sortState: boolean) {
+    const that: this = this;
     // Sort te table.
     this.TableRows.sort((a, b) => that.sortFunction(a, b, column, sortState));
     this.pagedRows();
@@ -347,6 +345,14 @@ export class DataTableComponent implements OnInit {
     moveItemInArray(this.columnDefs, event.previousIndex, event.currentIndex);
     moveItemInArray(this.FilterData, event.previousIndex, event.currentIndex);
     this.createTableData(this.FilterData, this.CurrentPage);
+  }
+
+
+  valueChanged(changeValue: any) {
+    this.TableRows[changeValue.row].data[changeValue.column] =  changeValue.value;
+    this.pagedRows();
+    this.setPagedRow(this.CurrentPage);
+
   }
 
   constructor() {

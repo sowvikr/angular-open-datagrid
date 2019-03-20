@@ -1,65 +1,71 @@
-<table class="dataTable">
-  <thead>
-  <tr class="header" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)">
-    <th *ngFor="let item of columnDefs ; let i = index" cdkDrag>
-      <i (click)="sortColumn(i)" class="fa fa-sort" *ngIf="item.sortState == null && item.sort" aria-hidden="true"> </i>
-      <i (click)="sortColumn(i)" class="fa fa-sort-asc" *ngIf="item.sortState && item.sort" aria-hidden="true"> </i>
-      <i (click)="sortColumn(i)" class="fa fa-sort-desc"
-         *ngIf="!item.sortState && !(item.sortState == null) && item.sort" aria-hidden="true"> </i>
-      {{item.headerName}}
-      <!--
-              <span [hidden]="!item.showFilter" *ngIf="item.filter">
-                <input (keyup)="filter(i,$event.target.value)" type="text"  height="10"/>
-              </span>
-              <i class="fa fa-filter" (click)="item.showFilter = !item.showFilter" *ngIf="item.filter" aria-hidden="true"> </i>
-      -->
-    </th>
-  </tr>
-  <tr class="filter">
-    <th *ngFor="let item of columnDefs; let i = index">
-      <input *ngIf="item.filter" [disabled]="item.columnFilter" (keyup)="filter(i,$event.target.value)" type="text" height="10"/>
-      <i class="fa fa-filter" *ngIf="item.filter" aria-hidden="true" (click)="item.showFilter=!item.showFilter">
-      </i>
-      <div *ngIf="item.filter && item.columnFilter" class="filterPanel" [hidden]="!item.showFilter">
-        <label style="display: block">
-          <input  type="checkbox" (change)="checkedColumnFilter(i, 'Select All', $event);" [checked]="item.selectAll"/> <span>Select All</span>
-        </label>
-        <label *ngFor="let sname of item.uniqueFilterValues" style="display: block">
-          <input  type="checkbox" [value]="sname" (change)="checkedColumnFilter(i, sname, $event)" [checked]="item.selectOne"/> <span>{{sname}}</span>
-        </label>
-      </div>
-    </th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let row of PagedRows; let rowCount = index" [hidden]="row.filteredOut">
-    <td *ngFor="let cell of row.data; let columnCount = index"
-        [innerHtml]="row.cellRender(rowCount, columnCount, cell, columnDefs)">
-    </td>
-  </tr>
-  </tbody>
-  <tbody *ngIf="FilterRowCount === 0">
-  <tr>
-    <td [attr.colspan]="columnDefs.length" style="text-align: center">
-      No Data
-    </td>
-  </tr>
-  </tbody>
+<div>
+  <table class="dataTable">
+    <thead>
+    <tr class="header" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)">
+      <th *ngFor="let item of columnDefs ; let i = index" cdkDrag>
+        <i (click)="sortColumn(i)" class="fa fa-sort" *ngIf="item.sortState == null && item.sort"
+           aria-hidden="true"> </i>
+        <i (click)="sortColumn(i)" class="fa fa-sort-asc" *ngIf="item.sortState && item.sort" aria-hidden="true"> </i>
+        <i (click)="sortColumn(i)" class="fa fa-sort-desc"
+           *ngIf="!item.sortState && !(item.sortState == null) && item.sort" aria-hidden="true"> </i>
+        {{item.headerName}}
+        <!--
+                <span [hidden]="!item.showFilter" *ngIf="item.filter">
+                  <input (keyup)="filter(i,$event.target.value)" type="text"  height="10"/>
+                </span>
+                <i class="fa fa-filter" (click)="item.showFilter = !item.showFilter" *ngIf="item.filter" aria-hidden="true"> </i>
+        -->
+      </th>
+    </tr>
+    <tr class="filter">
+      <th *ngFor="let item of columnDefs; let i = index">
+        <input *ngIf="item.filter" [disabled]="item.columnFilter" (keyup)="filter(i,$event.target.value)" type="text"
+               height="10"/>
+        <i class="fa fa-filter" *ngIf="item.filter" aria-hidden="true" (click)="item.showFilter=!item.showFilter">
+        </i>
+        <div *ngIf="item.filter && item.columnFilter" class="filterPanel" [hidden]="!item.showFilter">
+          <label style="display: block">
+            <input type="checkbox" (change)="checkedColumnFilter(i, 'Select All', $event);" [checked]="item.selectAll"/>
+            <span>Select All</span>
+          </label>
+          <label *ngFor="let sname of item.uniqueFilterValues" style="display: block">
+            <input type="checkbox" [value]="sname" (change)="checkedColumnFilter(i, sname, $event)"
+                   [checked]="item.selectOne"/> <span>{{sname}}</span>
+          </label>
+        </div>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let row of PagedRows; let rowCount = index" [hidden]="row.filteredOut">
+      <td *ngFor="let cell of row.data; let columnCount = index"
+          [innerHtml]="row.cellRender(rowCount, columnCount, cell, columnDefs)">
+      </td>
+    </tr>
+    </tbody>
+    <tbody *ngIf="FilterRowCount === 0">
+    <tr>
+      <td [attr.colspan]="columnDefs.length" style="text-align: center">
+        No Data
+      </td>
+    </tr>
+    </tbody>
 
-  <tfoot *ngIf="pagination">
-  <tr>
-    <td [attr.colspan]="columnDefs.length">
+    <tfoot *ngIf="pagination">
+    <tr>
+      <td [attr.colspan]="columnDefs.length">
 <span class="pagination-row">
     <span>{{FromRecord}}</span>
       to
     <span>{{ToRecord}}</span> of <span>{{TotalRows}}</span>
   </span>
     <span class="pagination-page-summary">
-    <button type="button" class="pagination btFirst" [disabled]="CurrentPage === 1" (click)="firstPage()"><i class="fa fa-angle-double-left"></i></button>
+    <button type="button" class="pagination btFirst" [disabled]="CurrentPage === 1" (click)="firstPage()"><i
+      class="fa fa-angle-double-left"></i></button>
     <button type="button" class="pagination btPrevious" [disabled]="CurrentPage === 1" (click)="previousPage()">
       <i class="fa fa-angle-left"></i>
     </button>
-    Page <span >{{CurrentPage}}</span> of <span ref="lbTotal">{{TotalPages}}</span>
+    Page <span>{{CurrentPage}}</span> of <span ref="lbTotal">{{TotalPages}}</span>
     <button type="button" class="pagination btNext" ref="btNext" [disabled]="CurrentPage === TotalPages"
             (click)="nextPage()">
       <i class="fa fa-angle-right"></i>
@@ -69,8 +75,9 @@
       <i class="fa fa-angle-double-right"></i>
     </button>
   </span>
-    </td>
-  </tr>
-  <!--    -->
-  </tfoot>
-</table>
+      </td>
+    </tr>
+    <!--    -->
+    </tfoot>
+  </table>
+</div>

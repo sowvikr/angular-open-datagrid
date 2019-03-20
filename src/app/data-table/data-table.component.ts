@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import {moveItemInArray} from '@angular/cdk/drag-drop';
 import {filter} from "rxjs/internal/operators/filter";
 
@@ -42,7 +42,7 @@ export class DataTableComponent implements OnInit {
   pagination = true;
   pageSize = 5;
 
-  columnDefs:Column[] = [
+  @Input() columnDefs:Column[] = [
     {
       headerName: 'Model',
       field: 'model',
@@ -55,7 +55,7 @@ export class DataTableComponent implements OnInit {
     {headerName: 'Make', field: 'make', filter: true, columnFilter: true},
     {headerName: 'Price', field: 'price'}
   ];
-  rowData = [
+  @Input() rowData = [
     {make: 'Toyota', model: 'Celica', price: 35000},
     {make: 'Ford', model: 'Mondeo', price: 32000},
     {make: 'Porsche', model: 'Boxter', price: 72000},

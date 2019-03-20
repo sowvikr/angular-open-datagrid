@@ -1,0 +1,7 @@
+<span [hidden] ="isEdit" (click)="onClick()">{{cellValue}}</span>
+<span [hidden] ="!isEdit" (click)="onClick()">
+  <select *ngIf="isCombobox">
+    <option *ngFor="let item of cellData; let i = index" [value]="item">{{item}}</option>
+  </select>
+  <input *ngIf="isCombobox" type="text" [value] = "cellValue"/>
+</span>

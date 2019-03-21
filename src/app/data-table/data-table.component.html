@@ -1,5 +1,5 @@
-<div>
-  <table class="dataTable">
+<div (click)="onContextMenuOff()">
+  <table class="dataTable" (click)="onContextMenuOff()">
     <thead>
     <tr class="header" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)">
       <th *ngFor="let item of columnDefs ; let i = index" cdkDrag>
@@ -36,11 +36,11 @@
       </th>
     </tr>
     </thead>
-    <tbody>
+    <tbody (click)="onContextMenuOff()">
     <tr *ngFor="let row of PagedRows; let rowCount = index" [hidden]="row.filteredOut">
-      <td *ngFor="let cell of row.data; let columnCount = index">
+      <td *ngFor="let cell of row.data; let columnCount = index" oncontextmenu="return false;">
           <!--[innerHtml]="row.cellRender(rowCount, columnCount, cell, columnDefs)|  safePipe: 'html'"-->
-      <app-inline-edit (changed)="valueChanged($event)"  [row]="rowCount" [column]="columnCount" [cellValue]="cell" [cellData]="columnDefs[columnCount].uniqueFilterValues"></app-inline-edit>
+      <app-inline-edit [renderer]="row.cellRender" (rightClicked)="showContextMenu($event)" (changed)="valueChanged($event)" [isEditable]="columnDefs[columnCount].isEdit"  [columnDefs]="columnDefs" [row]="rowCount" [column]="columnCount" [cellValue]="cell" [cellData]="columnDefs[columnCount].uniqueFilterValues"></app-inline-edit>
       </td>
     </tr>
     </tbody>
@@ -81,4 +81,7 @@
     <!--    -->
     </tfoot>
   </table>
+  <div *ngIf="contextmenu" (click)="onContextMenuOff()">
+    <app-context-menu [x]="contextmenuX" [y]="contextmenuY" [isEdit]="contextMenuIsEdit" [contextData]="contextMenuData"></app-context-menu>
+  </div>
 </div>

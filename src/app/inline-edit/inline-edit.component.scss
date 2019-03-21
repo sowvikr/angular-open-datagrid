@@ -1,0 +1,10 @@
+div.cell {
+  border: 1px solid transparent;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+div.cell:hover, div.cell:focus {
+  border: 1px solid #0091EA;
+  outline: initial;
+}

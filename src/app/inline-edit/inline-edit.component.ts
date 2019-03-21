@@ -6,12 +6,19 @@ interface ChangedValue {
   column: number;
 }
 
+interface ContextMenuArgs {
+  x: number;
+  y: number;
+  isEdit: boolean;
+  row: number;
+  column: number;
+}
+
 @Component({
   selector: 'app-inline-edit',
   templateUrl: './inline-edit.component.html',
   styleUrls: ['./inline-edit.component.scss']
 })
-
 
 
 export class InlineEditComponent implements OnInit {
@@ -20,21 +27,27 @@ export class InlineEditComponent implements OnInit {
   @Input() column: number;
   @Input() cellData: any;
   @Input() cellValue: any;
+  @Input() columnDefs: any;
+  @Input() renderer: any;
+  @Input() isEditable: boolean;
   @Output() changed = new EventEmitter<any>();
+  @Output() rightClicked = new EventEmitter<ContextMenuArgs>();
 
   @ViewChild('name') vc: ElementRef;
 
-  private isEdit: boolean = false;
-  private isCombobox: boolean = false;
+  private isEdit = false;
+  private isCombobox = false;
   private changedValue: ChangedValue = {column: 0, row: 0, value: null};
+  private contextMenuArgs: ContextMenuArgs = {x: 0, y: 0, isEdit: false, column: 0, row: 0};
 
   onFocusOut() {
     this.isEdit = false;
   }
 
+
   onClick() {
-    console.log("Clicked");
-    this.isCombobox = typeof (this.cellData) === "object";
+    console.log('Clicked');
+    this.isCombobox = typeof (this.cellData) === 'object';
     this.isEdit = true;
     this.vc.nativeElement.focus();
   }
@@ -46,8 +59,17 @@ export class InlineEditComponent implements OnInit {
     this.changed.emit(this.changedValue);
   }
 
+  onRightClick(event) {
+    this.contextMenuArgs.x = event.clientX;
+    this.contextMenuArgs.y = event.clientY;
+    this.contextMenuArgs.isEdit = this.isEdit;
+    this.contextMenuArgs.row = this.row;
+    this.contextMenuArgs.column = this.column;
+    this.rightClicked.emit(this.contextMenuArgs);
+  }
+
   constructor() {
-    this.isCombobox = typeof (this.cellData) === "object";
+    this.isCombobox = typeof (this.cellData) === 'object';
   }
 
   ngOnInit() {

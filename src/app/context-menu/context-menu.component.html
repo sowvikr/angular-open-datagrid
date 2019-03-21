@@ -1,0 +1,14 @@
+<div class="context-menu" [ngStyle]="{'left.px': x, 'top.px': y}">
+  <div class="context-menu-list">
+    <div class="context-menu-option" *ngFor="let item of MenuItems" (click)="item.onClick($event, contextData, copyTextToClipboard)">
+      <span class="context-menu-option-icon">
+        <span *ngIf="item.icon!== null">
+          <i [ngClass]="item.icon"></i>
+        </span>
+      </span>
+      <span class="context-menu-option-text">{{item.text}}</span>
+      <span class="context-menu-option-shortcut">{{item.shortcut}}</span>
+      <span class="context-menu-option-popup-pointer">&nbsp;</span>
+    </div>
+  </div>
+</div>

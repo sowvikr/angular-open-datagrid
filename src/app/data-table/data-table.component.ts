@@ -1,6 +1,6 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {moveItemInArray} from '@angular/cdk/drag-drop';
-import {filter} from "rxjs/internal/operators/filter";
+import {filter} from 'rxjs/internal/operators/filter';
 
 // Cell renderer interface.
 interface CellRenderer {
@@ -18,6 +18,7 @@ interface Column extends CellRenderer {
   uniqueFilterValues?: Array<any>;
   selectAll?: boolean;
   selectOne?: boolean;
+  isEdit?: boolean;
 }
 
 interface FilterOptions {
@@ -32,6 +33,7 @@ interface TableRow extends CellRenderer {
   pageNo?: number;
   data: Array<any>;
 }
+
 
 @Component({
   selector: 'app-data-table',
@@ -53,8 +55,8 @@ export class DataTableComponent implements OnInit {
         return '<a href="#">' + data + '</a>';
       }
     },
-    {headerName: 'Make', field: 'make', filter: true, columnFilter: true},
-    {headerName: 'Price', field: 'price'}
+    {headerName: 'Make', isEdit: true, field: 'make', filter: true, columnFilter: true},
+    {headerName: 'Price', isEdit: true, field: 'price'}
   ];
   @Input() rowData = [
     {make: 'Toyota', model: 'Celica', price: 35000},
@@ -83,6 +85,11 @@ export class DataTableComponent implements OnInit {
   private FilterData: Array<FilterOptions> = new Array<FilterOptions>(this.columnDefs.length);
   private TotalRows: number = this.rowData.length;
   private FilteredRows: TableRow[] = [];
+  private contextmenu: boolean;
+  private contextmenuX = 0;
+  private contextmenuY = 0;
+  private contextMenuData: Array<any> = [];
+  private contextMenuIsEdit: boolean;
 
 
   // Convert row data to a 2D array.
@@ -128,17 +135,21 @@ export class DataTableComponent implements OnInit {
   }
 
   private createColumnFilter(column: Column, rows: Array<TableRow>, columnNumber: number) {
-    let uniqueItems = [];
+    const uniqueItems = [];
     column.selectAll = true;
     column.selectOne = true;
-    if (!column.columnFilter) return;
+    if (!column.columnFilter) {
+      return;
+    }
     for (let i = 0; i < rows.length; ++i) {
-      if (rows[i].filteredOut) continue;
-      let columnValue = rows[i].data[columnNumber];
+      if (rows[i].filteredOut) {
+        continue;
+      }
+      const columnValue = rows[i].data[columnNumber];
       if (uniqueItems.indexOf(columnValue) < 0) {
         uniqueItems.push(columnValue);
         if (!this.FilterData[columnNumber]) {
-          this.FilterData[columnNumber] = {comparator: "includes", operator: "or", values: []}
+          this.FilterData[columnNumber] = {comparator: 'includes', operator: 'or', values: []};
         }
         this.FilterData[columnNumber].values.push(columnValue.toLowerCase());
       }
@@ -187,15 +198,15 @@ export class DataTableComponent implements OnInit {
 
 // Filters data based on CONTAINS.
   filter(column, text) {
-    this.FilterData[column] = {operator: "or", values: [text], comparator: "includes"};
+    this.FilterData[column] = {operator: 'or', values: [text], comparator: 'includes'};
     this.applyFilter(this.FilterData);
   }
 
   private getFilteredValue(column: number, filterOptions: Array<FilterOptions>, data: string) {
-    let filtered: boolean = false;
+    let filtered = false;
     for (let i = 0; i < filterOptions[column].values.length; ++i) {
-      if (filterOptions[column].comparator === "includes") {
-        if (filterOptions[column].operator == "or") {
+      if (filterOptions[column].comparator === 'includes') {
+        if (filterOptions[column].operator == 'or') {
           filtered = filtered || data.toLowerCase().includes(filterOptions[column].values[i]);
         }
       }
@@ -206,7 +217,7 @@ export class DataTableComponent implements OnInit {
   private applyFilter(filterData: Array<FilterOptions>) {
     this.FilterRowCount = 0;
     for (let i = 0; i < this.TableRows.length; ++i) {
-      let isFiltered: boolean = true;
+      let isFiltered = true;
       for (let j = 0; j < this.FilterData.length; ++j) {
         if (this.FilterData[j] === undefined) {
           isFiltered = isFiltered && this.TableRows[i].data[j].toString().toLowerCase().includes('');
@@ -240,7 +251,7 @@ export class DataTableComponent implements OnInit {
         this.columnDefs[column].selectAll = true;
       }
     } else if (!event.target.checked) {
-      let index = this.FilterData[column].values.indexOf(value.toLowerCase());
+      const index = this.FilterData[column].values.indexOf(value.toLowerCase());
       this.columnDefs[column].selectAll = false;
       if (index >= 0) {
         this.FilterData[column].values.splice(index, 1);
@@ -349,10 +360,24 @@ export class DataTableComponent implements OnInit {
 
 
   valueChanged(changeValue: any) {
-    this.TableRows[changeValue.row].data[changeValue.column] =  changeValue.value;
+    this.TableRows[changeValue.row].data[changeValue.column] = changeValue.value;
     this.pagedRows();
     this.setPagedRow(this.CurrentPage);
 
+  }
+
+  showContextMenu(event) {
+    this.contextMenuData = [];
+    this.contextmenuX = event.x;
+    this.contextmenuY = event.y;
+    this.contextMenuData.push(this.PagedRows[event.row].data[event.column]);
+    this.contextMenuIsEdit = event.isEdit;
+    this.contextmenu = true;
+  }
+
+
+  onContextMenuOff() {
+    this.contextmenu = false;
   }
 
   constructor() {

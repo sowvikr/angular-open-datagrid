@@ -1,0 +1,69 @@
+.context-menu {
+  background-color: white;
+  color: #000;
+  background: white;
+  border-radius: 2px;
+  box-shadow: none;
+  padding: 4px;
+  padding: 0;
+  z-index: 5;
+  border: 1px solid #BDC3C7;
+  max-height: 100%;
+  overflow-y: auto;
+  position: absolute;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+
+  .context-menu-list {
+    cursor: default;
+    margin-bottom: 4px;
+    margin-top: 4px;
+    width: 100%;
+    border-collapse: collapse;
+    display: table;
+
+    span {
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    .context-menu-option {
+      line-height: 16px;
+      padding-left: 8px;
+      padding-right: 8px;
+      height: 28px;
+      display: table-row;
+    }
+    .context-menu-option-disabled{
+      opacity: 0.5;
+    }
+
+    .context-menu-option-text {
+      white-space: nowrap;
+    }
+
+    .context-menu-option-icon {
+      padding-left: 4px;
+      padding-right: 4px;
+
+      span {
+        height: 16px;
+        line-height: 0;
+        margin-top: 4px;
+      }
+    }
+
+    .context-menu-option-shortcut {
+      padding-left: 8px;
+    }
+
+    .context-menu-option-popup-pointer {
+      width: 24px;
+    }
+  }
+}

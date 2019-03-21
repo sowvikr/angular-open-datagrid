@@ -38,9 +38,21 @@
     </thead>
     <tbody (click)="onContextMenuOff()">
     <tr *ngFor="let row of PagedRows; let rowCount = index" [hidden]="row.filteredOut">
-      <td *ngFor="let cell of row.data; let columnCount = index" oncontextmenu="return false;">
-          <!--[innerHtml]="row.cellRender(rowCount, columnCount, cell, columnDefs)|  safePipe: 'html'"-->
-      <app-inline-edit [renderer]="row.cellRender" (rightClicked)="showContextMenu($event)" (changed)="valueChanged($event)" [isEditable]="columnDefs[columnCount].isEdit"  [columnDefs]="columnDefs" [row]="rowCount" [column]="columnCount" [cellValue]="cell" [cellData]="columnDefs[columnCount].uniqueFilterValues"></app-inline-edit>
+      <td *ngFor="let cell of row.data; let columnCount = index"
+          (click)="onClick(rowCount, columnCount, cell, $event)"
+          (mousedown)="onDragStart($event)"
+          (mouseover)="onSelecting(rowCount, columnCount, cell, $event)"
+          (mouseup)="onDragEnd($event)"
+          oncontextmenu="return false;">
+        <app-inline-edit [isSelected]="contextMenuData && contextMenuData[rowCount] && !!contextMenuData[rowCount][columnCount]" [renderer]="row.cellRender"
+                         (rightClicked)="showContextMenu($event)"
+                         (changed)="valueChanged($event)"
+                         [isEditable]="columnDefs[columnCount].isEdit"
+                         [columnDefs]="columnDefs" [row]="rowCount"
+                         [column]="columnCount" [cellValue]="cell"
+                         [cellData]="columnDefs[columnCount].uniqueFilterValues">
+
+        </app-inline-edit>
       </td>
     </tr>
     </tbody>
@@ -60,7 +72,7 @@
       to
     <span>{{ToRecord}}</span> of <span>{{TotalRows}}</span>
   </span>
-    <span class="pagination-page-summary">
+        <span class="pagination-page-summary">
     <button type="button" class="pagination btFirst" [disabled]="CurrentPage === 1" (click)="firstPage()"><i
       class="fa fa-angle-double-left"></i></button>
     <button type="button" class="pagination btPrevious" [disabled]="CurrentPage === 1" (click)="previousPage()">
@@ -82,6 +94,7 @@
     </tfoot>
   </table>
   <div *ngIf="contextmenu" (click)="onContextMenuOff()">
-    <app-context-menu [x]="contextmenuX" [y]="contextmenuY" [isEdit]="contextMenuIsEdit" [contextData]="contextMenuData"></app-context-menu>
+    <app-context-menu [x]="contextmenuX" [y]="contextmenuY" [isEdit]="contextMenuIsEdit"
+                      [contextData]="contextMenuData"></app-context-menu>
   </div>
 </div>

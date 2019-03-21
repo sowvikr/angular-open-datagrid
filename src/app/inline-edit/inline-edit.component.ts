@@ -30,6 +30,7 @@ export class InlineEditComponent implements OnInit {
   @Input() columnDefs: any;
   @Input() renderer: any;
   @Input() isEditable: boolean;
+  @Input() isSelected: boolean;
   @Output() changed = new EventEmitter<any>();
   @Output() rightClicked = new EventEmitter<ContextMenuArgs>();
 
@@ -44,9 +45,13 @@ export class InlineEditComponent implements OnInit {
     this.isEdit = false;
   }
 
-
   onClick() {
-    console.log('Clicked');
+    if (this.isEdit) {
+      this.isEdit = false;
+    }
+  }
+
+  onDoubleClick() {
     this.isCombobox = typeof (this.cellData) === 'object';
     this.isEdit = true;
     this.vc.nativeElement.focus();

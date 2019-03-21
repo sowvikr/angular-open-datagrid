@@ -3,7 +3,9 @@ div.cell {
   padding-left: 5px;
   padding-right: 5px;
 }
-
+div.cell.selected-row {
+  background-color: rgba(0, 145, 234, 0.3);
+}
 div.cell:hover, div.cell:focus {
   border: 1px solid #0091EA;
   outline: initial;

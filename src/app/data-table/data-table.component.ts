@@ -34,6 +34,11 @@ interface TableRow extends CellRenderer {
   data: Array<any>;
 }
 
+interface ContextMenuData {
+  row: number;
+  column: number;
+  data: any;
+}
 
 @Component({
   selector: 'app-data-table',
@@ -88,8 +93,9 @@ export class DataTableComponent implements OnInit {
   private contextmenu: boolean;
   private contextmenuX = 0;
   private contextmenuY = 0;
-  private contextMenuData: Array<any> = [];
+  private contextMenuData: Array<Array<any>> = [[]];
   private contextMenuIsEdit: boolean;
+  private isDragging: boolean;
 
 
   // Convert row data to a 2D array.
@@ -367,14 +373,45 @@ export class DataTableComponent implements OnInit {
   }
 
   showContextMenu(event) {
-    this.contextMenuData = [];
     this.contextmenuX = event.x;
     this.contextmenuY = event.y;
-    this.contextMenuData.push(this.PagedRows[event.row].data[event.column]);
+    if (!this.contextMenuData[event.row]) {
+      this.contextMenuData[event.row] = [];
+    }
+    this.contextMenuData[event.row][event.column] = this.PagedRows[event.row].data[event.column];
     this.contextMenuIsEdit = event.isEdit;
     this.contextmenu = true;
   }
 
+  onSelecting(rowCount, columnCount, cell, $event) {
+    if (this.isDragging) {
+      console.log('drag: ' + rowCount + ' ' + columnCount + ' ' + cell);
+      if (!this.contextMenuData[rowCount]) {
+        this.contextMenuData[rowCount] = [];
+      }
+      this.contextMenuData[rowCount][columnCount] = this.PagedRows[rowCount].data[columnCount];
+    }
+  }
+
+  onClick(rowCount, columnCount, cell, $event) {
+/*    if (this.contextMenuData[rowCount] && this.contextMenuData[rowCount][columnCount]) {
+      this.contextMenuData[rowCount][columnCount] = undefined;
+      return;
+    }*/
+    this.contextMenuData = [];
+    if (!this.contextMenuData[rowCount]) {
+      this.contextMenuData[rowCount] = [];
+    }
+    this.contextMenuData[rowCount][columnCount] = this.PagedRows[rowCount].data[columnCount];
+  }
+
+  onDragStart($event) {
+    this.isDragging = true;
+  }
+
+  onDragEnd($event) {
+    this.isDragging = false;
+  }
 
   onContextMenuOff() {
     this.contextmenu = false;

@@ -112,8 +112,9 @@ table.dataTable {
         height: 19px;
         margin: 0;
       }
-      {
-
+      .filterDropdown{
+        position: absolute;
+        top:50px;
       }
     }
   }

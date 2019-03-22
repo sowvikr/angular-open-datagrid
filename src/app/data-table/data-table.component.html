@@ -24,8 +24,8 @@
         <span>
         <i class="fa fa-filter" *ngIf="item.filter" aria-hidden="true" (click)="item.showFilter=!item.showFilter">
         </i>
-        <app-column-filter [FilterValues]="columnDefs[i].uniqueFilterValues" [Column]="i" style="position: absolute;"
-                           class="filterDro"
+        <app-column-filter [FilterValues]="columnDefs[i].uniqueFilterValues" [Column]="i"
+                           class="filterDropdown"
                            (OnFilterChange)="checkedColumnFilter($event)" *ngIf="item.filter && item.columnFilter"
                            [hidden]="!item.showFilter">
         </app-column-filter>

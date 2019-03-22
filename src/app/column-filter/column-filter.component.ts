@@ -30,7 +30,7 @@ export class ColumnFilterComponent implements OnInit {
       this.selectOne = false;
     } else if (event.target.checked) {
       this.filteredData.push(value.toLowerCase());
-      if (this.filteredData.values.length === this.FilterValues.length) {
+      if (this.filteredData.length === this.FilterValues.length) {
         this.selectAll = true;
       }
     } else if (!event.target.checked) {

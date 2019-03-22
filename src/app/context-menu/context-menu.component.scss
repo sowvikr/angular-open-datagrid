@@ -39,12 +39,17 @@
       height: 28px;
       display: table-row;
     }
-    .context-menu-option-disabled{
+    .context-menu-option:hover {
+      background-color: #ECF0F1;
+    }
+    .context-menu-option-disabled {
       opacity: 0.5;
     }
 
     .context-menu-option-text {
       white-space: nowrap;
+      padding-left: 10px;
+      padding-right: 30px;
     }
 
     .context-menu-option-icon {

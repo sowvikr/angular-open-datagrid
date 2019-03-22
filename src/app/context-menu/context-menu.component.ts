@@ -1,4 +1,5 @@
 import {Component, OnInit, Input} from '@angular/core';
+import {ClipboardService} from '../clipboard.service';
 
 interface MenuItem {
   text: string;
@@ -38,31 +39,9 @@ export class ContextMenuComponent implements OnInit {
     }
   ];
   copyTextToClipboard(text) {
-    const txtArea = document.createElement('textarea');
-    txtArea.id = 'txt';
-    txtArea.style.position = 'fixed';
-    txtArea.style.top = '0';
-    txtArea.style.left = '0';
-    txtArea.style.opacity = '0';
-    txtArea.value = text;
-    document.body.appendChild(txtArea);
-    txtArea.select();
-
-    try {
-      const successful = document.execCommand('copy');
-      const msg = successful ? 'successful' : 'unsuccessful';
-      console.log('Copying text command was ' + msg);
-      if (successful) {
-        return true;
-      }
-    } catch (err) {
-      console.log('Oops, unable to copy');
-    } finally {
-      document.body.removeChild(txtArea);
-    }
-    return false;
+    return this.clipboardService.copyToClipboard(text);
   }
-  constructor() {
+  constructor(private clipboardService: ClipboardService) {
     for (let i = 0; i < this.MenuItems.length; ++i) {
       const item: MenuItem = this.MenuItems[i];
       if (item.text === 'paste' && !this.isEdit) {

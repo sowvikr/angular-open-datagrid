@@ -22,7 +22,7 @@
         <input *ngIf="item.filter" [disabled]="item.columnFilter" (keyup)="filter(i,$event.target.value)" type="text"
                height="10"/>
         <span>
-        <i class="fa fa-filter" *ngIf="item.filter" aria-hidden="true" (click)="item.showFilter=!item.showFilter">
+        <i class="fa fa-filter" *ngIf="item.filter && item.columnFilter" aria-hidden="true" (click)="item.showFilter=!item.showFilter">
         </i>
         <app-column-filter [FilterValues]="columnDefs[i].uniqueFilterValues" [Column]="i"
                            class="filterDropdown"

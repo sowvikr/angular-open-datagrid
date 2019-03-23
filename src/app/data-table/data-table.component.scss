@@ -1,8 +1,10 @@
 .container {
   width: 80%;
+  height: 300px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 30% auto;
+  overflow: auto;
 }
 
 table.dataTable {
@@ -15,7 +17,6 @@ table.dataTable {
   user-select: none;
   /* Non-prefixed version, currently
                                    supported by Chrome and Opera */
-
 
   background-color: white;
   color: #000;
@@ -112,9 +113,9 @@ table.dataTable {
         height: 19px;
         margin: 0;
       }
-      .filterDropdown{
+      .filterDropdown {
         position: absolute;
-        top:50px;
+        top: 50px;
       }
     }
   }

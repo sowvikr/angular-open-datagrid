@@ -48,8 +48,8 @@ interface ContextMenuData {
 })
 export class DataTableComponent implements OnInit {
 
-  pagination = true;
-  pageSize = 5;
+  @Input() pagination = true;
+  @Input() pageSize = 10;
 
   @Input() columnDefs:Column[] = [
     {

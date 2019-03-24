@@ -1,7 +1,14 @@
-div.filterPanel {
-  padding: 10px;
+.light-theme.filterPanel {
   background: whitesmoke;
   border: 1px solid #BDC3C7;
+}
+.dark-theme.filterPanel {
+  background-color: #2d3436;
+  color: #F5F5F5;
+  border: 1px solid #424242;
+}
+div.filterPanel {
+  padding: 10px;
   label {
     display: block;
     padding: 10px 10px 10px 15px;

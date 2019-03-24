@@ -1,4 +1,4 @@
-<div class="filterPanel">
+<div class="filterPanel" [ngClass]="theme">
   <label style="display: block">
     <input type="checkbox" (change)="checkedColumnFilter('Select All', $event);" [checked]="selectAll"/>
     <span>Select All</span>

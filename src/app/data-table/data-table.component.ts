@@ -51,6 +51,7 @@ export class DataTableComponent implements OnInit {
   @Input() pagination = true;
   @Input() pageSize = 10;
 
+  @Input() theme = "light-theme";
   @Input() columnDefs:Column[] = [
     {
       headerName: 'Model',

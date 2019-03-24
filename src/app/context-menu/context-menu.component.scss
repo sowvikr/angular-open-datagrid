@@ -1,13 +1,35 @@
-.context-menu {
+.light-theme.context-menu {
   background-color: white;
   color: #000;
   background: white;
+  border: 1px solid #BDC3C7;
+
+  .context-menu-list {
+    .context-menu-option:hover {
+      background-color: #ECF0F1;
+    }
+  }
+}
+
+
+.dark-theme{
+  background-color: #2d3436;
+  color: #F5F5F5;
+  border: 1px solid #BDC3C7;
+
+  .context-menu-list {
+    .context-menu-option:hover {
+      background-color: #3d4749;
+    }
+  }
+}
+
+.context-menu {
   border-radius: 2px;
   box-shadow: none;
   padding: 4px;
   padding: 0;
   z-index: 5;
-  border: 1px solid #BDC3C7;
   max-height: 100%;
   overflow-y: auto;
   position: absolute;
@@ -38,9 +60,6 @@
       padding-right: 8px;
       height: 28px;
       display: table-row;
-    }
-    .context-menu-option:hover {
-      background-color: #ECF0F1;
     }
     .context-menu-option-disabled {
       opacity: 0.5;

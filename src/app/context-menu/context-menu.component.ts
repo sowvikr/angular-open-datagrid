@@ -22,6 +22,7 @@ export class ContextMenuComponent implements OnInit {
   @Input() y = 0;
   @Input() isEdit: boolean;
   @Input() contextData: any;
+  @Input () theme:string;
 
   @Input() MenuItems: Array<MenuItem> = [
     {

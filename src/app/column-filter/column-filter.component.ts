@@ -9,7 +9,7 @@ export class ColumnFilterComponent implements OnInit {
 
   @Input() FilterValues:Array<any> = [];
   @Input() Column;
-
+  @Input() theme;
   @Output() OnFilterChange = new EventEmitter<any>();
 
   private selectAll:boolean = true;

@@ -1,6 +1,6 @@
 <div class="context-menu" [ngStyle]="{'left.px': x, 'top.px': y}">
   <div class="context-menu-list">
-    <div class="context-menu-option" *ngFor="let item of MenuItems" (click)="item.onClick($event, contextData, copyTextToClipboard)">
+    <div class="context-menu-option" *ngFor="let item of MenuItems" (click)="item.onClick($event, contextData, copyTextToClipboard, clipboardService)">
       <span class="context-menu-option-icon">
         <span *ngIf="item.icon!== null">
           <i [ngClass]="item.icon"></i>

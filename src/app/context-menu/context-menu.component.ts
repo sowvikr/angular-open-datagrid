@@ -25,8 +25,8 @@ export class ContextMenuComponent implements OnInit {
 
   @Input() MenuItems: Array<MenuItem> = [
     {
-      text: 'Copy', shortcut: 'Ctrl+C', icon: 'fa fa-copy', onClick($event, contextData, copyFunction) {
-        copyFunction(contextData);
+      text: 'Copy', shortcut: 'Ctrl+C', icon: 'fa fa-copy', onClick($event, contextData, copyFunction, clipboardService) {
+        copyFunction(contextData, clipboardService);
       }
     },
     {
@@ -38,8 +38,10 @@ export class ContextMenuComponent implements OnInit {
       }
     }
   ];
-  copyTextToClipboard(text) {
-    return this.clipboardService.copyToClipboard(text);
+
+
+  copyTextToClipboard(text, clipboardService) {
+    clipboardService.copyToClipboard(text);
   }
   constructor(private clipboardService: ClipboardService) {
     for (let i = 0; i < this.MenuItems.length; ++i) {

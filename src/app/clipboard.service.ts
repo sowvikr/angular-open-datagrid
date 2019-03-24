@@ -5,14 +5,21 @@ import { Injectable } from '@angular/core';
 })
 export class ClipboardService {
 
-  copyToClipboard(text) {
+  copyToClipboard(data:Array<Array<any>>) {
+    let clipboardData:string = "";
+    for (let i = 0; i < data.length; ++i) {
+      if (!data[i]) {
+        continue;
+      }
+      clipboardData += data[i].join(",") +'\n';
+    }
     const txtArea = document.createElement('textarea');
     txtArea.id = 'txt';
     txtArea.style.position = 'fixed';
     txtArea.style.top = '0';
     txtArea.style.left = '0';
     txtArea.style.opacity = '0';
-    txtArea.value = text;
+    txtArea.value = clipboardData;
     document.body.appendChild(txtArea);
     txtArea.select();
 

@@ -23,7 +23,7 @@ export class AppComponent {
     },
     {headerName: 'Make', isEdit: true, field: 'make', width: '40px', filter: true, columnFilter: true},
     {headerName: 'Price', isEdit: true, width: '40px', field: 'price'},
-    {headerName: 'Mileage (km/ltr)', isEdit: true, width: '40px', field: 'mileage', sort: true},
+    {headerName: 'Mileage (km/ltr)', isEdit: true, width: '10px', field: 'mileage', sort: true},
     {headerName: 'Color', isEdit: true, field: 'color', width: '10px', filter: true, columnFilter: true}
   ];
   rowData = [

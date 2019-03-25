@@ -8,6 +8,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import { InlineEditComponent } from './inline-edit/inline-edit.component';
 import { SafePipePipe } from './safe-pipe.pipe';
 import { ContextMenuComponent } from './context-menu/context-menu.component';
+import { HotKeysDirective } from './hot-keys.directive';
+import { ColumnFilterComponent } from './column-filter/column-filter.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import { ContextMenuComponent } from './context-menu/context-menu.component';
     DataTableComponent,
     InlineEditComponent,
     SafePipePipe,
-    ContextMenuComponent
+    ContextMenuComponent,
+    HotKeysDirective,
+    ColumnFilterComponent
   ],
   imports: [
     BrowserModule,

@@ -3,7 +3,7 @@
     <span [innerHTML]="renderer(row, column, cellValue, columnDefs)"></span>
   </div>
 </div>
-<div (click)="onClick()" (dblclick)="onDoubleClick()" [hidden]="!isEditable" class="cell" [ngClass]="{'selected-row':isSelected}">
+<div (dblclick)="onDoubleClick()" [hidden]="!isEditable" class="cell" [ngClass]="{'selected-row':isSelected}">
   <div (contextmenu)="onRightClick($event)">
     <span [hidden]="isEdit">{{cellValue}}</span>
     <span [hidden]="!isEdit" (focusout)="onFocusOut()" #name>

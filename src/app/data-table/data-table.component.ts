@@ -48,100 +48,23 @@ interface ContextMenuData {
 })
 export class DataTableComponent implements OnInit {
 
-  @Input() pagination = true;
-  @Input() pageSize = 10;
+  @Input() pagination ;
+  @Input() pageSize;
 
-  @Input() theme = "light-theme";
-  @Input() columnDefs:Column[] = [
-    {
-      headerName: 'Model',
-      field: 'model',
-      sort: true,
-      filter: true,
-      cellRender: (row, column, data, def) => {
-        return '<a href="#">' + data + '</a>';
-      }
-    },
-    {headerName: 'Make', isEdit: true, field: 'make', filter: true, columnFilter: true},
-    {headerName: 'Price', isEdit: true, field: 'price'},
-    {headerName: 'Mileage (km/ltr)', isEdit: true, field: 'mileage'},
-    {headerName: 'Color', isEdit: true, field: 'color'}
-  ];
-  @Input() rowData = [
-    {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'red'},
-    {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'green'},
-    {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'blue'},
-    {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'bottle green'},
-    {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'black'},
-    {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'white'},
-    {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'yellow'},
-    {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'yellow'},
-    {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
-    {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'green'},
-    {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'sky blue'},
-    {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
-    {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'white'},
-    {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'yellow'},
-    {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'yellow'},
-    {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
-    {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'green'},
-    {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'sky blue'},
-    {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
-    {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'white'},
-    {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'yellow'},
-    {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'yellow'},
-    {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
-    {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'green'},
-    {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'sky blue'},
-    {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
-    {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'white'},
-    {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'yellow'},
-    {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'yellow'},
-    {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
-    {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'green'},
-    {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'sky blue'},
-    {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
-    {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'white'},
-    {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'yellow'},
-    {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'yellow'},
-    {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
-    {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'green'},
-    {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'sky blue'},
-    {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
-    {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'white'},
-    {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'yellow'},
-    {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'yellow'},
-    {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
-    {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'green'},
-    {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'sky blue'},
-    {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
-    {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'white'},
-    {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'yellow'},
-    {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'yellow'},
-    {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
-    {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'green'},
-    {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'sky blue'},
-    {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
-    {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'white'},
-    {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'yellow'},
-    {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'yellow'},
-    {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
-    {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'green'},
-    {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'sky blue'},
-    {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'}
-  ];
-
+  @Input() theme;
+  @Input() columnDefs:Column[];
+  @Input() rowData;
 
   private TableRows:TableRow[] = [];
-  private FilterRowCount:number = this.rowData.length;
+  private FilterRowCount:number;
   private TotalPages:number;
   private PagedRows:TableRow[] = [];
   private CurrentPage = 1;
   private InvalidPage = 0;
   private FromRecord = 1;
   private ToRecord:number = this.pageSize;
-  private FilterData:Array<FilterOptions> = new Array<FilterOptions>(this.columnDefs.length);
-  private TotalRows:number = this.rowData.length;
+  private FilterData:Array<FilterOptions>;
+  private TotalRows:number;
   private FilteredRows:TableRow[] = [];
   private contextmenu:boolean;
   private contextmenuX = 0;
@@ -266,7 +189,7 @@ export class DataTableComponent implements OnInit {
     for (let i = 0; i < filterOptions[column].values.length; ++i) {
       if (filterOptions[column].comparator === 'includes') {
         if (filterOptions[column].operator == 'or') {
-          filtered = filtered || data.toLowerCase().includes(filterOptions[column].values[i]);
+          filtered = filtered || data.includes(filterOptions[column].values[i].toLowerCase());
         }
       }
     }
@@ -482,11 +405,14 @@ export class DataTableComponent implements OnInit {
   }
 
   constructor(private clipboardService:ClipboardService) {
-    this.createTableData();
-    this.TotalPages = Math.ceil(this.rowData.length / this.pageSize);
   }
 
   ngOnInit() {
+    this.FilterRowCount = this.rowData.length;
+    this.TotalRows = this.rowData.length;
+    this.FilterData = new Array<FilterOptions>(this.columnDefs.length);
+    this.createTableData();
+    this.TotalPages = Math.ceil(this.rowData.length / this.pageSize);
   }
 
 }

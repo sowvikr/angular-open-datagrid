@@ -11,14 +11,13 @@
   }
 }
 
-
-.dark-theme{
+.dark-theme {
   background-color: #2d3436;
   color: #F5F5F5;
   border: 1px solid #BDC3C7;
 
   .context-menu-list {
-    .context-menu-option:hover {
+    .context-menu-option:hover:not(.context-menu-option-disabled) {
       background-color: #3d4749;
     }
   }

@@ -96,6 +96,8 @@
 </table>
 <div *ngIf="contextmenu" (click)="onContextMenuOff()">
   <app-context-menu [x]="contextmenuX" [y]="contextmenuY" [isEdit]="contextMenuIsEdit" [theme]="theme"
-                    [contextData]="contextMenuData"></app-context-menu>
+                    [contextData]="contextMenuData"
+                    [rowData]="rowData"
+                    [columnData]="columnDefs"></app-context-menu>
 </div>
 

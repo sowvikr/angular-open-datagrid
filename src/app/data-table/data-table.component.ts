@@ -477,6 +477,10 @@ export class DataTableComponent implements OnInit {
     this.clipboardService.copyToClipboard(this.contextMenuData);
   }
 
+  exportToCSV() {
+    console.log("Export to CSV");
+  }
+
   constructor(private clipboardService:ClipboardService) {
     this.createTableData();
     this.TotalPages = Math.ceil(this.rowData.length / this.pageSize);

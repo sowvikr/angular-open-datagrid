@@ -32,14 +32,14 @@ export class ContextMenuComponent implements OnInit {
   @Input() MenuItems:Array<MenuItem> = [
     {
       text: 'Copy',
-      shortcut: 'Ctrl+C',
+      shortcut: '',
       icon: 'fa fa-copy',
       onClick($event, contextData, copyFunction, clipboardService) {
         copyFunction(contextData, clipboardService);
       }
     },
     {
-      text: 'Paste', shortcut: 'Ctrl+V', icon: 'fa fa-paste', onClick() {
+      text: 'Paste', shortcut: '', icon: 'fa fa-paste', onClick() {
     }
     },
     {

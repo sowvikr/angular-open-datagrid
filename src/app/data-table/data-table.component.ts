@@ -12,6 +12,7 @@ interface CellRenderer {
 interface Column extends CellRenderer {
   headerName: string;
   field: string;
+  width:string;
   sortState?: boolean;
   sort?: boolean;
   filter?: boolean;
@@ -48,7 +49,7 @@ interface ContextMenuData {
 })
 export class DataTableComponent implements OnInit {
 
-  @Input() pagination ;
+  @Input() pagination;
   @Input() pageSize;
 
   @Input() theme;
@@ -186,6 +187,9 @@ export class DataTableComponent implements OnInit {
 
   private getFilteredValue(column:number, filterOptions:Array<FilterOptions>, data:string) {
     let filtered = false;
+    if (!filterOptions[column].values.length) {
+      return true;
+    }
     for (let i = 0; i < filterOptions[column].values.length; ++i) {
       if (filterOptions[column].comparator === 'includes') {
         if (filterOptions[column].operator == 'or') {

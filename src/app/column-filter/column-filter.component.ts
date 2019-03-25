@@ -12,8 +12,8 @@ export class ColumnFilterComponent implements OnInit {
   @Input() theme;
   @Output() OnFilterChange = new EventEmitter<any>();
 
-  private selectAll:boolean = true;
-  private selectOne:boolean = true;
+  private selectAll:boolean = false;
+  private selectOne:boolean = false;
   private filteredData:Array<any> = [];
 
 

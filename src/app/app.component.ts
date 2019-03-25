@@ -14,16 +14,17 @@ export class AppComponent {
     {
       headerName: 'Model',
       field: 'model',
+      width: '40px',
       sort: true,
       filter: true,
       cellRender: (row, column, data, def) => {
         return '<a href="#">' + data + '</a>';
       }
     },
-    {headerName: 'Make', isEdit: true, field: 'make', filter: true, columnFilter: true},
-    {headerName: 'Price', isEdit: true, field: 'price'},
-    {headerName: 'Mileage (km/ltr)', isEdit: true, field: 'mileage', sort: true},
-    {headerName: 'Color', isEdit: true, field: 'color', filter: true, columnFilter: true}
+    {headerName: 'Make', isEdit: true, field: 'make', width: '40px', filter: true, columnFilter: true},
+    {headerName: 'Price', isEdit: true, width: '40px', field: 'price'},
+    {headerName: 'Mileage (km/ltr)', isEdit: true, width: '40px', field: 'mileage', sort: true},
+    {headerName: 'Color', isEdit: true, field: 'color', width: '10px', filter: true, columnFilter: true}
   ];
   rowData = [
     {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'red'},

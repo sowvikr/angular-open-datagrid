@@ -79,6 +79,7 @@
 }
 
 table.dataTable {
+  table-layout: fixed;
   webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
   -khtml-user-select: none; /* Konqueror HTML */
@@ -163,11 +164,12 @@ table.dataTable {
       input[type=text] {
         height: 19px;
         margin: 0;
+        width:50%;
       }
       .filterDropdown {
         position: absolute;
         top: 50px;
-        width: 150px;
+        width: 130px;
       }
     }
   }

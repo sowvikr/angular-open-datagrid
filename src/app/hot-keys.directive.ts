@@ -13,7 +13,6 @@ export class HotKeysDirective {
 
   @HostListener('keydown.control.c') onCtrlC() {
     this.ctrlC.emit();
-    console.log("Pressed!")
   }
 
   constructor() {

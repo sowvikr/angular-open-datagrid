@@ -26,7 +26,7 @@ interface Column extends CellRenderer {
 interface FilterOptions {
   operator: string;
   values: string[];
-  comparator: string;
+  comparator: any;
 }
 
 // interface for each table row
@@ -98,7 +98,7 @@ export class DataTableComponent implements OnInit {
     this.generateUniqueFilters();
 
     if (filteredData && filteredData.length !== 0 && currentPage > 0) {
-      this.applyFilter(this.FilterData);
+      this.applyFilter(this.FilterData, this.TableRows);
       this.setPagedRow(currentPage);
       for (let i = 0; i < this.columnDefs.length; ++i) {
         if (this.columnDefs[i].sortState !== null) {
@@ -119,8 +119,6 @@ export class DataTableComponent implements OnInit {
 
   private createColumnFilter(column:Column, rows:Array<TableRow>, columnNumber:number) {
     const uniqueItems = [];
-    column.selectAll = true;
-    column.selectOne = true;
     if (!column.columnFilter) {
       return;
     }
@@ -132,7 +130,7 @@ export class DataTableComponent implements OnInit {
       if (uniqueItems.indexOf(columnValue) < 0) {
         uniqueItems.push(columnValue);
         if (!this.FilterData[columnNumber]) {
-          this.FilterData[columnNumber] = {comparator: 'includes', operator: 'or', values: []};
+          this.FilterData[columnNumber] = {comparator: String.prototype.includes, operator: 'or', values: []};
         }
         this.FilterData[columnNumber].values.push(columnValue.toLowerCase());
       }
@@ -181,8 +179,8 @@ export class DataTableComponent implements OnInit {
 
 // Filters data based on CONTAINS.
   filter(column, text) {
-    this.FilterData[column] = {operator: 'or', values: [text], comparator: 'includes'};
-    this.applyFilter(this.FilterData);
+    this.FilterData[column] = {operator: 'or', values: [text], comparator: String.prototype.includes};
+    this.applyFilter(this.FilterData, this.TableRows);
   }
 
   private getFilteredValue(column:number, filterOptions:Array<FilterOptions>, data:string) {
@@ -191,28 +189,26 @@ export class DataTableComponent implements OnInit {
       return true;
     }
     for (let i = 0; i < filterOptions[column].values.length; ++i) {
-      if (filterOptions[column].comparator === 'includes') {
-        if (filterOptions[column].operator == 'or') {
-          filtered = filtered || data.includes(filterOptions[column].values[i].toLowerCase());
-        }
+      if (filterOptions[column].operator == 'or') {
+        filtered = filtered || filterOptions[column].comparator.call(data, filterOptions[column].values[i].toLowerCase())
       }
     }
     return filtered;
   }
 
-  private applyFilter(filterData:Array<FilterOptions>) {
+  private applyFilter(filterData:Array<FilterOptions>, tableRows:Array<any>) {
     this.FilterRowCount = 0;
-    for (let i = 0; i < this.TableRows.length; ++i) {
+    for (let i = 0; i < tableRows.length; ++i) {
       let isFiltered = true;
       for (let j = 0; j < this.FilterData.length; ++j) {
         if (this.FilterData[j] === undefined) {
-          isFiltered = isFiltered && this.TableRows[i].data[j].toString().toLowerCase().includes('');
+          isFiltered = isFiltered && tableRows[i].data[j].toString().toLowerCase().includes('');
           continue;
         }
-        isFiltered = isFiltered && this.getFilteredValue(j, filterData, this.TableRows[i].data[j].toString().toLowerCase());
+        isFiltered = isFiltered && this.getFilteredValue(j, filterData, tableRows[i].data[j].toString().toLowerCase());
       }
-      this.TableRows[i].filteredOut = !isFiltered;
-      if (!this.TableRows[i].filteredOut) {
+      tableRows[i].filteredOut = !isFiltered;
+      if (!tableRows[i].filteredOut) {
         this.FilterRowCount++;
       }
     }
@@ -227,7 +223,7 @@ export class DataTableComponent implements OnInit {
     for (let i = 0; i < filterEventArgs.filteredData.length; ++i) {
       this.FilterData[filterEventArgs.column].values.push(filterEventArgs.filteredData[i]);
     }
-    this.applyFilter(this.FilterData);
+    this.applyFilter(this.FilterData, this.TableRows);
   }
 
   updateTotalPageCount() {
@@ -397,15 +393,26 @@ export class DataTableComponent implements OnInit {
   }
 
   onCtrlV() {
+    let pasteData:Array<Array<any>> = this.clipboardService.getClipboardData();
+    let pasteRow = 0, pasteColumn = 0;
+    for (let i = 0; i < this.contextMenuData.length; ++i) {
+      if (!this.contextMenuData[i])
+        continue;
+      let row = this.contextMenuData[i];
+      for (let j = 0; j < row.length; ++j) {
+        if (!row[j])
+          continue;
+        if (!pasteData[pasteRow][pasteColumn++])
+          continue;
+        this.pagedRows[i][j] = pasteData[pasteRow][pasteColumn++];
+      }
+      pasteRow++;
+    }
     //this.clipboardService.copyToClipboard(this.contextMenuData);
   }
 
   onCtrlC() {
     this.clipboardService.copyToClipboard(this.contextMenuData);
-  }
-
-  exportToCSV() {
-    console.log("Export to CSV");
   }
 
   constructor(private clipboardService:ClipboardService) {

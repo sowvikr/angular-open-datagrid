@@ -332,13 +332,28 @@ export class DataTableComponent implements OnInit {
 
   }
 
+  private selectedRowsCount():number {
+    let rowCount = 0;
+    for (let i = 0; i < this.contextMenuData.length; ++i) {
+      if (!this.contextMenuData[i]) continue;
+      if (!this.contextMenuData[i].length) continue;
+      rowCount++;
+    }
+    return rowCount;
+  }
+
+
   showContextMenu(event) {
     this.contextmenuX = event.x;
     this.contextmenuY = event.y;
-    if (!this.contextMenuData[event.row]) {
-      this.contextMenuData[event.row] = [];
+    if(!(this.contextMenuData[event.row] && this.contextMenuData[event.row][event.column])){
+      this.contextMenuData = [];
+      if(!this.contextMenuData[event.row]){
+        this.contextMenuData[event.row] = [];
+      }
+      this.contextMenuData[event.row][event.column] = this.PagedRows[event.row].data[event.column];
     }
-    this.contextMenuData[event.row][event.column] = this.PagedRows[event.row].data[event.column];
+
     this.contextMenuIsEdit = event.isEdit;
     this.contextmenu = true;
   }

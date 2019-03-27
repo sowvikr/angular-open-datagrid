@@ -12,6 +12,7 @@ interface ContextMenuArgs {
   isEdit: boolean;
   row: number;
   column: number;
+  mouseEvent:any;
 }
 
 @Component({
@@ -40,7 +41,7 @@ export class InlineEditComponent implements OnInit {
   private isEdit = false;
   private isCombobox = false;
   private changedValue:ChangedValue = {column: 0, row: 0, value: null};
-  private contextMenuArgs:ContextMenuArgs = {x: 0, y: 0, isEdit: false, column: 0, row: 0};
+  private contextMenuArgs:ContextMenuArgs = {x: 0, y: 0, isEdit: false, column: 0, row: 0, mouseEvent: null};
 
 
   onClick() {
@@ -68,6 +69,7 @@ export class InlineEditComponent implements OnInit {
     this.contextMenuArgs.isEdit = this.isEdit;
     this.contextMenuArgs.row = this.row;
     this.contextMenuArgs.column = this.column;
+    this.contextMenuArgs.mouseEvent = event;
     this.rightClicked.emit(this.contextMenuArgs);
   }
 

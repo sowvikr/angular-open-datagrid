@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, ViewChild, ElementRef} from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import {ClipboardService} from '../clipboard.service';
 import { ExportToCsv } from 'export-to-csv';
@@ -64,6 +64,7 @@ export class ContextMenuComponent implements OnInit {
       csvExporter.generateCsv(this.rowData);    }
     }*/
   ];
+  @ViewChild('contextMenu') contextMenu:ElementRef;
 
 
   copyTextToClipboard(text, clipboardService) {
@@ -77,7 +78,7 @@ export class ContextMenuComponent implements OnInit {
     for (let i = 0; i < this.MenuItems.length; ++i) {
       const item:MenuItem = this.MenuItems[i];
       if (item.text === 'Paste' && !this.isEdit) {
-        item.enabled = false;
+        item.enabled = true;
       }
       else{
         item.enabled = true;

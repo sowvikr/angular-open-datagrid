@@ -1,11 +1,12 @@
 <div class="filterPanel" [ngClass]="theme">
-  <label style="display: block">
+  <label class="container">Select All
     <input type="checkbox" (change)="checkedColumnFilter('Select All', $event);" [checked]="selectAll"/>
-    <span>Select All</span>
+    <span class="checkmark"></span>
   </label>
-  <label *ngFor="let sname of FilterValues" style="display: block">
+  <label class="container" *ngFor="let sname of FilterValues">{{sname}}
     <input type="checkbox" [value]="sname" (change)="checkedColumnFilter(sname, $event)"
-           [checked]="selectOne"/> <span>{{sname}}</span>
+           [checked]="selectOne"/>
+    <span class="checkmark"></span>
   </label>
 </div>
 

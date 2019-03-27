@@ -60,6 +60,7 @@
     }
     td {
       line-height: 45px;
+      font-size: 13px;
     }
   }
   thead {
@@ -236,7 +237,7 @@ table.dataTable {
       }
       .filterDropdown {
         position: absolute;
-        top: 50px;
+        top: 100px;
         width: 130px;
       }
     }

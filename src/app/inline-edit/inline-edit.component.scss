@@ -1,12 +1,53 @@
-div.cell {
-  border: 1px solid transparent;
-  padding-left: 12px;
-  padding-right: 12px;
+.metrial-theme {
+  .cell {
+    border: 1px solid transparent;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .cell.selected-row {
+    border: 1px solid #3f51b5;
+  }
+
+  .cell:hover, .cell:focus {
+    outline: initial;
+  }
 }
-div.cell.selected-row {
-  background-color: rgba(0, 145, 234, 0.3);
+
+.light-theme {
+  .cell {
+    border: 1px solid transparent;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .cell.selected-row {
+    background-color: rgba(0, 145, 234, 0.3);
+  }
+
+  .cell:hover, div.cell:focus {
+    border: 1px solid #0091EA;
+    outline: initial;
+  }
 }
-div.cell:hover, div.cell:focus {
-  border: 1px solid #0091EA;
-  outline: initial;
+
+.dark-theme {
+  .cell {
+    border: 1px solid transparent;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .cell.selected-row {
+    background-color: rgba(0, 145, 234, 0.3);
+  }
+
+  .cell:hover, .cell:focus {
+    border: 1px solid #0091EA;
+    outline: initial;
+  }
+
 }
+
+
+

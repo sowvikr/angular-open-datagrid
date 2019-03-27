@@ -33,6 +33,7 @@ export class InlineEditComponent implements OnInit {
   @Input() isSelected: boolean;
   @Output() changed = new EventEmitter<any>();
   @Output() rightClicked = new EventEmitter<ContextMenuArgs>();
+  @Input() theme:string;
 
   @ViewChild('name') vc: ElementRef;
 

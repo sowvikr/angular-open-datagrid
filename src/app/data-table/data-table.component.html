@@ -40,6 +40,7 @@
         [ngStyle]="{'width':columnDefs[columnCount].width}"
         oncontextmenu="return false;">
       <app-inline-edit
+        [theme]="theme"
         [isSelected]="contextMenuData && contextMenuData[rowCount] && !!contextMenuData[rowCount][columnCount]"
         [renderer]="row.cellRender"
         (rightClicked)="showContextMenu($event)"

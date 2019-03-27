@@ -41,7 +41,7 @@ export class ContextMenuComponent implements OnInit {
     {
       text: 'Paste', shortcut: 'Ctrl+V', icon: 'fa fa-paste', onClick() {
     }
-    },
+    }/*,
     {
       text: 'Export', shortcut: ' ', icon: null, onClick() {
       let col = [];
@@ -62,7 +62,7 @@ export class ContextMenuComponent implements OnInit {
       const csvExporter = new ExportToCsv(options);
 
       csvExporter.generateCsv(this.rowData);    }
-    }
+    }*/
   ];
 
 

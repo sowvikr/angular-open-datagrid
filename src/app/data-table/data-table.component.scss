@@ -7,6 +7,10 @@
 }
 
 .light-theme.dataTable {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+
   background-color: white;
   color: #000;
   border: 1px solid #BDC3C7;
@@ -21,6 +25,9 @@
   }
   thead {
     background: #f5f7f7;
+    font-weight: 600;
+    font-size: 12px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
     th {
       border: 0 solid #BDC3C7;
       border-right: 1px solid rgba(189, 195, 199, 0.5);
@@ -36,19 +43,83 @@
   }
 }
 
+.metrial-theme.dataTable {
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  background-color: white;
+  color: rgba(0, 0, 0, 0.87);
+  border: 1px solid #e2e2e2;
+  tbody {
+    tr {
+      border: 1px solid #e2e2e2;
+    }
+
+    tr:hover {
+      background-color: #fafafa;
+    }
+    td {
+      line-height: 45px;
+    }
+  }
+  thead {
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    background: #f5f7f7;
+    th {
+      border: 0 solid #e2e2e2;
+      border-right: 1px solid #e2e2e2;
+      border-bottom: 1px solid #e2e2e2;
+      color: rgba(0, 0, 0, 0.54);
+      line-height: 41px;
+    }
+    tr.header {
+      border: 0 solid #e2e2e2;
+      height: 56px;
+    }
+    tr.filter {
+      input[type=text] {
+        height: 25px;
+      }
+    }
+  }
+  tfoot {
+    border-top: 1px solid #e2e2e2;
+    border: 1px solid #e2e2e2;
+    border-top: 0;
+    color: rgba(0, 0, 0, 0.38);
+    font-weight: 700;
+    font-size: 12px;
+    font-family: "Roboto", sans-serif;
+    tr {
+      td {
+        line-height: 48px;
+        font-family: Roboto, sans-serif;
+        font-weight: 400;
+        font-size: 13px;
+      }
+    }
+  }
+}
+
 .dark-theme.dataTable {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+
   background-color: #1c1f20;
   color: rgba(245, 245, 245, 0.64);
   border: 1px solid #424242;
   tbody {
-    color:#F5F5F5;
+    color: #F5F5F5;
     tr {
       border: 1px solid #5c5c5c;
     }
-    tr:nth-child(even){
+    tr:nth-child(even) {
       background-color: #2d3436;
     }
-    tr:nth-child(odd){
+    tr:nth-child(odd) {
       background-color: #262c2e;
     }
     tr:hover {
@@ -56,6 +127,9 @@
     }
   }
   thead {
+    font-weight: 600;
+    font-size: 12px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
     background: #1c1f20;
     th {
       border: 0 solid #424242;
@@ -69,10 +143,10 @@
   }
   tfoot {
     border-top: 1px solid #424242;
-    button{
-      color:#F5F5F5
+    button {
+      color: #F5F5F5
     }
-    button:disabled{
+    button:disabled {
       color: rgba(245, 245, 245, 0.64);
     }
   }
@@ -89,9 +163,6 @@ table.dataTable {
   /* Non-prefixed version, currently
                                    supported by Chrome and Opera */
 
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  font-weight: 400;
-  font-size: 12px;
   width: 100%;
   text-align: left;
   border-collapse: collapse;
@@ -143,9 +214,6 @@ table.dataTable {
         padding-left: 10px;
         cursor: pointer;
       }
-      font-weight: 600;
-      font-size: 12px;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
     }
 
     th:first-child {
@@ -162,9 +230,8 @@ table.dataTable {
 
     tr.filter {
       input[type=text] {
-        height: 19px;
         margin: 0;
-        width:50%;
+        width: 50%;
         height: 15px;
       }
       .filterDropdown {

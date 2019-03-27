@@ -9,7 +9,7 @@ export class AppComponent {
   pagination = true;
   pageSize = 10;
 
-  theme = "dark-theme";
+  theme = "metrial-theme";
   columnDefs = [
     {
       headerName: 'Model',

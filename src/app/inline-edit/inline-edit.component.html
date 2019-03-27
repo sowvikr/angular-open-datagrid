@@ -1,18 +1,22 @@
-<div [hidden]="isEditable" class="cell" [ngClass]="{'selected-row':isSelected}">
-  <div (contextmenu)="onRightClick($event)">
-    <span [innerHTML]="renderer(row, column, cellValue, columnDefs)"></span>
+<div [ngClass]="theme">
+  <div [hidden]="isEditable" class="cell"
+       [ngClass]="{'selected-row':isSelected, 'metrial-theme':theme==='metrial-theme'}" >
+    <div (contextmenu)="onRightClick($event)">
+      <span [innerHTML]="renderer(row, column, cellValue, columnDefs)"></span>
+    </div>
   </div>
-</div>
-<div (dblclick)="onDoubleClick()" [hidden]="!isEditable" class="cell" [ngClass]="{'selected-row':isSelected}">
-  <div (contextmenu)="onRightClick($event)">
-    <span [hidden]="isEdit">{{cellValue}}</span>
+  <div (dblclick)="onDoubleClick()" [hidden]="!isEditable" class="cell" [ngClass]="{'selected-row':isSelected}">
+    <div (contextmenu)="onRightClick($event)">
+      <span [hidden]="isEdit">{{cellValue}}</span>
     <span [hidden]="!isEdit" (focusout)="onFocusOut()" #name>
   <select *ngIf="isCombobox" (focusout)="onFocusOut()" (change)="onChange($event.target.value)">
     <option *ngFor="let item of cellData; let i = index" [value]="item"
-            [selected]="cellValue === item">{{item}}</option>
+            [selected]="cellValue === item">{{item}}
+    </option>
   </select>
   <input #name *ngIf="!isCombobox" type="text" [value]="cellValue" (focusout)="onFocusOut()"
          (change)="onChange($event.target.value)"/>
 </span>
+    </div>
   </div>
 </div>

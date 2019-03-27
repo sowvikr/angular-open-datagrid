@@ -1,4 +1,4 @@
-<div [ngClass]="theme">
+<div class="editConatiner" [ngClass]="theme" tabindex="0">
   <div [hidden]="isEditable" class="cell"
        [ngClass]="{'selected-row':isSelected, 'metrial-theme':theme==='metrial-theme'}" >
     <div (contextmenu)="onRightClick($event)">

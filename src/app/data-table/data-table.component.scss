@@ -153,6 +153,7 @@
   }
 }
 
+
 table.dataTable {
   table-layout: fixed;
   webkit-touch-callout: none; /* iOS Safari */
@@ -175,6 +176,9 @@ table.dataTable {
   td {
     line-height: 26px;
     font-size: 12px;
+  }
+  tbody:focus{
+    outline: none;
   }
 
   thead {

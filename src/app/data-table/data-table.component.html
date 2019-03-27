@@ -1,6 +1,4 @@
-<table class="dataTable" (click)="onContextMenuOff()" [ngClass]="theme" tabindex="0" ctrlKeys
-       (ctrlC)="onCtrlC($event)"
-       (ctrlV)="onCtrlV($event)">
+<table class="dataTable" (click)="onContextMenuOff()" [ngClass]="theme" >
   <thead>
   <tr class="header" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)">
     <th *ngFor="let item of columnDefs ; let i = index" cdkDrag [ngStyle]="{'width':item.width}">
@@ -30,7 +28,9 @@
     </th>
   </tr>
   </thead>
-  <tbody (click)="onContextMenuOff()">
+  <tbody (click)="onContextMenuOff()" tabindex="0" ctrlKeys
+         (ctrlC)="onCtrlC($event)"
+         (ctrlV)="onCtrlV($event)">
   <tr *ngFor="let row of PagedRows; let rowCount = index" [hidden]="row.filteredOut">
     <td ctrlkeys *ngFor="let cell of row.data; let columnCount = index"
         (click)="onClick(rowCount, columnCount, cell, $event)"

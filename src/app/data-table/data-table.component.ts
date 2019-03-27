@@ -21,6 +21,7 @@ interface Column extends CellRenderer {
   selectAll?: boolean;
   selectOne?: boolean;
   isEdit?: boolean;
+  showFilter?:boolean;
 }
 
 interface FilterOptions {
@@ -87,6 +88,7 @@ export class DataTableComponent implements OnInit {
       for (let i = 0; i < this.columnDefs.length; ++i) {
         if (!(filteredData && filteredData.length !== 0 && currentPage > 0)) {
           this.columnDefs[i].sortState = null;
+          this.columnDefs[i].showFilter = false;
         }
         row.cellRender = this.cellRenderer;
         row.data.push(this.rowData[j][this.columnDefs[i].field]);
@@ -346,9 +348,9 @@ export class DataTableComponent implements OnInit {
   showContextMenu(event) {
     this.contextmenuX = event.x;
     this.contextmenuY = event.y;
-    if(!(this.contextMenuData[event.row] && this.contextMenuData[event.row][event.column])){
+    if (!(this.contextMenuData[event.row] && this.contextMenuData[event.row][event.column])) {
       this.contextMenuData = [];
-      if(!this.contextMenuData[event.row]){
+      if (!this.contextMenuData[event.row]) {
         this.contextMenuData[event.row] = [];
       }
       this.contextMenuData[event.row][event.column] = this.PagedRows[event.row].data[event.column];
@@ -428,6 +430,15 @@ export class DataTableComponent implements OnInit {
 
   onCtrlC() {
     this.clipboardService.copyToClipboard(this.contextMenuData);
+  }
+
+  toggleFilter(column) {
+    for (let i = 0; i < this.columnDefs.length; ++i) {
+      if (i === column) continue;
+      this.columnDefs[i].showFilter = false;
+    }
+
+    this.columnDefs[column].showFilter = !this.columnDefs[column].showFilter;
   }
 
   constructor(private clipboardService:ClipboardService) {

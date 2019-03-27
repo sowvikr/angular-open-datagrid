@@ -22,8 +22,36 @@ interface MenuItem {
   styleUrls: ['./context-menu.component.scss']
 })
 export class ContextMenuComponent implements OnInit {
-  @Input() x = 0;
-  @Input() y = 0;
+
+  private _x = 0;
+  private _y = 0;
+
+  @Input()
+  set x(mx:number) {
+    let positionX = mx + 144;
+    if (positionX > window.innerWidth) {
+      this._x = mx - 144;
+    }
+    else{
+      this._x = mx;
+    }
+  }
+
+  get x():number {
+    return this._x;
+  }
+
+  @Input()
+  set y(my:number) {
+    this._y = my;
+  }
+
+  get y():number {
+    return this._y;
+  }
+
+  //@Input() x = 0;
+  //@Input() y = 0;
   @Input() isEdit:boolean;
   @Input() contextData:any;
   @Input() theme:string;
@@ -42,27 +70,27 @@ export class ContextMenuComponent implements OnInit {
       text: 'Paste', shortcut: 'Ctrl+V', icon: 'fa fa-paste', onClick() {
     }
     }/*,
-    {
-      text: 'Export', shortcut: ' ', icon: null, onClick() {
-      let col = [];
-      for (let i = 0; i < this.columnData.length; ++i) {
-        col.push(this.columnData[i].field);
-      }
-      const options = {
-        fieldSeparator: ',',
-        quoteStrings: '"',
-        decimalSeparator: '.',
-        showLabels: true,
-        showTitle: true,
-        title: 'Data',
-        useTextFile: false,
-        useBom: true,
-         headers: col
-      };
-      const csvExporter = new ExportToCsv(options);
+     {
+     text: 'Export', shortcut: ' ', icon: null, onClick() {
+     let col = [];
+     for (let i = 0; i < this.columnData.length; ++i) {
+     col.push(this.columnData[i].field);
+     }
+     const options = {
+     fieldSeparator: ',',
+     quoteStrings: '"',
+     decimalSeparator: '.',
+     showLabels: true,
+     showTitle: true,
+     title: 'Data',
+     useTextFile: false,
+     useBom: true,
+     headers: col
+     };
+     const csvExporter = new ExportToCsv(options);
 
-      csvExporter.generateCsv(this.rowData);    }
-    }*/
+     csvExporter.generateCsv(this.rowData);    }
+     }*/
   ];
   @ViewChild('contextMenu') contextMenu:ElementRef;
 
@@ -71,7 +99,7 @@ export class ContextMenuComponent implements OnInit {
     clipboardService.copyToClipboard(text);
   }
 
-  constructor(private clipboardService:ClipboardService, private domSanitizer: DomSanitizer) {
+  constructor(private clipboardService:ClipboardService, private domSanitizer:DomSanitizer) {
   }
 
   ngOnInit() {
@@ -80,14 +108,16 @@ export class ContextMenuComponent implements OnInit {
       if (item.text === 'Paste' && !this.isEdit) {
         item.enabled = true;
       }
-      else{
+      else {
         item.enabled = true;
       }
-      if (item.text === 'Export'){
+      if (item.text === 'Export') {
         item.columnData = this.columnData;
         item.rowData = this.rowData;
       }
     }
+
+
   }
 
 }

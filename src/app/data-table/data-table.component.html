@@ -16,7 +16,7 @@
              height="10"/>
         <span>
         <i class="fa fa-filter" *ngIf="item.filter && item.columnFilter" aria-hidden="true"
-           (click)="item.showFilter=!item.showFilter">
+           (click)="toggleFilter(i)">
         </i>
         <app-column-filter [FilterValues]="columnDefs[i].uniqueFilterValues" [Column]="i"
                            class="filterDropdown"

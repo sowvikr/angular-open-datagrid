@@ -409,23 +409,37 @@ export class DataTableComponent implements OnInit {
     this.contextmenu = false;
   }
 
-  onCtrlV() {
-    let pasteData:Array<Array<any>> = this.clipboardService.getClipboardData();
-    let pasteRow = 0, pasteColumn = 0;
+
+  pasteData(pasteData:Array<Array<any>>) {
+    let pasteRow = 0, pasteColumn = 0, prevCol;
     for (let i = 0; i < this.contextMenuData.length; ++i) {
       if (!this.contextMenuData[i])
         continue;
       let row = this.contextMenuData[i];
       for (let j = 0; j < row.length; ++j) {
-        if (!row[j])
+        if (!row[j]) {
           continue;
-        if (!pasteData[pasteRow][pasteColumn++])
+        }
+        if (!pasteData[pasteRow][pasteColumn]) {
+          pasteColumn++;
           continue;
-        this.pagedRows[i][j] = pasteData[pasteRow][pasteColumn++];
+        }
+        this.PagedRows[i].data[j] = pasteData[pasteRow][pasteColumn];
+        if (!prevCol) {
+          prevCol = j;
+        }
+        else if (prevCol !== j) {
+          pasteColumn++;
+          prevCol = j;
+        }
       }
       pasteRow++;
     }
-    //this.clipboardService.copyToClipboard(this.contextMenuData);
+
+  }
+
+  onCtrlV() {
+    let pasteData:Array<Array<any>> = this.clipboardService.getClipboardData();
   }
 
   onCtrlC() {
@@ -450,6 +464,8 @@ export class DataTableComponent implements OnInit {
     this.FilterData = new Array<FilterOptions>(this.columnDefs.length);
     this.createTableData();
     this.TotalPages = Math.ceil(this.rowData.length / this.pageSize);
+
+    this.clipboardService.getPasteEvent().subscribe(data => this.pasteData(data))
   }
 
 }

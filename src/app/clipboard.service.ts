@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import {stripComments} from "tslint/lib/utils";
 
 @Injectable({
@@ -7,29 +7,32 @@ import {stripComments} from "tslint/lib/utils";
 export class ClipboardService {
 
 
-  private generateTempTextArea(clipboardData?):any {
+  private txtAreaG:any;
+  private onPaste:EventEmitter<Array<Array<any>>> = new EventEmitter<Array<Array<any>>>();
+
+  private generateTempTextArea():any {
     const txtArea = document.createElement('textarea');
     txtArea.id = 'txt';
     txtArea.style.position = 'fixed';
     txtArea.style.top = '0';
     txtArea.style.left = '0';
     txtArea.style.opacity = '0';
-    if (clipboardData) {
-      txtArea.value = clipboardData;
-    }
     document.body.appendChild(txtArea);
     return txtArea;
   }
 
   private sanitize(data):string {
-    return data.replace(/^,?(.+),?$/, "$1")
+    return data.replace(/^,*(.+),*$/, "$1")
   }
 
   private get2DArray(data):Array<Array<any>> {
     let array:Array<any> = data.split(/\r?\n/);
     let array2D = [[]];
     for (let i = 0; i < array.length; ++i) {
-      array2D[i] = [].concat(array[i].split(","));
+      let row = array[i].split(",");
+      if (row.length === 1 && row.indexOf("") >= 0)
+        continue;
+      array2D[i] = [].concat(row);
     }
     return array2D;
 
@@ -41,9 +44,18 @@ export class ClipboardService {
       if (!data[i]) {
         continue;
       }
-      clipboardData += this.sanitize(data[i].join(",")) + '\n';
+      let row = data[i].join(",");
+      if (row === "") {
+        continue;
+      }
+      clipboardData += this.sanitize(row) + '\n';
     }
-    const txtArea = this.generateTempTextArea(clipboardData);
+    let txtArea;
+    if (!this.txtAreaG) {
+      this.txtAreaG = this.generateTempTextArea();
+    }
+    txtArea = this.txtAreaG;
+    txtArea.value = clipboardData;
     txtArea.select();
     try {
       const successful = document.execCommand('copy');
@@ -55,21 +67,24 @@ export class ClipboardService {
     } catch (err) {
       console.log('Oops, unable to copy');
     } finally {
-      document.body.removeChild(txtArea);
+      //document.body.removeChild(txtArea);
     }
     return false;
 
   }
 
   getClipboardData():Array<Array<any>> {
-    const txtArea = this.generateTempTextArea();
+    let txtArea;
+    if (!this.txtAreaG) {
+      this.txtAreaG = this.generateTempTextArea();
+    }
+    txtArea = this.txtAreaG;
     txtArea.focus();
     let result:string = '';
     try {
-      const successful = document.execCommand('paste');
+      //const successful = document.execCommand('paste');
       let msg:string;
-      if (successful) {
-        result = txtArea.value;
+      if (result = txtArea.value) {
         msg = 'successful';
       }
       else {
@@ -79,10 +94,14 @@ export class ClipboardService {
     } catch (err) {
       console.log('Oops, unable to paste!');
     } finally {
-      document.body.removeChild(txtArea);
+      this.onPaste.emit(this.get2DArray(result));
       return this.get2DArray(result);
     }
 
+  }
+
+  public getPasteEvent():EventEmitter<Array<Array<any>>> {
+    return this.onPaste;
   }
 
   constructor() {

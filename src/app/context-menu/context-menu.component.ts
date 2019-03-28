@@ -14,6 +14,9 @@ interface MenuItem {
   enabled?: boolean;
   rowData?:Array<any>;
   columnData?:Array<any>;
+  contextData?:any;
+  copyFunction?:any;
+  clipboardService?:any;
 }
 
 @Component({
@@ -32,7 +35,7 @@ export class ContextMenuComponent implements OnInit {
     if (positionX > window.innerWidth) {
       this._x = mx - 144;
     }
-    else{
+    else {
       this._x = mx;
     }
   }
@@ -62,12 +65,13 @@ export class ContextMenuComponent implements OnInit {
       text: 'Copy',
       shortcut: 'Ctrl+C',
       icon: 'fa fa-copy',
-      onClick($event, contextData, copyFunction, clipboardService) {
-        copyFunction(contextData, clipboardService);
+      onClick($event) {
+        this.copyFunction(this.contextData, this.clipboardService);
       }
     },
     {
       text: 'Paste', shortcut: 'Ctrl+V', icon: 'fa fa-paste', onClick() {
+      let pasteData:Array<Array<any>> = this.clipboardService.getClipboardData();
     }
     }/*,
      {
@@ -107,6 +111,13 @@ export class ContextMenuComponent implements OnInit {
       const item:MenuItem = this.MenuItems[i];
       if (item.text === 'Paste' && !this.isEdit) {
         item.enabled = true;
+        item.clipboardService = this.clipboardService;
+      }
+      if (item.text === 'Copy') {
+        item.enabled = true;
+        item.contextData = this.contextData;
+        item.copyFunction = this.copyTextToClipboard;
+        item.clipboardService = this.clipboardService;
       }
       else {
         item.enabled = true;

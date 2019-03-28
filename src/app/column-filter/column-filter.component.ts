@@ -1,4 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {FilterService} from '../filter.service';
+
+interface FilterOptions {
+  operator: string;
+  values: string[];
+  comparator: any;
+}
 
 @Component({
   selector: 'app-column-filter',
@@ -43,7 +50,12 @@ export class ColumnFilterComponent implements OnInit {
     this.OnFilterChange.emit({filteredData: this.filteredData, column: this.Column});
   }
 
-  constructor() {
+  search(text){
+    let filterOptions:FilterOptions = [{comparator:String.prototype.includes, operator:"or", values:[text]}];
+    this.FilterValues = this.filterService.filter(filterOptions, this.FilterValues).tableRows;
+  }
+
+  constructor(private filterService:FilterService) {
   }
 
   ngOnInit() {

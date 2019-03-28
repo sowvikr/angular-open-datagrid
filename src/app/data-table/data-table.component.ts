@@ -2,6 +2,7 @@ import {Component, OnInit, Input} from '@angular/core';
 import {moveItemInArray} from '@angular/cdk/drag-drop';
 import {filter} from 'rxjs/internal/operators/filter';
 import {ClipboardService} from '../clipboard.service';
+import {FilterService} from '../filter.service';
 
 // Cell renderer interface.
 interface CellRenderer {
@@ -120,7 +121,8 @@ export class DataTableComponent implements OnInit {
   }
 
   private createColumnFilter(column:Column, rows:Array<TableRow>, columnNumber:number) {
-    const uniqueItems = [];
+    const uniqueItems:Array<any> = [];
+    column.uniqueFilterValues = [];
     if (!column.columnFilter) {
       return;
     }
@@ -131,13 +133,14 @@ export class DataTableComponent implements OnInit {
       const columnValue = rows[i].data[columnNumber];
       if (uniqueItems.indexOf(columnValue) < 0) {
         uniqueItems.push(columnValue);
+        column.uniqueFilterValues.push({filteredOut:false, data:[columnValue]});
         if (!this.FilterData[columnNumber]) {
           this.FilterData[columnNumber] = {comparator: String.prototype.includes, operator: 'or', values: []};
         }
         this.FilterData[columnNumber].values.push(columnValue.toLowerCase());
       }
     }
-    column.uniqueFilterValues = uniqueItems;
+    //column.uniqueFilterValues = uniqueItems;
   }
 
 
@@ -199,21 +202,9 @@ export class DataTableComponent implements OnInit {
   }
 
   private applyFilter(filterData:Array<FilterOptions>, tableRows:Array<any>) {
-    this.FilterRowCount = 0;
-    for (let i = 0; i < tableRows.length; ++i) {
-      let isFiltered = true;
-      for (let j = 0; j < this.FilterData.length; ++j) {
-        if (this.FilterData[j] === undefined) {
-          isFiltered = isFiltered && tableRows[i].data[j].toString().toLowerCase().includes('');
-          continue;
-        }
-        isFiltered = isFiltered && this.getFilteredValue(j, filterData, tableRows[i].data[j].toString().toLowerCase());
-      }
-      tableRows[i].filteredOut = !isFiltered;
-      if (!tableRows[i].filteredOut) {
-        this.FilterRowCount++;
-      }
-    }
+    let result = this.filterService.filter(filterData, tableRows);
+    this.FilterRowCount = result.FilteredRowCount;
+    tableRows = result.tableRows;
     this.pagedRows();
     this.setPagedRow(1);
     this.updateTotalPageCount();
@@ -455,7 +446,7 @@ export class DataTableComponent implements OnInit {
     this.columnDefs[column].showFilter = !this.columnDefs[column].showFilter;
   }
 
-  constructor(private clipboardService:ClipboardService) {
+  constructor(private clipboardService:ClipboardService, private filterService:FilterService) {
   }
 
   ngOnInit() {

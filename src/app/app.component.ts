@@ -6,11 +6,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  pagination = true;
-  pageSize = 10;
 
-  theme = "metrial-theme";
-  columnDefs = [
+  pagination1 = true;
+  pageSize1 = 10;
+  pagination2 = true;
+  pageSize2 = 10;
+
+  theme1 = "metrial-theme";
+  theme2 = "dark-theme";
+  columnDefs1 = [
     {
       headerName: 'Model',
       field: 'model',
@@ -26,7 +30,9 @@ export class AppComponent {
     {headerName: 'Mileage (km/ltr)', isEdit: true, width: '10px', field: 'mileage', sort: true},
     {headerName: 'Color', isEdit: true, field: 'color', width: '10px', filter: true, columnFilter: true}
   ];
-  rowData = [
+  columnDefs2 = [].concat(this.columnDefs1);
+
+  rowData1 = [
     {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'red'},
     {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 50, color: 'green'},
     {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 40, color: 'blue'},
@@ -89,6 +95,6 @@ export class AppComponent {
     {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'sky blue'},
     {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'}
   ];
-
+  rowData2 = [].concat(this.rowData1);
 
 }

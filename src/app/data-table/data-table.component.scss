@@ -33,6 +33,9 @@
       border-right: 1px solid rgba(189, 195, 199, 0.5);
       border-bottom: 1px solid rgba(189, 195, 199, 0.5);
       color: rgba(0, 0, 0, 0.54);
+      .filterDropdown {
+        top: 65px;
+      }
     }
     tr.header {
       border: 0 solid #BDC3C7;
@@ -74,6 +77,10 @@
       border-bottom: 1px solid #e2e2e2;
       color: rgba(0, 0, 0, 0.54);
       line-height: 41px;
+      .filterDropdown {
+        top: 65px;
+      }
+
     }
     tr.header {
       border: 0 solid #e2e2e2;
@@ -116,6 +123,10 @@
   input[type=text]{
     background-color: #262c2e;
     color: #F5F5F5;
+    border: 1px solid #fff;
+  }
+  input[type=text]:disabled{
+    border: 1px solid #5c5c5c;
   }
   tbody {
     color: #F5F5F5;
@@ -142,6 +153,10 @@
       border-right: 1px solid #424242;
       border-bottom: 1px solid #424242;
       color: rgba(245, 245, 245, 0.64);
+      .filterDropdown {
+        top: 65px;
+      }
+
     }
     tr.header {
       border: 0 solid #424242;
@@ -246,7 +261,6 @@ table.dataTable {
       }
       .filterDropdown {
         position: absolute;
-        top: 100px;
         width: 135px;
       }
     }

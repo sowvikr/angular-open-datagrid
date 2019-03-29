@@ -10,8 +10,8 @@
       <span [hidden]="isEdit">{{cellValue}}</span>
     <span [hidden]="!isEdit" (focusout)="onFocusOut()" #name>
   <select *ngIf="isCombobox" (focusout)="onFocusOut()" (change)="onChange($event.target.value)">
-    <option *ngFor="let item of cellData; let i = index" [value]="item"
-            [selected]="cellValue === item">{{item}}
+    <option *ngFor="let item of cellData; let i = index" [value]="item.data[0]"
+            [selected]="cellValue === item.data[0]">{{item.data[0]}}
     </option>
   </select>
   <input #name *ngIf="!isCombobox" type="text" [value]="cellValue" (focusout)="onFocusOut()"

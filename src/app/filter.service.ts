@@ -22,7 +22,7 @@ export class FilterService {
     }
     for (let i = 0; i < filterOptions[column].values.length; ++i) {
       if (filterOptions[column].operator == 'or') {
-        filtered = filtered || filterOptions[column].comparator.call(data, filterOptions[column].values[i].toLowerCase())
+        filtered = filtered || filterOptions[column].comparator.call(data, filterOptions[column].values[i])
       }
     }
     return filtered;
@@ -35,10 +35,10 @@ export class FilterService {
       let isFiltered = true;
       for (let j = 0; j < data.length; ++j) {
         if (data[j] === undefined) {
-          isFiltered = isFiltered && tableRows[i].data[j].toString().toLowerCase().includes('');
+          isFiltered = isFiltered && tableRows[i].data[j].toString().includes('');
           continue;
         }
-        isFiltered = isFiltered && this.getFilteredValue(j, data, tableRows[i].data[j].toString().toLowerCase());
+        isFiltered = isFiltered && this.getFilteredValue(j, data, tableRows[i].data[j].toString());
       }
       tableRows[i].filteredOut = !isFiltered;
       if (!tableRows[i].filteredOut) {

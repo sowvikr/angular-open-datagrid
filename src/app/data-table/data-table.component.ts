@@ -139,7 +139,7 @@ export class DataTableComponent implements OnInit {
         if (!this.FilterData[columnNumber]) {
           this.FilterData[columnNumber] = {comparator: String.prototype.includes, operator: 'or', values: []};
         }
-        this.FilterData[columnNumber].values.push(columnValue.toLowerCase());
+        this.FilterData[columnNumber].values.push(columnValue);
       }
     }
     //column.uniqueFilterValues = uniqueItems;
@@ -197,7 +197,7 @@ export class DataTableComponent implements OnInit {
     }
     for (let i = 0; i < filterOptions[column].values.length; ++i) {
       if (filterOptions[column].operator == 'or') {
-        filtered = filtered || filterOptions[column].comparator.call(data, filterOptions[column].values[i].toLowerCase())
+        filtered = filtered || filterOptions[column].comparator.call(data, filterOptions[column].values[i])
       }
     }
     return filtered;
@@ -215,6 +215,7 @@ export class DataTableComponent implements OnInit {
   checkedColumnFilter(filterEventArgs) {
 
     this.FilterData[filterEventArgs.column].values = [];
+    this.FilterData[filterEventArgs.column].comparator=String.prototype.equals;
     for (let i = 0; i < filterEventArgs.filteredData.length; ++i) {
       this.FilterData[filterEventArgs.column].values.push(filterEventArgs.filteredData[i]);
     }

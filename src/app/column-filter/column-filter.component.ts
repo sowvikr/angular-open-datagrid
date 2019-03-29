@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {FilterService} from '../filter.service';
-
 interface FilterOptions {
   operator: string;
   values: Array<any>;
@@ -30,18 +29,18 @@ export class ColumnFilterComponent implements OnInit {
       this.filteredData = [];
       this.selectOne = true;
       for (let i = 0; i < this.FilterValues.length; ++i) {
-        this.filteredData.push(this.FilterValues[i].toLowerCase());
+        this.filteredData.push(this.FilterValues[i]);
       }
     } else if (value === 'Select All' && !event.target.checked) {
       this.filteredData = [];
       this.selectOne = false;
     } else if (event.target.checked) {
-      this.filteredData.push(value.toLowerCase());
+      this.filteredData.push(value);
       if (this.filteredData.length === this.FilterValues.length) {
         this.selectAll = true;
       }
     } else if (!event.target.checked) {
-      const index = this.filteredData.indexOf(value.toLowerCase());
+      const index = this.filteredData.indexOf(value);
       this.selectAll = false;
       if (index >= 0) {
         this.filteredData.splice(index, 1);

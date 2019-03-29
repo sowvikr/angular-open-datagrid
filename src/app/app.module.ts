@@ -11,6 +11,8 @@ import { ContextMenuComponent } from './context-menu/context-menu.component';
 import { HotKeysDirective } from './hot-keys.directive';
 import { ColumnFilterComponent } from './column-filter/column-filter.component';
 import { ClickOutsideModule } from 'ng4-click-outside';
+import './string-prototype.service.ts'
+
 @NgModule({
   declarations: [
     AppComponent,

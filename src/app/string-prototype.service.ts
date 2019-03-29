@@ -1,4 +1,3 @@
-includeRef = String.prototype.includes;
 
 String.prototype.equals = equals;
 String.prototype.includes = includes;

@@ -3,7 +3,7 @@ import {FilterService} from '../filter.service';
 
 interface FilterOptions {
   operator: string;
-  values: string[];
+  values: Array<any>;
   comparator: any;
 }
 
@@ -51,7 +51,7 @@ export class ColumnFilterComponent implements OnInit {
   }
 
   search(text){
-    let filterOptions:FilterOptions = [{comparator:String.prototype.includes, operator:"or", values:[text]}];
+    let filterOptions:Array<FilterOptions> = [{comparator:String.prototype.includes, operator:"or", values:[text]}];
     this.FilterValues = this.filterService.filter(filterOptions, this.FilterValues).tableRows;
   }
 

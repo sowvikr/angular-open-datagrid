@@ -380,7 +380,9 @@ export class DataTableComponent implements OnInit {
       this.contextMenuData = [];
     }
     else {
-      this.contextMenuData = [];
+      if(!$event.ctrlKey){
+        this.contextMenuData = [];
+      }
       if (!this.contextMenuData[rowCount]) {
         this.contextMenuData[rowCount] = [];
       }

@@ -444,10 +444,10 @@ export class DataTableComponent implements OnInit {
   toggleFilter(column, event) {
     let positionX = event.clientX + 135;
     if (positionX > window.innerWidth) {
-      this.filterMenuX = event.clientX - 135;
+      this.filterMenuX = - 135;
     }
     else {
-      this.filterMenuX = event.clientX;
+      this.filterMenuX = 20;
     }
     for (let i = 0; i < this.columnDefs.length; ++i) {
       if (i === column) continue;

@@ -33,9 +33,11 @@
       border-right: 1px solid rgba(189, 195, 199, 0.5);
       border-bottom: 1px solid rgba(189, 195, 199, 0.5);
       color: rgba(0, 0, 0, 0.54);
+      /*
       .filterDropdown {
         top: 65px;
       }
+      */
     }
     tr.header {
       border: 0 solid #BDC3C7;
@@ -77,9 +79,11 @@
       border-bottom: 1px solid #e2e2e2;
       color: rgba(0, 0, 0, 0.54);
       line-height: 41px;
+      /*
       .filterDropdown {
         top: 65px;
       }
+      */
 
     }
     tr.header {
@@ -153,9 +157,11 @@
       border-right: 1px solid #424242;
       border-bottom: 1px solid #424242;
       color: rgba(245, 245, 245, 0.64);
+      /*
       .filterDropdown {
         top: 65px;
       }
+      */
 
     }
     tr.header {
@@ -254,6 +260,9 @@ table.dataTable {
     }
 
     tr.filter {
+      span{
+        position: relative;
+      }
       input[type=text] {
         margin: 0;
         width: 50%;
@@ -262,6 +271,7 @@ table.dataTable {
       .filterDropdown {
         position: absolute;
         width: 135px;
+        top:10px;
       }
     }
   }

@@ -2,6 +2,9 @@
 <!--
 <app-data-table [pagination]="pagination1" [pageSize]="pageSize1" [theme]="theme1" [columnDefs]="columnDefs1" [rowData]="rowData1"></app-data-table>
 -->
-<app-data-table [pagination]="pagination2" [pageSize]="pageSize2" [theme]="theme2" [columnDefs]="columnDefs2" [rowData]="rowData2"></app-data-table>
+<div *ngFor="let dataTable of dataTables">
+  <app-data-table [pagination]="dataTable.pagination" [pageSize]="dataTable.pageSize" [theme]="dataTable.theme"
+                  [columnDefs]="dataTable.columnDefs" [rowData]="dataTable.rowData"></app-data-table>
+</div>
 
 <router-outlet></router-outlet>

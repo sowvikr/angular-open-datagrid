@@ -72,6 +72,8 @@ export class DataTableComponent implements OnInit {
   private contextmenu:boolean;
   private contextmenuX = 0;
   private contextmenuY = 0;
+  private filterMenuX = 0;
+  private filterMenuY = 0;
   private contextMenuData:Array<Array<any>> = [[]];
   private contextMenuIsEdit:boolean;
   private isDragging:boolean;
@@ -439,7 +441,14 @@ export class DataTableComponent implements OnInit {
     this.clipboardService.copyToClipboard(this.contextMenuData);
   }
 
-  toggleFilter(column) {
+  toggleFilter(column, event) {
+    let positionX = event.clientX + 135;
+    if (positionX > window.innerWidth) {
+      this.filterMenuX = event.clientX - 135;
+    }
+    else {
+      this.filterMenuX = event.clientX;
+    }
     for (let i = 0; i < this.columnDefs.length; ++i) {
       if (i === column) continue;
       this.columnDefs[i].showFilter = false;

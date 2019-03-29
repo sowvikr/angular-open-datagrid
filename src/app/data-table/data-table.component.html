@@ -16,12 +16,12 @@
              height="10"/>
         <span>
         <i class="fa fa-filter" *ngIf="item.filter && item.columnFilter" aria-hidden="true"
-           (click)="toggleFilter(i)">
+           (click)="toggleFilter(i, $event)">
         </i>
         <app-column-filter [FilterValues]="columnDefs[i].uniqueFilterValues" [Column]="i"
                            class="filterDropdown"
                            (OnFilterChange)="checkedColumnFilter($event)" *ngIf="item.filter && item.columnFilter"
-                           [hidden]="!item.showFilter" [theme]="theme">
+                           [hidden]="!item.showFilter" [theme]="theme" [ngStyle]="{'left.px': filterMenuX}">
         </app-column-filter>
         </span>
 

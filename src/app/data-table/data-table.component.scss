@@ -112,6 +112,11 @@
   background-color: #1c1f20;
   color: rgba(245, 245, 245, 0.64);
   border: 1px solid #424242;
+
+  input[type=text]{
+    background-color: #262c2e;
+    color: #F5F5F5;
+  }
   tbody {
     color: #F5F5F5;
     tr {

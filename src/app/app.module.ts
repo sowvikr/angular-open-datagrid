@@ -10,7 +10,7 @@ import { SafePipePipe } from './safe-pipe.pipe';
 import { ContextMenuComponent } from './context-menu/context-menu.component';
 import { HotKeysDirective } from './hot-keys.directive';
 import { ColumnFilterComponent } from './column-filter/column-filter.component';
-
+import { ClickOutsideModule } from 'ng4-click-outside';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +24,8 @@ import { ColumnFilterComponent } from './column-filter/column-filter.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    DragDropModule
+    DragDropModule,
+    ClickOutsideModule
   ],
   providers: [],
   bootstrap: [AppComponent]

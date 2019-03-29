@@ -86,7 +86,7 @@ export class AppComponent {
       {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'sky blue'},
       {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'}
     ] },
-    {pagination1:true,pageSize1:10,theme:"dark-theme", columnDefs:[
+    {pagination:true,pageSize:10,theme:"dark-theme", columnDefs:[
       {
         headerName: 'Model',
         field: 'model',

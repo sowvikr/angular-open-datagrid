@@ -1,6 +1,9 @@
 .light-theme.filterPanel {
   background: whitesmoke;
   border: 1px solid #BDC3C7;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  color:#000;
+  font-weight: 400;
   .filterHeader {
     border-bottom: 1px solid #BDC3C7;
   }
@@ -13,10 +16,13 @@
   .container {
     input[type=checkbox]:checked ~ .checkmark {
       background-color: #2196F3;
+      border: 1px solid #2196F3;
     }
 
     .checkmark {
-      background-color: #eee;
+      background-color: #fff;
+      border: 1px solid #2196F3;
+
     }
   }
 }

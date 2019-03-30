@@ -29,7 +29,7 @@ export class ColumnFilterComponent implements OnInit {
       this.filteredData = [];
       this.selectOne = true;
       for (let i = 0; i < this.FilterValues.length; ++i) {
-        this.filteredData.push(this.FilterValues[i]);
+        this.filteredData.push(this.FilterValues[i].data[0]);
       }
     } else if (value === 'Select All' && !event.target.checked) {
       this.filteredData = [];

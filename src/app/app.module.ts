@@ -11,7 +11,10 @@ import { ContextMenuComponent } from './context-menu/context-menu.component';
 import { HotKeysDirective } from './hot-keys.directive';
 import { ColumnFilterComponent } from './column-filter/column-filter.component';
 import { ClickOutsideModule } from 'ng4-click-outside';
-import './string-prototype.service.ts'
+import './string-prototype.service.ts';
+import { DarkThemeComponent } from './pages/dark-theme/dark-theme.component';
+import { StandardThemeComponent } from './pages/standard-theme/standard-theme.component';
+import { MaterialThemeComponent } from './pages/material-theme/material-theme.component'
 
 @NgModule({
   declarations: [
@@ -21,7 +24,10 @@ import './string-prototype.service.ts'
     SafePipePipe,
     ContextMenuComponent,
     HotKeysDirective,
-    ColumnFilterComponent
+    ColumnFilterComponent,
+    DarkThemeComponent,
+    StandardThemeComponent,
+    MaterialThemeComponent
   ],
   imports: [
     BrowserModule,

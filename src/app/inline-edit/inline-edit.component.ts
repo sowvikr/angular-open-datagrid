@@ -51,7 +51,6 @@ export class InlineEditComponent implements OnInit {
   }
 
   onDoubleClick() {
-    this.isCombobox = typeof (this.cellData) === 'object';
     this.isEdit = true;
     this.vc.nativeElement.focus();
   }
@@ -78,10 +77,14 @@ export class InlineEditComponent implements OnInit {
   }
 
   constructor() {
-    this.isCombobox = typeof (this.cellData) === 'object';
   }
 
   ngOnInit() {
+    if (this.cellData.length > 0) {
+      this.isCombobox = true;
+    }
+    else {
+      this.isCombobox = false;
+    }
   }
-
 }

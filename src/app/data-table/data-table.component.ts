@@ -137,7 +137,7 @@ export class DataTableComponent implements OnInit {
       const columnValue = rows[i].data[columnNumber];
       if (uniqueItems.indexOf(columnValue) < 0) {
         uniqueItems.push(columnValue);
-        column.uniqueFilterValues.push({checked:false, filteredOut:false, data:[columnValue]});
+        column.uniqueFilterValues.push({checked: false, filteredOut: false, data: [columnValue]});
         if (!this.FilterData[columnNumber]) {
           this.FilterData[columnNumber] = {comparator: String.prototype.includes, operator: 'or', values: []};
         }
@@ -217,7 +217,7 @@ export class DataTableComponent implements OnInit {
   checkedColumnFilter(filterEventArgs) {
 
     this.FilterData[filterEventArgs.column].values = [];
-    this.FilterData[filterEventArgs.column].comparator=String.prototype.equals;
+    this.FilterData[filterEventArgs.column].comparator = String.prototype.equals;
     for (let i = 0; i < filterEventArgs.filteredData.length; ++i) {
       this.FilterData[filterEventArgs.column].values.push(filterEventArgs.filteredData[i]);
     }
@@ -385,7 +385,7 @@ export class DataTableComponent implements OnInit {
       this.contextMenuData = [];
     }
     else {
-      if(!$event.ctrlKey){
+      if (!$event.ctrlKey) {
         this.contextMenuData = [];
       }
       if (!this.contextMenuData[rowCount]) {
@@ -410,6 +410,32 @@ export class DataTableComponent implements OnInit {
 
   pasteData(pasteData:Array<Array<any>>) {
     let pasteRow = 0, pasteColumn = 0, prevCol;
+    /*
+     for (let i = 0; i < this.contextMenuData.length; ++i) {
+     if (!this.contextMenuData[i])
+     continue;
+     let row = this.contextMenuData[i];
+     for (let j = 0; j < row.length; ++j) {
+     if (!row[j]) {
+     continue;
+     }
+     if (!pasteData[pasteRow][pasteColumn]) {
+     pasteColumn++;
+     continue;
+     }
+     this.PagedRows[i].data[j] = pasteData[pasteRow][pasteColumn];
+     if (!prevCol) {
+     prevCol = j;
+     }
+     else if (prevCol !== j) {
+     pasteColumn++;
+     prevCol = j;
+     }
+     }
+     pasteRow++;
+     }
+     */
+    let startRow, startColumn;
     for (let i = 0; i < this.contextMenuData.length; ++i) {
       if (!this.contextMenuData[i])
         continue;
@@ -418,22 +444,18 @@ export class DataTableComponent implements OnInit {
         if (!row[j]) {
           continue;
         }
-        if (!pasteData[pasteRow][pasteColumn]) {
-          pasteColumn++;
+        startRow = i;
+        startColumn = j;
+      }
+    }
+    for (let i = 0; i < pasteData.length; ++i) {
+      for (let j = 0; j < pasteData[i].length; ++j) {
+        if (j === (this.columnDefs.length - 1)) {
           continue;
         }
-        this.PagedRows[i].data[j] = pasteData[pasteRow][pasteColumn];
-        if (!prevCol) {
-          prevCol = j;
-        }
-        else if (prevCol !== j) {
-          pasteColumn++;
-          prevCol = j;
-        }
+        this.PagedRows[startRow + i].data[startColumn + j] = pasteData[i][j];
       }
-      pasteRow++;
     }
-
   }
 
   onCtrlV() {
@@ -447,7 +469,7 @@ export class DataTableComponent implements OnInit {
   toggleFilter(column, event) {
     let positionX = event.clientX + 135;
     if (positionX > window.innerWidth) {
-      this.filterMenuX = - 135;
+      this.filterMenuX = -135;
     }
     else {
       this.filterMenuX = 20;
@@ -460,12 +482,12 @@ export class DataTableComponent implements OnInit {
     this.columnDefs[column].showFilter = !this.columnDefs[column].showFilter;
   }
 
-  onRowSizeChange($event, value){
+  onRowSizeChange($event, value) {
     this.pageSize = parseInt(value);
     this.tableDraw();
   }
 
-  private tableDraw(){
+  private tableDraw() {
     this.FilterRowCount = this.rowData.length;
     this.TotalRows = this.rowData.length;
     this.FilterData = new Array<FilterOptions>(this.columnDefs.length);
@@ -479,7 +501,7 @@ export class DataTableComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dragTheme = this.theme +"-drag";
+    this.dragTheme = this.theme + "-drag";
     this.pageSize = this.rowSizes[0];
     this.tableDraw();
     this.clipboardService.getPasteEvent().subscribe(data => this.pasteData(data))

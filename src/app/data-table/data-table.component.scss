@@ -296,21 +296,14 @@ table.dataTable {
 }
 
 .tableConfig {
-  font-family: inherit;
-  font-size: inherit;
-  line-height: 41px;
-  margin: 5px 0;
-  padding: 0 10px;
-  width: 100%;
-  background: #f1f7ff;
-  border-bottom: 1px solid #8abde3;
+  text-align: left;
+  padding-left: 5px;
   label {
     display: inline-block;
     margin-bottom: 0.5rem;
+    margin-right: 10px;
   }
   select {
-    height: 35px;
-    width: 180px;
     border-radius: 5px;
     border: 1px solid grey;
     background-color: #f9f9f9;

@@ -74,6 +74,7 @@ export class DataTableComponent implements OnInit {
   @Input() columnDefs:Column[];
   @Input() rowData;
 
+  private math = Math;
   private TableRows:TableRow[] = [];
   private FilterRowCount:number;
   private TotalPages:number;

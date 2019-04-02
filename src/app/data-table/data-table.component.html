@@ -1,9 +1,11 @@
+<!--
 <div class="tableConfig">
   <label for="rowCount">Rows: </label>
   <select id="rowCount" (change) = "onRowSizeChange( $event, $event.target.value)">
     <option *ngFor="let r of rowSizes" [value]="r">{{r}}</option>
   </select>
 </div>
+-->
 <table class="dataTable" (click)="onContextMenuOff()" [ngClass]="theme" >
   <thead>
   <tr class="header" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)">
@@ -70,7 +72,16 @@
 
   <tfoot *ngIf="pagination">
   <tr>
-    <td [attr.colspan]="columnDefs.length">
+    <td [attr.colspan]="math.floor(columnDefs.length/2)">
+      <div class="tableConfig">
+        <label for="rowCount">Rows: </label>
+        <select id="rowCount" (change) = "onRowSizeChange( $event, $event.target.value)">
+          <option *ngFor="let r of rowSizes" [value]="r">{{r}}</option>
+        </select>
+      </div>
+
+    </td>
+    <td [attr.colspan]="math.ceil(columnDefs.length/2)">
 <span class="pagination-row">
     <span>{{FromRecord}}</span>
       to

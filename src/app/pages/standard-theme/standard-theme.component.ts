@@ -14,6 +14,7 @@ export class StandardThemeComponent implements OnInit {
           field: 'model',
           width: '40px',
           sort: true,
+          isEdit: true,
           filter: true/*,
           cellRender: (row, column, data, def) => {
             return '<a href="#">' + data + '</a>';

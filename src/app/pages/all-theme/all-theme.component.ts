@@ -14,6 +14,7 @@ export class AllThemeComponent implements OnInit {
           field: 'model',
           width: '40px',
           sort: true,
+          isEdit: true,
           filter: true/*,
           cellRender: (row, column, data, def) => {
             return '<a href="#">' + data + '</a>';
@@ -94,6 +95,7 @@ export class AllThemeComponent implements OnInit {
           field: 'model',
           width: '40px',
           sort: true,
+          isEdit: true,
           filter: true/*,
           cellRender: (row, column, data, def) => {
             return '<a href="#">' + data + '</a>';
@@ -173,6 +175,7 @@ export class AllThemeComponent implements OnInit {
           headerName: 'Model',
           field: 'model',
           width: '40px',
+          isEdit: true,
           sort: true,
           filter: true/*,
           cellRender: (row, column, data, def) => {

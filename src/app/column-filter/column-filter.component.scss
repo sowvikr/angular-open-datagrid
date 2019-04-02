@@ -8,6 +8,9 @@
     border-bottom: 1px solid #BDC3C7;
   }
 
+  .filterFooter{
+    border-top: 1px solid #BDC3C7;
+  }
   .container:hover {
     input ~ .checkmark {
       background-color: inherit;
@@ -42,6 +45,9 @@
       border: 1px solid initial;
     }
   }
+  .filterFooter{
+    border-top: 1px solid #424242;
+  }
   .container {
     input[type=checkbox]:checked ~ .checkmark {
       background-color: #2196F3;
@@ -66,6 +72,18 @@
   color: rgba(0, 0, 0, 0.87);
   .filterHeader {
     border-bottom: 1px solid #e2e2e2;
+  }
+  .filterFooter{
+    button{
+      background-color: transparent;
+      border: 0;
+      color: #3f51b5;
+      font-family: inherit;
+      font-size: inherit;
+      margin: 0;
+      padding: 0;
+      text-transform: uppercase;
+    }
   }
   .container {
     input[type=checkbox]:checked ~ .checkmark {
@@ -147,6 +165,12 @@ div.filterPanel {
     content: "";
     position: absolute;
     display: none;
+  }
+
+  .filterFooter{
+    padding: 4px;
+    padding-top: 8px;
+    text-align: right;
   }
 
 }

@@ -23,34 +23,50 @@ export class ColumnFilterComponent implements OnInit {
   private filteredData:Array<any> = [];
 
 
-  checkedColumnFilter(value:string, event) {
+  clearAll($event) {
+    this.filterColumn('Select All', false);
+    this.OnFilterChange.emit({filteredData: [], column: this.Column});
+  }
 
-    if (value === 'Select All' && event.target.checked) {
+  filterColumn(value:string, checkboxValue:boolean) {
+    if (value === 'Select All' && checkboxValue) {
       this.filteredData = [];
       this.selectOne = true;
       for (let i = 0; i < this.FilterValues.length; ++i) {
-        this.filteredData.push(this.FilterValues[i].data[0]);
+        let filterValue = this.FilterValues[i];
+        filterValue.checked = true;
+        this.filteredData.push(filterValue.data[0]);
       }
-    } else if (value === 'Select All' && !event.target.checked) {
+    } else if (value === 'Select All' && !checkboxValue) {
       this.filteredData = [];
+      for (let i = 0; i < this.FilterValues.length; ++i) {
+        let filterValue = this.FilterValues[i];
+        filterValue.checked = false;
+        this.selectAll = false;
+      }
       this.selectOne = false;
-    } else if (event.target.checked) {
+    } else if (checkboxValue) {
       this.filteredData.push(value);
       if (this.filteredData.length === this.FilterValues.length) {
         this.selectAll = true;
       }
-    } else if (!event.target.checked) {
+    } else if (!checkboxValue) {
       const index = this.filteredData.indexOf(value);
       this.selectAll = false;
       if (index >= 0) {
         this.filteredData.splice(index, 1);
       }
     }
+  }
+
+  checkedColumnFilter(value:string, event) {
+
+    this.filterColumn(value, event.target.checked);
     this.OnFilterChange.emit({filteredData: this.filteredData, column: this.Column});
   }
 
-  search(text){
-    let filterOptions:Array<FilterOptions> = [{comparator:String.prototype.includes, operator:"or", values:[text]}];
+  search(text) {
+    let filterOptions:Array<FilterOptions> = [{comparator: String.prototype.includes, operator: "or", values: [text]}];
     this.FilterValues = this.filterService.filter(filterOptions, this.FilterValues).tableRows;
   }
 

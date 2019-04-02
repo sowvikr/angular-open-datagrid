@@ -135,7 +135,7 @@ export class DataTableComponent implements OnInit {
       const columnValue = rows[i].data[columnNumber];
       if (uniqueItems.indexOf(columnValue) < 0) {
         uniqueItems.push(columnValue);
-        column.uniqueFilterValues.push({filteredOut:false, data:[columnValue]});
+        column.uniqueFilterValues.push({checked:false, filteredOut:false, data:[columnValue]});
         if (!this.FilterData[columnNumber]) {
           this.FilterData[columnNumber] = {comparator: String.prototype.includes, operator: 'or', values: []};
         }

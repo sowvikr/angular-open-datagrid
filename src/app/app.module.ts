@@ -16,6 +16,7 @@ import { DarkThemeComponent } from './pages/dark-theme/dark-theme.component';
 import { StandardThemeComponent } from './pages/standard-theme/standard-theme.component';
 import { MaterialThemeComponent } from './pages/material-theme/material-theme.component';
 import { AllThemeComponent } from './pages/all-theme/all-theme.component'
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { AllThemeComponent } from './pages/all-theme/all-theme.component'
     BrowserModule,
     AppRoutingModule,
     DragDropModule,
-    ClickOutsideModule
+    ClickOutsideModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

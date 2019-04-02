@@ -37,7 +37,7 @@
   <tbody (click)="onContextMenuOff()" tabindex="0" ctrlKeys
          (ctrlC)="onCtrlC($event)"
          (ctrlV)="onCtrlV($event)">
-  <tr *ngFor="let row of PagedRows; let rowCount = index" [hidden]="row.filteredOut">
+  <tr *ngFor="let row of PagedRows; let rowCount = index" [hidden]="row.filteredOut" [@enterAnimation]>
     <td ctrlkeys *ngFor="let cell of row.data; let columnCount = index"
         (click)="onClick(rowCount, columnCount, cell, $event)"
         (mousedown)="onDragStart($event)"

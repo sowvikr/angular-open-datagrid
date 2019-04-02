@@ -1,4 +1,5 @@
 import {Component, OnInit, Input} from '@angular/core';
+import { trigger, style, animate, transition } from '@angular/animations';
 import {moveItemInArray} from '@angular/cdk/drag-drop';
 import {filter} from 'rxjs/internal/operators/filter';
 import {ClipboardService} from '../clipboard.service';
@@ -47,7 +48,21 @@ interface ContextMenuData {
 @Component({
   selector: 'app-data-table',
   templateUrl: './data-table.component.html',
-  styleUrls: ['./data-table.component.scss']
+  styleUrls: ['./data-table.component.scss'],
+  animations: [
+    trigger(
+      'enterAnimation', [
+        transition(':enter', [
+          style({transform: 'translateY(28px)', opacity: 0, height: '28px'}),
+          animate('200ms', style({transform: 'translateY(0)', opacity: 1, height: '0'}))
+        ]),
+        transition(':leave', [
+          style({transform: 'translateY(28px)', opacity: 0, height: '28px'}),
+          animate('200ms', style({transform: 'translateY(0)', opacity: 1, height: '0'}))
+        ])
+      ]
+    )
+  ]
 })
 export class DataTableComponent implements OnInit {
 

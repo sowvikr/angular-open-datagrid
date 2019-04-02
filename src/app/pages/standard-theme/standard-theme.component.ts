@@ -14,10 +14,10 @@ export class StandardThemeComponent implements OnInit {
           field: 'model',
           width: '40px',
           sort: true,
-          filter: true,
+          filter: true/*,
           cellRender: (row, column, data, def) => {
             return '<a href="#">' + data + '</a>';
-          }
+          }*/
         },
         {headerName: 'Make', isEdit: true, field: 'make', width: '40px', filter: true, columnFilter: true},
         {headerName: 'Price', isEdit: true, width: '40px', field: 'price'},

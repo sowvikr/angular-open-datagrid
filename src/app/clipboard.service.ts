@@ -9,6 +9,7 @@ export class ClipboardService {
 
   private txtAreaG:any;
   private onPaste:EventEmitter<Array<Array<any>>> = new EventEmitter<Array<Array<any>>>();
+  private onCopy:EventEmitter<any> = new EventEmitter<any>();
 
   private generateTempTextArea():any {
     const txtArea = document.createElement('textarea');
@@ -62,6 +63,7 @@ export class ClipboardService {
       const msg = successful ? 'successful' : 'unsuccessful';
       console.log('Copying text command was ' + msg);
       if (successful) {
+        this.onCopy.emit(true);
         return true;
       }
     } catch (err) {
@@ -102,6 +104,10 @@ export class ClipboardService {
 
   public getPasteEvent():EventEmitter<Array<Array<any>>> {
     return this.onPaste;
+  }
+
+  public getCopyEvent():EventEmitter<any> {
+    return this.onCopy;
   }
 
   constructor() {

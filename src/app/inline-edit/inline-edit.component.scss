@@ -4,10 +4,16 @@
     padding-left: 12px;
     padding-right: 12px;
     input[type=text] {
-      height: 20px;
+      height: 38px;
     }
   }
-
+  .cell.highlight{
+    background-color: #fce4ec !important
+  }
+  .cell.cell-highlight-animation{
+    -webkit-transition: background-color 1s;
+    transition: background-color 1s;
+  }
   .cell.selected-row {
     border: 1px solid #3f51b5;
   }
@@ -22,8 +28,19 @@
     border: 1px solid transparent;
     padding-left: 12px;
     padding-right: 12px;
+    input[type=text] {
+      height: 19px;
+    }
   }
 
+  .cell.highlight{
+    background-color: #0091EA !important
+  }
+
+  .cell.cell-highlight-animation{
+    -webkit-transition: background-color 1s;
+    transition: background-color 1s;
+  }
   .cell.selected-row {
     background-color: rgba(0, 145, 234, 0.3);
   }
@@ -39,6 +56,17 @@
     border: 1px solid transparent;
     padding-left: 12px;
     padding-right: 12px;
+    input[type=text] {
+      line-height: 19px;
+    }
+
+  }
+  .cell.highlight{
+    background-color: #00B0FF !important
+  }
+  .cell.cell-highlight-animation{
+    -webkit-transition: background-color 1s;
+    transition: background-color 1s;
   }
 
   .cell.selected-row {

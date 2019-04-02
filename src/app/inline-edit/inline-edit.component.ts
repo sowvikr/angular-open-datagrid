@@ -1,4 +1,6 @@
 import {Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef} from '@angular/core';
+import {ClipboardService} from '../clipboard.service';
+
 
 interface ChangedValue {
   value: string;
@@ -42,7 +44,7 @@ export class InlineEditComponent implements OnInit {
   private isCombobox = false;
   private changedValue:ChangedValue = {column: 0, row: 0, value: null};
   private contextMenuArgs:ContextMenuArgs = {x: 0, y: 0, isEdit: false, column: 0, row: 0, mouseEvent: null};
-
+  private isCoping:boolean;
 
   onClick() {
     if (this.isEdit) {
@@ -76,7 +78,7 @@ export class InlineEditComponent implements OnInit {
     this.isEdit = false;
   }
 
-  constructor() {
+  constructor(private clipboardService:ClipboardService) {
   }
 
   ngOnInit() {
@@ -86,5 +88,15 @@ export class InlineEditComponent implements OnInit {
     else {
       this.isCombobox = false;
     }
+    this.clipboardService.getCopyEvent().subscribe(data => {
+      if(this.isSelected) {
+        this.isCoping = true;
+        let that = this;
+        setTimeout(function () {
+          that.isCoping = false;
+        }, 1000);
+      }
+    })
+
   }
 }

@@ -1,11 +1,11 @@
 <div class="editConatiner" [ngClass]="theme" tabindex="0">
-  <div [hidden]="isEditable" class="cell"
-       [ngClass]="{'selected-row':isSelected, 'metrial-theme':theme==='metrial-theme'}" >
+  <div [hidden]="isEditable" class="cell cell-highlight-animation"
+       [ngClass]="{'selected-row':isSelected, 'metrial-theme':theme==='metrial-theme', 'highlight':isCoping}" >
     <div (contextmenu)="onRightClick($event)">
       <span [innerHTML]="renderer(row, column, cellValue, columnDefs)"></span>
     </div>
   </div>
-  <div (dblclick)="onDoubleClick()" [hidden]="!isEditable" class="cell" [ngClass]="{'selected-row':isSelected}">
+  <div (dblclick)="onDoubleClick()" [hidden]="!isEditable" class="cell cell-highlight-animation" [ngClass]="{'selected-row':isSelected, 'highlight':isCoping}">
     <div (contextmenu)="onRightClick($event)">
       <span [hidden]="isEdit">{{cellValue}}</span>
     <span [hidden]="!isEdit" (focusout)="onFocusOut()" #name>

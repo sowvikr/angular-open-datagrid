@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class DarkThemeComponent implements OnInit {
   dataTables: Array<any> = [
     {
-      pagination: true, pageSize: 10, theme: 'dark-theme', columnDefs: [
+      pagination: true, theme: 'dark-theme', columnDefs: [
         {
           headerName: 'Model',
           field: 'model',

@@ -52,7 +52,7 @@ interface ContextMenuData {
 export class DataTableComponent implements OnInit {
 
   @Input() pagination;
-  @Input() pageSize;
+  private pageSize;
 
   @Input() theme;
   @Input() columnDefs:Column[];
@@ -65,7 +65,7 @@ export class DataTableComponent implements OnInit {
   private CurrentPage = 1;
   private InvalidPage = 0;
   private FromRecord = 1;
-  private ToRecord:number = this.pageSize;
+  private ToRecord:number = 0;
   private FilterData:Array<FilterOptions>;
   private TotalRows:number;
   private FilteredRows:TableRow[] = [];
@@ -77,6 +77,7 @@ export class DataTableComponent implements OnInit {
   private contextMenuData:Array<Array<any>> = [[]];
   private contextMenuIsEdit:boolean;
   private isDragging:boolean;
+  private rowSizes = [25, 50, 75, 100];
 
 
   // Convert row data to a 2D array.
@@ -458,16 +459,27 @@ export class DataTableComponent implements OnInit {
     this.columnDefs[column].showFilter = !this.columnDefs[column].showFilter;
   }
 
-  constructor(private clipboardService:ClipboardService, private filterService:FilterService) {
+  onRowSizeChange($event, value){
+    this.pageSize = parseInt(value);
+    this.tableDraw();
   }
 
-  ngOnInit() {
+  private tableDraw(){
     this.FilterRowCount = this.rowData.length;
     this.TotalRows = this.rowData.length;
     this.FilterData = new Array<FilterOptions>(this.columnDefs.length);
     this.createTableData();
     this.TotalPages = Math.ceil(this.rowData.length / this.pageSize);
+    this.ToRecord = this.pageSize;
 
+  }
+
+  constructor(private clipboardService:ClipboardService, private filterService:FilterService) {
+  }
+
+  ngOnInit() {
+    this.pageSize = this.rowSizes[0];
+    this.tableDraw();
     this.clipboardService.getPasteEvent().subscribe(data => this.pasteData(data))
   }
 

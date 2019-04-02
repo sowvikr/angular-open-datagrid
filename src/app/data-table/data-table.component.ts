@@ -53,6 +53,7 @@ export class DataTableComponent implements OnInit {
 
   @Input() pagination;
   private pageSize;
+  private dragTheme;
 
   @Input() theme;
   @Input() columnDefs:Column[];
@@ -478,6 +479,7 @@ export class DataTableComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.dragTheme = this.theme +"-drag";
     this.pageSize = this.rowSizes[0];
     this.tableDraw();
     this.clipboardService.getPasteEvent().subscribe(data => this.pasteData(data))

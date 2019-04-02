@@ -1,4 +1,4 @@
-.dataTable{
+.dataTable {
   margin-bottom: 40px;
 }
 
@@ -42,7 +42,7 @@
         top: 65px;
       }
       */
-      &:hover{
+      &:hover {
         color: rgba(0, 0, 0, 0.94);
         background: #d1d3d3;
       }
@@ -94,7 +94,7 @@
       }
       */
 
-      &:hover{
+      &:hover {
         color: rgba(0, 0, 0, 0.94);
         background: #d1d3d3;
       }
@@ -137,12 +137,12 @@
   color: rgba(245, 245, 245, 0.64);
   border: 1px solid #424242;
 
-  input[type=text]{
+  input[type=text] {
     background-color: #262c2e;
     color: #F5F5F5;
     border: 1px solid #fff;
   }
-  input[type=text]:disabled{
+  input[type=text]:disabled {
     border: 1px solid #5c5c5c;
   }
   tbody {
@@ -192,7 +192,6 @@
   }
 }
 
-
 table.dataTable {
   table-layout: fixed;
   webkit-touch-callout: none; /* iOS Safari */
@@ -216,7 +215,7 @@ table.dataTable {
     line-height: 26px;
     font-size: 12px;
   }
-  tbody:focus{
+  tbody:focus {
     outline: none;
   }
 
@@ -253,7 +252,7 @@ table.dataTable {
     }
 
     tr.filter {
-      span{
+      span {
         position: relative;
       }
       input[type=text] {
@@ -264,7 +263,7 @@ table.dataTable {
       .filterDropdown {
         position: absolute;
         width: 135px;
-        top:10px;
+        top: 10px;
       }
     }
   }
@@ -296,7 +295,7 @@ table.dataTable {
 
 }
 
-.tableConfig{
+.tableConfig {
   font-family: inherit;
   font-size: inherit;
   line-height: 41px;
@@ -305,11 +304,11 @@ table.dataTable {
   width: 100%;
   background: #f1f7ff;
   border-bottom: 1px solid #8abde3;
-  label{
+  label {
     display: inline-block;
     margin-bottom: 0.5rem;
   }
-  select{
+  select {
     height: 35px;
     width: 180px;
     border-radius: 5px;
@@ -322,22 +321,31 @@ table.dataTable {
   }
 }
 
-
 .cdk-drag-preview {
   box-sizing: border-box;
-  border-radius: 4px;
   text-align: left;
-  line-height: 20px;
-  padding: 12px;
-  font-family: Roboto, sans-serif;
-  font-weight: 400;
   font-size: 13px;
-  background-color: white;
+  vertical-align: middle;
+  display: table-cell;
   color: rgba(0, 0, 0, 0.87);
   min-width: 300px;
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
   0 8px 10px 1px rgba(0, 0, 0, 0.14),
   0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+.cdk-drag-preview.light-theme-drag {
+  background-color: #f5f7f7;
+  padding: 5px 10px;
+  color: rgba(0, 0, 0, 0.54);
+}
+.cdk-drag-preview.dark-theme-drag {
+  background-color: #1c1f20;
+  padding: 5px 10px;
+  color: rgba(245, 245, 245, 0.64);
+}
+.cdk-drag-preview.metrial-theme-drag{
+  background-color: #f9f9f9;
+  padding: 15px 15px;
 }
 
 .cdk-drag-placeholder {

@@ -6,7 +6,7 @@
   </select>
 </div>
 -->
-<table class="dataTable" (click)="onContextMenuOff()" [ngClass]="theme" >
+<table class="dataTable" (click)="onContextMenuOff()" [ngClass]="theme">
   <thead>
   <tr class="header" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)">
     <th *ngFor="let item of columnDefs ; let i = index" cdkDrag [ngStyle]="{'width':item.width}" [ngClass]="dragTheme">
@@ -23,10 +23,11 @@
       <input *ngIf="item.filter" [disabled]="item.columnFilter" (keyup)="filter(i,$event.target.value)" type="text"
              height="10"/>
         <span>
-        <i  class="fa fa-filter" *ngIf="item.filter && item.columnFilter" aria-hidden="true"
+        <i class="fa fa-filter" *ngIf="item.filter && item.columnFilter" aria-hidden="true"
            (click)="toggleFilter(i, $event)">
         </i>
-        <app-column-filter (clickOutside)="item.showFilter=false" [exclude]="'.fa-filter'" [FilterValues]="columnDefs[i].uniqueFilterValues" [Column]="i"
+        <app-column-filter (clickOutside)="item.showFilter=false" [exclude]="'.fa-filter'"
+                           [FilterValues]="columnDefs[i].uniqueFilterValues" [Column]="i"
                            class="filterDropdown"
                            (OnFilterChange)="checkedColumnFilter($event)" *ngIf="item.filter && item.columnFilter"
                            [hidden]="!item.showFilter" [theme]="theme" [ngStyle]="{'left.px': filterMenuX}">
@@ -72,40 +73,38 @@
 
   <tfoot *ngIf="pagination">
   <tr>
-    <td [attr.colspan]="math.floor(columnDefs.length/2)">
-      <div class="tableConfig">
+
+    <td [attr.colspan]="columnDefs.length">
+      <span class="rowCount">
         <label for="rowCount">Rows: </label>
-        <select id="rowCount" (change) = "onRowSizeChange( $event, $event.target.value)">
+        <select id="rowCount" (change)="onRowSizeChange( $event, $event.target.value)">
           <option *ngFor="let r of rowSizes" [value]="r">{{r}}</option>
         </select>
-      </div>
-
-    </td>
-    <td [attr.colspan]="math.ceil(columnDefs.length/2)">
-<span class="pagination-row">
-    <span>{{FromRecord}}</span>
-      to
-    <span>{{ToRecord}}</span> of <span>{{TotalRows}}</span>
-  </span>
-        <span class="pagination-page-summary">
-    <button type="button" class="pagination btFirst" [disabled]="CurrentPage === 1" (click)="firstPage()"><i
-      class="fa fa-angle-double-left"></i></button>
-    <button type="button" class="pagination btPrevious" [disabled]="CurrentPage === 1" (click)="previousPage()">
-      <i class="fa fa-angle-left"></i>
-    </button>
-    Page <span>{{CurrentPage}}</span> of <span ref="lbTotal">{{TotalPages}}</span>
-    <button type="button" class="pagination btNext" ref="btNext" [disabled]="CurrentPage === TotalPages"
-            (click)="nextPage()">
-      <i class="fa fa-angle-right"></i>
-    </button>
-    <button type="button" class="pagination btLast" ref="btLast" [disabled]="CurrentPage === TotalPages"
-            (click)="lastPage()">
-      <i class="fa fa-angle-double-right"></i>
-    </button>
-  </span>
+      </span>
+      <span class="pagination-row">
+        <span>{{FromRecord}}</span>
+          to
+        <span>{{ToRecord}}</span> of <span>{{TotalRows}}</span>
+      </span>
+      <span class="pagination-page-summary">
+        <button type="button" class="pagination btFirst" [disabled]="CurrentPage === 1" (click)="firstPage()">
+          <i class="fa fa-angle-double-left"></i>
+        </button>
+       <button type="button" class="pagination btPrevious" [disabled]="CurrentPage === 1" (click)="previousPage()">
+         <i class="fa fa-angle-left"></i>
+       </button>Page <span>{{CurrentPage}}</span> of
+        <span ref="lbTotal">{{TotalPages}}</span>
+        <button type="button" class="pagination btNext" ref="btNext" [disabled]="CurrentPage === TotalPages"
+                (click)="nextPage()">
+          <i class="fa fa-angle-right"></i>
+        </button>
+        <button type="button" class="pagination btLast" ref="btLast" [disabled]="CurrentPage === TotalPages"
+                (click)="lastPage()">
+          <i class="fa fa-angle-double-right"></i>
+        </button>
+      </span>
     </td>
   </tr>
-  <!--    -->
   </tfoot>
 </table>
 <div *ngIf="contextmenu" (click)="onContextMenuOff()">

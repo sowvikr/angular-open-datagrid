@@ -27,6 +27,9 @@
               "src/assets"
             ],
             "styles": [
+              "src/assets/icon/feather/css/feather.css",
+              "src/assets/icon/themify/themify-icons.css",
+              "src/assets/icon/icofont/css/icofont.scss",
               "src/styles.scss"
             ],
             "scripts": [],

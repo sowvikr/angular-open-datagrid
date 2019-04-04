@@ -1,0 +1,210 @@
+<mat-sidenav-container class="sidenav-container"
+                       [ngClass]="{'sidenav-expanded': showFullNavigation,
+                        'sidenav-menu-expanded': showNavigationMenu, 'link-expanded': showLink}">
+  <!-- <mat-sidenav
+     #drawer class="sidenav" fixedInViewport="true"
+     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+     [mode]="(isHandset$ | async) ? 'over' : 'side'"
+     [opened]="!(isHandset$ | async)">
+     <mat-toolbar></mat-toolbar>
+     <mat-nav-list class="nav-menus">
+       <a mat-list-item href="javascript:" *ngFor="let item of menuItems"
+          [ngClass]="{'link-self-expanded': item.clicked}" class="menu-link"
+          (mouseenter)="mouseEnter(item)"  (mouseleave)="mouseLeave(item)">
+         <i class="{{item.icon}}" (click)="toggleMenuItem(item)"
+            ></i>
+         <span class="toggle-link" [ngClass]="{'toggle-link-expanded': item.clicked, 'toggle-link-closed': !item.clicked}"
+               *ngIf="!item.searchable">{{item.title}}</span>
+         <form class="toggle-link" [ngClass]="{'toggle-link-expanded': item.clicked, 'toggle-link-closed': !item.clicked}"
+               *ngIf="item.searchable" action="" (submit)="goToPage(item.id)">
+           <div class="form-group">
+             <input type="text" class="form-control"
+                    placeholder="{{item.title}}">
+           </div>
+         </form>
+       </a>
+     </mat-nav-list>
+
+   </mat-sidenav>-->
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>
+        <a href="#"><img src="assets/dashboard_images/EquityMarketsLogo.png" class="dashboard-logo"></a>
+      </span>
+      <!--<mat-slide-toggle
+        class="toggle-menu"
+        [color]="slideColor"
+        (change)="toggle($event)">
+      </mat-slide-toggle>-->
+      <a href="javascript:" class="toggle-mega-menu mega-menu-link prime-links">
+        <span>Equity Apps</span>
+        <i class="feather icon-chevron-down f-14 p-l-5"></i>
+      </a>
+      <a href="javascript:" class="toggle-mega-menu mega-menu-link search-link">
+        <span></span>
+        <i class="feather icon-search f-14 p-l-5"></i>
+      </a>
+
+      <div class="right-side-menu">
+        <a href="javascript:">
+          <i class="feather icon-maximize full-screen"></i>
+        </a>
+        <a href="javascript:" [matMenuTriggerFor]="menu">
+          <i class="feather icon-bell" matBadge="5" matBadgeColor="warn"></i>
+        </a>
+        <mat-menu #menu="matMenu">
+          <div mat-menu-item class="text-center">
+            You have <span class="notification-number">{{notifications.length}}</span> new notifications.
+            <button class="clear-all btn-sm" *ngIf="notifications.length" (click)="clearAllNotifications()">Clear All
+            </button>
+          </div>
+          <div mat-menu-item *ngFor="let notification of notifications">
+            <div class="notification">
+              <div [innerHTML]="notification.message"></div>
+              <i class="icofont icofont-ui-delete close-notification"
+                 (click)="deleteNotification($event, notification)"></i>
+            </div>
+          </div>
+        </mat-menu>
+        <!--<a href="javascript:">
+          <i class="feather icon-message-square" matBadge="3" matBadgeColor="warn"></i>
+        </a>-->
+        <a href="javascript:" [matMenuTriggerFor]="menuLogin">
+          <img src="assets/dashboard_images/Vic.png" class="img-radius" alt="User-Profile-Image">
+          <span>Victor Dodig</span>
+          <i class="feather icon-chevron-down"></i>
+        </a>
+        <mat-menu #menuLogin="matMenu" class="user-menus">
+          <div mat-menu-item>
+            <i class="feather icon-settings"></i>Settings
+          </div>
+          <div mat-menu-item>
+            <i class="feather icon-user"></i>User Settings
+          </div>
+          <div mat-menu-item>
+            <i class="feather icon-log-out"></i>Logout
+          </div>
+        </mat-menu>
+      </div>
+    </mat-toolbar>
+    <div class="mega-menu" [ngClass]="megaMenuOpened ? 'opened':''" (clickOutside)="clickedOutMegaMenu()"
+         [exclude]="'.prime-links'">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 text-content">
+            <h3>Equity Market Apps</h3>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Asperiores natus laboriosam fugit, cons</p>
+          </div>
+          <div class="col-lg-6 icon-content" [ngClass]="appliedDarkTheme ? 'dark' : ''">
+            <div class="container">
+              <div class="row">
+                <a class="col-lg-4 prime-app-img anchor" href="http://prime-reporting.crossleafdevelopment.com">
+                  <img class="black" src="./assets/dashboard_images/favicon.ico">
+                  <img class="light" src="./assets/dashboard_images/Prime_Logo_light.png">
+                  <div class="app-name">Prime Reporting</div>
+                </a>
+                <a class="col-lg-4 anchor" href="http://dashboards.crossleafdevelopment.com">
+                  <i class="icofont icofont-presentation-alt"></i>
+                  <div class="app-name">Prime Dashboard</div>
+                </a>
+                <div class="col-lg-4 prime-app-img">
+                  <a href="http://cars.crossleafdevelopment.com/#/login" target="_blank" class="anchor">
+                    <img class="black" src="./assets/dashboard_images/CARS-Dark.png">
+                    <img class="light" src="./assets/dashboard_images/CARS-Light.png">
+                    <div class="app-name">CARS</div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container search-container" (clickOutside)="clickedOutSearch()"
+         [exclude]="'.search-link'"
+         [@openClose]="searchOpened ? 'open' : 'closed'"
+         (keydown.esc)="onEscKeyUp($event)">
+      <div class="row">
+        <div class="col-12 col-sm-12 col-md-3 sol-lg-3" *ngFor="let item of searchItems">
+          <form class="" action="" (submit)="goToPage(item.id)">
+            <div class="form-group input-container">
+              <!--<input type="text" class="form-control" placeholder="{{item.title}}"
+                     (keyup)="onChangeSearchInput($event, item)">-->
+              <input id="typeahead-basic" type="text" class="form-control" [ngbTypeahead]="item.searchFn"
+                     placeholder="{{item.title}}"
+                     (focus)="focus$.next($event.target.value)"
+                     (click)="click$.next($event.target.value)"
+                     #instance="ngbTypeahead"/>
+              <i class="icofont icofont-search search-icon" (click)="goToPage(item.id)"></i>
+            </div>
+          </form>
+          <ul class="submenu-list">
+            <li class="nav-item menu-link-list" *ngFor="let submenu of item.links"
+                [routerLink]=[submenu.id]>
+            <a><i class="{{submenu.icon}}"></i> {{submenu.title}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="dashboard-side-nav">
+      <ul class="nav flex-column">
+        <li class="nav-item menu-link-list" *ngFor="let item of menuItems" [ngClass]="{'active': item.active}">
+          <div
+             [ngClass]="{'link-self-expanded': item.clicked}" class="menu-link"
+             (mouseenter)="mouseEnter(item)" (mouseleave)="mouseLeave(item)" (click)="onClickMenuItem($event, item)">
+            <i class="{{item.icon}}"></i>
+            <a class="toggle-link toggle-link-span" href="{{item.id}}"
+                  [ngClass]="{'toggle-link-expanded': item.clicked, 'toggle-link-closed': !item.clicked}"
+                  *ngIf="item.link">{{item.title}}</a>
+            <form class="toggle-link toggle-link-form"
+                  [ngClass]="{'toggle-link-expanded': item.clicked, 'toggle-link-closed': !item.clicked}"
+                  *ngIf="item.searchable" action="" (submit)="goToPage(item.id)">
+              <div class="form-group">
+                <input type="text" class="form-control"
+                       placeholder="{{item.title}}" (focus)="onFocusSearchInput($event, item)"
+                       (blur)="onFocusSearchInput($event, item)">
+                <i class="icofont icofont-search search-icon" (click)="goToPage(item.id)"></i>
+              </div>
+            </form>
+            <div class="toggle-link submenu"
+                 [ngClass]="{'toggle-link-expanded': item.clicked, 'toggle-link-closed': !item.clicked}"
+                 *ngIf="item.links">
+              <a class="submenu-link" *ngIf="item.submenu">{{item.title}}<i class="feather icon-chevron-down"></i></a>
+              <a class="submenu-link" *ngIf="item.submenuWithSearch">
+                <form class="toggle-link toggle-link-form"
+                      [ngClass]="{'toggle-link-expanded': item.clicked, 'toggle-link-closed': !item.clicked}"
+                      action="" (submit)="goToPage(item.id)">
+                  <div class="form-group">
+                    <input type="text" class="form-control"
+                           placeholder="{{item.title}}" (focus)="onFocusSearchInput($event, item)"
+                           (blur)="onFocusSearchInput($event, item)" (keyup)="onChangeSubmenuWithSearch($event, item)">
+                    <i class="icofont icofont-search search-icon" (click)="goToPage(item.id)"></i>
+                  </div>
+                </form>
+              </a>
+              <ul class="submenu-list">
+                <li class="nav-item menu-link-list" *ngFor="let submenu of item.links" [routerLink]=[submenu.id]>
+                  <a><i class="{{submenu.icon}}"></i> {{submenu.title}}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        </li>
+      </ul>
+    </div>
+    <!-- Add Content Here -->
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+

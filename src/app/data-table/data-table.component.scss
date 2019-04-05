@@ -141,9 +141,9 @@
     background-color: #262c2e;
     color: #F5F5F5;
     border: 1px solid #fff;
-  }
-  input[type=text]:disabled {
-    border: 1px solid #5c5c5c;
+    &:disabled{
+      border: 1px solid #5c5c5c;
+    }
   }
   tbody {
     color: #F5F5F5;
@@ -188,6 +188,11 @@
     }
     button:disabled {
       color: rgba(245, 245, 245, 0.64);
+    }
+    select{
+      line-height: 19px!important;
+      background-color: #262c2e;
+      color: #F5F5F5;
     }
   }
 }

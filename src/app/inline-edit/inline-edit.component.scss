@@ -58,8 +58,18 @@
     padding-right: 12px;
     input[type=text] {
       line-height: 19px;
+      background-color: #262c2e;
+      color: #F5F5F5;
+      border: 1px solid #fff;
+      &:disabled{
+        border: 1px solid #5c5c5c;
+      }
     }
-
+    select{
+      line-height: 19px!important;
+      background-color: #262c2e;
+      color: #F5F5F5;
+    }
   }
   .cell.highlight{
     background-color: #00B0FF !important
@@ -84,6 +94,12 @@
   .cell {
     input[type=text] {
       width: 100%;
+    }
+
+     select {
+      margin: 0;
+      font: inherit;
+      outline:none; /* remove focus ring from Webkit */
     }
   }
 }

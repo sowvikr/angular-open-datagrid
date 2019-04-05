@@ -8,11 +8,11 @@ import {AllThemeComponent} from './pages/all-theme/all-theme.component';
 
 const routes: Routes = [
   {
-    path: 'standard',
+    path: '',
     component: StandardThemeComponent,
   },
   {
-    path: '',
+    path: 'dark',
     component: DarkThemeComponent,
   },
   {

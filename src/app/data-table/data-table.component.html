@@ -19,6 +19,7 @@
       <i (click)="sortColumn(i)" class="fa fa-sort-desc"
          *ngIf="!item.sortState && !(item.sortState == null) && item.sort" aria-hidden="true"> </i>
       {{item.headerName}}
+      <span class="col-resize col-resize-cursor"></span>
     </th>
   </tr>
   <tr class="filter">
@@ -42,6 +43,7 @@
                            [hidden]="!item.showFilter" [theme]="theme" [ngStyle]="{'left.px': filterMenuX}">
         </app-column-filter>
         </span>
+        <span class="col-resize"></span>
 
     </th>
   </tr>

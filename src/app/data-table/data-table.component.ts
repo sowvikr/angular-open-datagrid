@@ -100,7 +100,7 @@ export class DataTableComponent implements OnInit {
   // Convert row data to a 2D array.
   createTableData(filteredData?:Array<any>, currentPage?:number) {
     this.TableRows = new Array<any>();
-    if(!(this.rowData && this.rowData.length)){
+    if (!(this.rowData && this.rowData.length)) {
       this.rowData = [];
     }
     else if (this.columnDefs.length !== Object.keys(this.rowData[0]).length) {
@@ -147,7 +147,7 @@ export class DataTableComponent implements OnInit {
         if (!(this.contextMenuData[i] && this.contextMenuData[i].length)) {
           this.contextMenuData[i] = [];
         }
-        this.contextMenuData[i] =  this.TableRows[i].data;
+        this.contextMenuData[i] = this.TableRows[i].data;
       }
     }
     if (!isSelect) {
@@ -166,7 +166,7 @@ export class DataTableComponent implements OnInit {
       if (!(this.contextMenuData[rowNumber] && this.contextMenuData[rowNumber].length)) {
         this.contextMenuData[rowNumber] = [];
       }
-      this.contextMenuData[rowNumber] =  this.PagedRows[rowNumber].data;
+      this.contextMenuData[rowNumber] = this.PagedRows[rowNumber].data;
     }
     else if (!selected) {
       this.contextMenuData[rowNumber] = [];
@@ -434,30 +434,34 @@ export class DataTableComponent implements OnInit {
     return false;
   }
 
-  onSelecting(rowCount, columnCount, cell, $event) {
-    if (this.PagedRows[rowCount].rowSelect) {
-      return;
+  unSelectRows() {
+    for (let i = 0; i < this.PagedRows.length; ++i) {
+      this.PagedRows[i].rowSelect = false;
     }
+  }
+
+  onSelecting(rowCount, columnCount, cell, $event) {
     if (this.isDragging) {
       if (!this.contextMenuData[rowCount]) {
         this.contextMenuData[rowCount] = [];
+        this.PagedRows[rowCount].rowSelect = false;
       }
       this.contextMenuData[rowCount][columnCount] = this.PagedRows[rowCount].data[columnCount];
     }
   }
 
   onClick(rowCount, columnCount, cell, $event) {
-    if (this.PagedRows[rowCount].rowSelect) {
-      return;
-    }
     if (this.contextMenuData[rowCount] && this.contextMenuData[rowCount][columnCount]) {
       this.contextMenuData = [];
+      this.unSelectRows();
     }
     else {
       if (!$event.ctrlKey) {
         this.contextMenuData = [];
+        this.unSelectRows();
       }
       if (!this.contextMenuData[rowCount]) {
+        this.PagedRows[rowCount].rowSelect = false;
         this.contextMenuData[rowCount] = [];
       }
       this.contextMenuData[rowCount][columnCount] = this.PagedRows[rowCount].data[columnCount];
@@ -480,7 +484,8 @@ export class DataTableComponent implements OnInit {
   deleteData(data:Array<Array<any>>) {
     for (let i = 0; i < data.length; ++i) {
       if (data[i] && data[i].length) {
-        this.rowData[i] = undefined;
+        if (this.rowData[i].rowSelect)
+          this.rowData[i] = undefined;
       }
     }
     for (let j = 0; j < this.rowData.length; ++j) {

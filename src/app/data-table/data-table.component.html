@@ -9,6 +9,9 @@
 <table class="dataTable" (click)="onContextMenuOff()" [ngClass]="theme">
   <thead>
   <tr class="header" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)">
+    <th style="width: 5px">
+
+    </th>
     <th *ngIf="rowSelection" style="width: 5px">
 
     </th>
@@ -22,6 +25,9 @@
     </th>
   </tr>
   <tr class="filter">
+    <th style="width: 5px">
+      #
+    </th>
     <th style="width: 5px" *ngIf="rowSelection">
       <label class="container">
         <input type="checkbox" (change)="checkedRowSelection($event, true);" [(ngModel)]="selectAllRows"/>
@@ -51,6 +57,20 @@
          (ctrlV)="onCtrlV($event)">
   <tr *ngFor="let row of PagedRows; let rowCount = index" [hidden]="row.filteredOut" [@enterAnimation]
       [ngClass]="{'odd': rowCount%2 !== 0, 'even': rowCount%2===0}">
+    <td style="width: 5px" oncontextmenu="return false;" *ngIf="rowSelection" class="checkBoxRow">
+      <app-inline-edit
+        [theme]="theme"
+        [isSelected]="false"
+        [renderer]="null"
+        (rightClicked)="showContextMenu($event)"
+        (changed)="checkedRowSelection($event)"
+        [isEditable]="false"
+        [columnDefs]="columnDefs" [row]="rowCount"
+        [column]="-2" [cellValue]="rowCount+1"
+        [cellData]="[]">
+
+      </app-inline-edit>
+    </td>
     <td style="width: 5px" oncontextmenu="return false;" *ngIf="rowSelection" class="checkBoxRow">
       <app-inline-edit
         [theme]="theme"
@@ -98,7 +118,7 @@
   <tfoot *ngIf="pagination">
   <tr>
 
-    <td [attr.colspan]="columnDefs.length+1">
+    <td [attr.colspan]="columnDefs.length+2">
       <span class="rowCount">
         <label for="rowCount">Rows: </label>
         <select id="rowCount" (change)="onRowSizeChange( $event, $event.target.value)">

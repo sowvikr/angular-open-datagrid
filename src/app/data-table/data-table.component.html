@@ -9,6 +9,9 @@
 <table class="dataTable" (click)="onContextMenuOff()" [ngClass]="theme">
   <thead>
   <tr class="header" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)">
+    <th *ngIf="rowSelection" style="width: 5px">
+
+    </th>
     <th *ngFor="let item of columnDefs ; let i = index" cdkDrag [ngStyle]="{'width':item.width}" [ngClass]="dragTheme">
       <i (click)="sortColumn(i)" class="fa fa-sort" *ngIf="item.sortState == null && item.sort"
          aria-hidden="true"> </i>
@@ -19,6 +22,12 @@
     </th>
   </tr>
   <tr class="filter">
+    <th style="width: 5px" *ngIf="rowSelection">
+      <label class="container">
+        <input type="checkbox" (change)="checkedRowSelection($event);" [(ngModel)]="selectAllRows"/>
+        <span class="checkmark"></span>
+      </label>
+    </th>
     <th *ngFor="let item of columnDefs; let i = index" [ngStyle]="{'width':item.width}">
       <input *ngIf="item.filter" [disabled]="item.columnFilter" (keyup)="filter(i,$event.target.value)" type="text"
              height="10"/>
@@ -41,6 +50,12 @@
          (ctrlC)="onCtrlC($event)"
          (ctrlV)="onCtrlV($event)">
   <tr *ngFor="let row of PagedRows; let rowCount = index" [hidden]="row.filteredOut" [@enterAnimation]>
+    <td style="width: 5px" oncontextmenu="return false;" *ngIf="rowSelection" class="checkBoxRow">
+      <label class="container">
+        <input type="checkbox" (change)="checkedRowSelection($event, rowCount)" [(ngModel)]="row.rowSelect"/>
+        <span class="checkmark"></span>
+      </label>
+    </td>
     <td ctrlkeys *ngFor="let cell of row.data; let columnCount = index"
         (click)="onClick(rowCount, columnCount, cell, $event)"
         (mousedown)="onDragStart($event)"
@@ -74,7 +89,7 @@
   <tfoot *ngIf="pagination">
   <tr>
 
-    <td [attr.colspan]="columnDefs.length">
+    <td [attr.colspan]="columnDefs.length+1">
       <span class="rowCount">
         <label for="rowCount">Rows: </label>
         <select id="rowCount" (change)="onRowSizeChange( $event, $event.target.value)">

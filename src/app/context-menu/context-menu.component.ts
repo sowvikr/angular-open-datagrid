@@ -2,6 +2,7 @@ import {Component, OnInit, Input, ViewChild, ElementRef} from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import {ClipboardService} from '../clipboard.service';
 import { ExportToCsv } from 'export-to-csv';
+import {DataTableUtilsService} from "../data-table-utils.service";
 
 interface MenuItem {
   text: string;
@@ -17,6 +18,7 @@ interface MenuItem {
   contextData?:any;
   copyFunction?:any;
   clipboardService?:any;
+  onDelete?:any;
 }
 
 @Component({
@@ -53,6 +55,7 @@ export class ContextMenuComponent implements OnInit {
     return this._y;
   }
 
+
   //@Input() x = 0;
   //@Input() y = 0;
   @Input() isEdit:boolean;
@@ -73,7 +76,13 @@ export class ContextMenuComponent implements OnInit {
       text: 'Paste', shortcut: 'Ctrl+V', icon: 'fa fa-paste', onClick() {
       let pasteData:Array<Array<any>> = this.clipboardService.getClipboardData();
     }
-    }/*,
+    },
+    {
+      text: 'Delete', shortcut: '', icon: 'fa fa-trash-o', onClick() {
+      this.onDelete.delete(this.contextData);
+    }
+    }
+    /*,
      {
      text: 'Export', shortcut: ' ', icon: null, onClick() {
      let col = [];
@@ -103,7 +112,8 @@ export class ContextMenuComponent implements OnInit {
     clipboardService.copyToClipboard(text);
   }
 
-  constructor(private clipboardService:ClipboardService, private domSanitizer:DomSanitizer) {
+
+  constructor(private clipboardService:ClipboardService, private domSanitizer:DomSanitizer, private dataTableService:DataTableUtilsService) {
   }
 
   ngOnInit() {
@@ -118,6 +128,11 @@ export class ContextMenuComponent implements OnInit {
         item.contextData = this.contextData;
         item.copyFunction = this.copyTextToClipboard;
         item.clipboardService = this.clipboardService;
+      }
+      if (item.text === 'Delete') {
+        item.enabled = true;
+        item.onDelete = this.dataTableService;
+        item.contextData = this.contextData;
       }
       else {
         item.enabled = true;

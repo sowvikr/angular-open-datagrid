@@ -4,6 +4,8 @@ import {moveItemInArray} from '@angular/cdk/drag-drop';
 import {filter} from 'rxjs/internal/operators/filter';
 import {ClipboardService} from '../clipboard.service';
 import {FilterService} from '../filter.service';
+import {sequenceEqual} from "rxjs/internal/operators/sequenceEqual";
+import {DataTableUtilsService} from "../data-table-utils.service";
 
 // Cell renderer interface.
 interface CellRenderer {
@@ -37,6 +39,7 @@ interface TableRow extends CellRenderer {
   filteredOut: boolean;
   pageNo?: number;
   data: Array<any>;
+  rowSelect?:boolean;
 }
 
 interface ContextMenuData {
@@ -69,6 +72,7 @@ export class DataTableComponent implements OnInit {
   @Input() theme;
   @Input() columnDefs:Column[];
   @Input() rowData;
+  @Input() rowSelection:boolean = true;
 
   private math = Math;
   private TableRows:TableRow[] = [];
@@ -87,16 +91,19 @@ export class DataTableComponent implements OnInit {
   private contextmenuY = 0;
   private filterMenuX = 0;
   private filterMenuY = 0;
-  private contextMenuData:Array<Array<any>> = [[]];
+  private contextMenuData:Array<Array<any>> = [];
   private contextMenuIsEdit:boolean;
   private isDragging:boolean;
   private rowSizes = [25, 50, 75, 100];
-
+  private selectAllRows:boolean = false;
 
   // Convert row data to a 2D array.
   createTableData(filteredData?:Array<any>, currentPage?:number) {
     this.TableRows = new Array<any>();
-    if (this.columnDefs.length !== Object.keys(this.rowData[0]).length) {
+    if(!(this.rowData && this.rowData.length)){
+      this.rowData = [];
+    }
+    else if (this.columnDefs.length !== Object.keys(this.rowData[0]).length) {
       console.warn('Invalid data: Total Column in def: ' + this.columnDefs.length + 'Total Columns in data:'
         + Object.keys(this.rowData[0]).length);
     }
@@ -109,6 +116,9 @@ export class DataTableComponent implements OnInit {
         }
         row.cellRender = this.cellRenderer;
         row.data.push(this.rowData[j][this.columnDefs[i].field]);
+        if (this.rowSelection) {
+          row.rowSelect = false;
+        }
       }
       this.TableRows.push(row);
       this.FilteredRows.push(row);
@@ -128,6 +138,44 @@ export class DataTableComponent implements OnInit {
       this.pagedRows();
       this.setPagedRow(1);
     }
+  }
+
+  private allRows(isSelect) {
+    for (let i = 0; i < this.TableRows.length; ++i) {
+      this.TableRows[i].rowSelect = isSelect;
+      if (isSelect) {
+        this.contextMenuData.splice(i, 0, this.TableRows[i].data);
+      }
+    }
+    if (!isSelect) {
+      this.contextMenuData = [];
+    }
+  }
+
+
+  private selectRows(selected:boolean, rowNumber:number, isAll?:boolean) {
+    let row = this.PagedRows[rowNumber];
+    if (isAll) {
+      this.allRows(selected);
+      return;
+    }
+    if (row.rowSelect && selected) {
+      if (!(this.contextMenuData[rowNumber] && this.contextMenuData[rowNumber].length)) {
+        this.contextMenuData[rowNumber] = [];
+      }
+      this.contextMenuData.splice(rowNumber, 0, this.PagedRows[rowNumber].data);
+    }
+    else if (!selected) {
+      this.contextMenuData[rowNumber] = [];
+    }
+  }
+
+  private checkedRowSelection(event, rowCount) {
+    if (rowCount === undefined) {
+      this.selectRows(event.target.checked, null, true);
+      return;
+    }
+    this.selectRows(event.target.checked, rowCount);
   }
 
   private generateUniqueFilters() {
@@ -384,6 +432,9 @@ export class DataTableComponent implements OnInit {
   }
 
   onSelecting(rowCount, columnCount, cell, $event) {
+    if (this.PagedRows[rowCount].rowSelect) {
+      return;
+    }
     if (this.isDragging) {
       if (!this.contextMenuData[rowCount]) {
         this.contextMenuData[rowCount] = [];
@@ -393,6 +444,9 @@ export class DataTableComponent implements OnInit {
   }
 
   onClick(rowCount, columnCount, cell, $event) {
+    if (this.PagedRows[rowCount].rowSelect) {
+      return;
+    }
     if (this.contextMenuData[rowCount] && this.contextMenuData[rowCount][columnCount]) {
       this.contextMenuData = [];
     }
@@ -419,6 +473,22 @@ export class DataTableComponent implements OnInit {
     this.contextmenu = false;
   }
 
+
+  deleteData(data:Array<Array<any>>) {
+    for (let i = 0; i < data.length; ++i) {
+      if (data[i] && data[i].length) {
+        this.rowData[i] = undefined;
+      }
+    }
+    for (let j = 0; j < this.rowData.length; ++j) {
+      if (!this.rowData[j]) {
+        this.rowData.splice(j, 1);
+        j--;
+      }
+    }
+    this.contextMenuData = [];
+    this.tableDraw();
+  }
 
   pasteData(pasteData:Array<Array<any>>) {
     let pasteRow = 0, pasteColumn = 0, prevCol;
@@ -509,14 +579,15 @@ export class DataTableComponent implements OnInit {
 
   }
 
-  constructor(private clipboardService:ClipboardService, private filterService:FilterService) {
+  constructor(private clipboardService:ClipboardService, private filterService:FilterService, private dataTableService:DataTableUtilsService) {
   }
 
   ngOnInit() {
     this.dragTheme = this.theme + "-drag";
     this.pageSize = this.rowSizes[0];
     this.tableDraw();
-    this.clipboardService.getPasteEvent().subscribe(data => this.pasteData(data))
+    this.clipboardService.getPasteEvent().subscribe(data => this.pasteData(data));
+    this.dataTableService.getOnDeleteEvent().subscribe(data => this.deleteData(data));
   }
 
 }

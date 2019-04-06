@@ -144,7 +144,10 @@ export class DataTableComponent implements OnInit {
     for (let i = 0; i < this.TableRows.length; ++i) {
       this.TableRows[i].rowSelect = isSelect;
       if (isSelect) {
-        this.contextMenuData.splice(i, 0, this.TableRows[i].data);
+        if (!(this.contextMenuData[i] && this.contextMenuData[i].length)) {
+          this.contextMenuData[i] = [];
+        }
+        this.contextMenuData[i] =  this.TableRows[i].data;
       }
     }
     if (!isSelect) {
@@ -163,7 +166,7 @@ export class DataTableComponent implements OnInit {
       if (!(this.contextMenuData[rowNumber] && this.contextMenuData[rowNumber].length)) {
         this.contextMenuData[rowNumber] = [];
       }
-      this.contextMenuData.splice(rowNumber, 0, this.PagedRows[rowNumber].data);
+      this.contextMenuData[rowNumber] =  this.PagedRows[rowNumber].data;
     }
     else if (!selected) {
       this.contextMenuData[rowNumber] = [];

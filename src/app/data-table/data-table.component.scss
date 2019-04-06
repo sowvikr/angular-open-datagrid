@@ -24,7 +24,7 @@
 
   tbody {
     tr {
-      border: 1px solid #BDC3C7;
+      border-bottom: 1px solid #d9dcde;
     }
 
     tr:hover {
@@ -57,6 +57,17 @@
   }
   tfoot {
     border-top: 1px solid #BDC3C7;
+    color: rgba(0,0,0, 0.54);
+    font-size: 12px;
+    font-weight: 400;
+
+    .page-number-selection{
+      font-size: 12px;
+      background: #f9f7f7;
+      &:focus{
+        outline: none;
+      }
+    }
   }
 }
 
@@ -273,7 +284,19 @@ table.dataTable {
     }
 
     tr {
+      border-bottom: 1px solid #d9dcde;
 
+      &.odd{
+        background-color: #fcfdfe;
+      }
+
+      &.even{
+        background-color: white;
+      }
+
+      td{
+        text-align: center;
+      }
     }
   }
 
@@ -284,8 +307,8 @@ table.dataTable {
       line-height: 27px;
       padding-left: 12px;
       padding-right: 12px;
-      font-weight: normal;
       font-size: 12px;
+      font-weight: 600;
       position: relative;
 
       i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
@@ -293,7 +316,7 @@ table.dataTable {
         cursor: pointer;
       }
 
-      i.fa.fa-filter {
+      i.filter-icon {
         padding-left: 10px;
         cursor: pointer;
       }
@@ -317,8 +340,15 @@ table.dataTable {
       }
       input[type=text] {
         margin: 0;
-        width: 50%;
+        width: 80%;
         height: 15px;
+
+        &:focus{
+          outline: none;
+        }
+      }
+      input[disabled]{
+        background: #ebebeb;
       }
       .filterDropdown {
         position: absolute;

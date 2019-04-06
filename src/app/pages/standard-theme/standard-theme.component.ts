@@ -11,20 +11,23 @@ export class StandardThemeComponent implements OnInit {
       pagination: true, theme: 'light-theme',
       columnDefs: [
         {
-          headerName: 'Trade Date', width: 220, field: 'tradeDate', filter: true, sort: true, isEdit: true, suppressMovable: true
+          headerName: 'Trade Date', width: 220, field: 'tradeDate', filter: true, columnFilter: true,
+          sort: true, isEdit: true, suppressMovable: true
         }, {
-          headerName: 'Trade Reference', width: 220, field: 'tradeRef', filter: true, sort: true, isEdit: true, suppressMovable: true
+          headerName: 'Trade Reference', width: 220, field: 'tradeRef', filter: true, columnFilter: true,
+          sort: true, isEdit: true, suppressMovable: true
         },
         {
-          headerName: 'Client', width: 220, field: 'client', filter: true, sort: true, isEdit: true, suppressMovable: true,
-          cellRenderer: (row, column, data, def) => {
+          headerName: 'Client', width: 220, field: 'client', filter: true, sort: true, columnFilter: true,
+          isEdit: true, suppressMovable: true,
+          cellRender: (row, column, data, def) => {
             return '<a href="#/client"><span class="client-link">'
               + data + '</span></a>';
           }
         },
         {
           headerName: 'Symbol', width: 220, field: 'symbol', filter: true, sort: true, isEdit: true, suppressMovable: true,
-          cellRenderer: (row, column, data, def) => {
+          cellRender: (row, column, data, def) => {
             return '<a href="#/client"><span class="client-link">'
               + data + '</span></a>';
           }

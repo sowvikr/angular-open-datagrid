@@ -173,12 +173,13 @@ export class DataTableComponent implements OnInit {
     }
   }
 
-  private checkedRowSelection(event, rowCount) {
-    if (rowCount === undefined) {
+  private checkedRowSelection(event, isHeader) {
+    if (isHeader) {
       this.selectRows(event.target.checked, null, true);
       return;
     }
-    this.selectRows(event.target.checked, rowCount);
+    this.PagedRows[event.row].rowSelect = event.value;
+    this.selectRows(event.value, event.row);
   }
 
   private generateUniqueFilters() {
@@ -407,7 +408,7 @@ export class DataTableComponent implements OnInit {
   showContextMenu(event) {
     this.contextmenuX = event.x;
     this.contextmenuY = event.y;
-    if (!(this.contextMenuData[event.row] && this.contextMenuData[event.row][event.column])) {
+    if (!(this.contextMenuData[event.row] && this.contextMenuData[event.row][event.column]) && event.column !== -1) {
       this.contextMenuData = [];
       if (!this.contextMenuData[event.row]) {
         this.contextMenuData[event.row] = [];

@@ -65,8 +65,8 @@ export class InlineEditComponent implements OnInit {
   }
 
   onRightClick(event) {
-    this.contextMenuArgs.x = event.layerX;
-    this.contextMenuArgs.y = event.layerY;
+    this.contextMenuArgs.x = event.clientX;
+    this.contextMenuArgs.y = event.clientY;
     this.contextMenuArgs.isEdit = this.isEdit;
     this.contextMenuArgs.row = this.row;
     this.contextMenuArgs.column = this.column;

@@ -18,6 +18,7 @@ import { MaterialThemeComponent } from './pages/material-theme/material-theme.co
 import { AllThemeComponent } from './pages/all-theme/all-theme.component'
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ResizableDirective, GrabberDirective } from './resizeable';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     DarkThemeComponent,
     StandardThemeComponent,
     MaterialThemeComponent,
-    AllThemeComponent
+    AllThemeComponent,
+    ResizableDirective,
+    GrabberDirective
   ],
   imports: [
     BrowserModule,

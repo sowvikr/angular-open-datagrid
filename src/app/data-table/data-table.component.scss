@@ -57,14 +57,14 @@
   }
   tfoot {
     border-top: 1px solid #BDC3C7;
-    color: rgba(0,0,0, 0.54);
+    color: rgba(0, 0, 0, 0.54);
     font-size: 12px;
     font-weight: 400;
 
-    .page-number-selection{
+    .page-number-selection {
       font-size: 12px;
       background: #f9f7f7;
-      &:focus{
+      &:focus {
         outline: none;
       }
     }
@@ -286,15 +286,15 @@ table.dataTable {
     tr {
       border-bottom: 1px solid #d9dcde;
 
-      &.odd{
+      &.odd {
         background-color: #fcfdfe;
       }
 
-      &.even{
+      &.even {
         background-color: white;
       }
 
-      td{
+      td {
         text-align: center;
       }
     }
@@ -343,11 +343,11 @@ table.dataTable {
         width: 80%;
         height: 15px;
 
-        &:focus{
+        &:focus {
           outline: none;
         }
       }
-      input[disabled]{
+      input[disabled] {
         background: #ebebeb;
       }
       .filterDropdown {
@@ -461,7 +461,7 @@ table.dataTable {
   }
 }
 
-.cdk-drag-preview::before {
+.cdk-drag-preview div::before {
   content: "\f047";
   font-family: FontAwesome;
   font-weight: normal;
@@ -478,6 +478,7 @@ table.dataTable {
 }
 
 .cdk-drag-preview.dark-theme-drag {
+
   background-color: #1c1f20;
   padding: 5px 10px;
   color: rgba(245, 245, 245, 0.64);

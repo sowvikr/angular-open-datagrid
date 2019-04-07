@@ -230,7 +230,11 @@ table.dataTable {
   }
 
   thead {
-
+    .headerText{
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
     th {
       text-align: left;
       line-height: 27px;
@@ -269,7 +273,7 @@ table.dataTable {
       }
       input[type=text] {
         margin: 0;
-        width: 80%;
+        width: calc(100% - 30px);
         height: 15px;
 
         &:focus {

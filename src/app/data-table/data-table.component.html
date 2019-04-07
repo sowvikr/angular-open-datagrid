@@ -17,7 +17,7 @@
     </th>
     <th *ngFor="let item of columnDefs ; let i = index" cdkDrag [ngStyle]="{'width':item.width}" [ngClass]="dragTheme"
         resizable>
-      <div cdkDragHandle>
+      <div class="headerText" cdkDragHandle>
         <i (click)="sortColumn(i)" class="fa fa-sort" *ngIf="item.sortState == null && item.sort"
            aria-hidden="true"> </i>
         <i (click)="sortColumn(i)" class="fa fa-sort-asc" *ngIf="item.sortState && item.sort" aria-hidden="true"> </i>
@@ -39,7 +39,7 @@
       </label>
     </th>
     <th *ngFor="let item of columnDefs; let i = index" [ngStyle]="{'width':item.width}">
-      <input *ngIf="item.filter" [disabled]="item.columnFilter" (keyup)="filter(i,$event.target.value)" type="text"
+      <input *ngIf="item.filter" [disabled]="item.columnFilter" (keyup)="filter(i,$event.target.value)" type="text" width="calc(100% - 23px)"
              height="10"/>
         <span>
           <i class="feather icon-filter filter-icon" *ngIf="item.filter && item.columnFilter"

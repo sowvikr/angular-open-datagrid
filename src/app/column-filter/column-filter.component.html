@@ -1,10 +1,13 @@
 <div class="filterPanel" [ngClass]="theme">
   <div class="filterHeader">
+    <div class="filter-icon-box">
+      <i class="feather icon-filter"></i>
+    </div>
     <div class="search-box">
-      <input  placeholder="Search.." type="text" style="width: 100%" (keyup)="search($event.target.value)">
+      <input  placeholder="Search..." type="text" style="width: 100%" (keyup)="search($event.target.value)">
     </div>
     <div class="checkbox-container">
-      <label class="container">Select All
+      <label class="container select-all">Select All
         <input type="checkbox" (change)="checkedColumnFilter('Select All', $event);" [(ngModel)]="selectAll"/>
         <span class="checkmark"></span>
       </label>
@@ -21,7 +24,7 @@
     </div>
   </div>
   <div class="filterFooter">
-    <button type="button" (click)="clearAll($event);">Clear Filter</button>
+    <button type="button" class="btn clear-all" (click)="clearAll($event);">Clear Filter</button>
   </div>
 </div>
 

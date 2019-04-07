@@ -43,8 +43,9 @@
 .light-theme {
   .container {
     input[type=checkbox]:checked ~ .checkmark {
-      background-color: #2196F3;
+      // background-color: #2196F3;
       border: 1px solid #2196F3;
+      border-radius: 2px;
     }
 
     .checkmark {
@@ -78,8 +79,8 @@
   }
 
   .cell:hover, div.cell:focus {
-    border: 1px solid #0091EA;
-    outline: initial;
+    /*border: 1px solid #0091EA;
+    outline: initial;*/
   }
 }
 
@@ -87,6 +88,7 @@
   .container {
     input[type=checkbox]:checked ~ .checkmark {
       background-color: #2196F3;
+      border-radius: 2px;
     }
     .container:hover {
       input ~ .checkmark {
@@ -176,7 +178,7 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  line-height: 19px;
+  line-height: 13px;
   input[type=checkbox] {
     position: relative;
     opacity: 0;
@@ -188,13 +190,12 @@
     display: block;
   }
   .checkmark:after {
-    left: 6px;
-    top: 3px;
+    left: 4px;
+    top: 1px;
     width: 3px;
-    height: 6px;
-    border: solid white;
-
-    border-width: 0 2px 2px 0;
+    height: 7px;
+    border: solid #2196F3;
+    border-width: 0 1px 1px 0;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
@@ -203,8 +204,8 @@
     position: absolute !important;
     top: 0;
     left: 0;
-    height: 16px;
-    width: 16px;
+    height: 12px;
+    width: 12px;
   }
 
 }

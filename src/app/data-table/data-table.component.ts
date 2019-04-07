@@ -564,10 +564,10 @@ export class DataTableComponent implements OnInit {
   toggleFilter(column, event) {
     let positionX = event.clientX + 135;
     if (positionX > window.innerWidth) {
-      this.filterMenuX = -135;
+      this.filterMenuX = -220;
     }
     else {
-      this.filterMenuX = 20;
+      this.filterMenuX = 25;
     }
     for (let i = 0; i < this.columnDefs.length; ++i) {
       if (i === column) continue;

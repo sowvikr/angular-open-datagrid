@@ -19,6 +19,7 @@ import { AllThemeComponent } from './pages/all-theme/all-theme.component'
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ResizableDirective, GrabberDirective } from './resizeable';
+import {BlueThemeComponent} from './pages/blue-theme/blue-theme.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ResizableDirective, GrabberDirective } from './resizeable';
     ColumnFilterComponent,
     DarkThemeComponent,
     StandardThemeComponent,
+    BlueThemeComponent,
     MaterialThemeComponent,
     AllThemeComponent,
     ResizableDirective,

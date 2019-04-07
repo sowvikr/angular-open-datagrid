@@ -377,7 +377,30 @@ table.dataTable {
     display: none;
   }
 }
+.blue-theme.dataTable {
+  @extend .light-theme.dataTable;
 
+  thead{
+    color: white;
+    background: #407AE5;
+
+    th{
+      color: white;
+
+      .col-resize{
+        border-right: 1px solid rgba(251, 248, 248, 0.45);
+      }
+    }
+  }
+
+  tbody{
+    tr{
+      &.odd{
+        background: #F1F1F1;
+      }
+    }
+  }
+}
 .cdk-drag-preview {
   box-sizing: border-box;
   text-align: left;

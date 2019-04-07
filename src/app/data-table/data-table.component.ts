@@ -489,7 +489,7 @@ export class DataTableComponent implements OnInit {
   deleteData(data:Array<Array<any>>) {
     for (let i = 0; i < data.length; ++i) {
       if (data[i] && data[i].length) {
-        if (this.rowData[i].rowSelect)
+        if (this.TableRows[i].rowSelect)
           this.rowData[i] = undefined;
       }
     }

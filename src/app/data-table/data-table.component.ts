@@ -51,7 +51,8 @@ interface ContextMenuData {
 @Component({
   selector: 'app-data-table',
   templateUrl: './data-table.component.html',
-  styleUrls: ['./data-table.component.scss'],
+  styleUrls: ['./data-table.component.scss',
+    './data-table.component-dark.scss'],
   animations: [
     trigger(
       'enterAnimation', [

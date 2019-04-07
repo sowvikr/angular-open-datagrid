@@ -5,6 +5,7 @@
   background-color: #1c1f20;
   color: rgba(245, 245, 245, 0.64);
   border: 1px solid #424242;
+
   .container {
     input[type=checkbox]:checked ~ .checkmark {
       border: 1px solid #2196F3;
@@ -35,6 +36,12 @@
     color: white;
     tr {
       border: 1px solid #5c5c5c;
+
+      td{
+        ::ng-deep a{
+          color: #8601ff;
+        }
+      }
     }
     tr:nth-child(even) {
       background-color: #2d3436;

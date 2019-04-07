@@ -58,6 +58,10 @@ interface ContextMenuData {
         transition(':enter', [
           style({transform: 'translateY(28px)', opacity: 0, height: '28px'}),
           animate('200ms', style({transform: 'translateY(0)', opacity: 1, height: '0'}))
+        ]),
+        transition(':enter', [
+          style({transform: 'translateY(0)', opacity: 0, height: '0'}),
+          animate('200ms', style({transform: 'translateY(28px)', opacity: 1, height: '28px'}))
         ])
       ]
     )

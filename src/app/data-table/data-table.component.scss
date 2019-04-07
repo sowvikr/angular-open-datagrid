@@ -11,8 +11,9 @@
   border: 1px solid #BDC3C7;
   .container {
     input[type=checkbox]:checked ~ .checkmark {
-      background-color: #2196F3;
+      // background-color: #2196F3;
       border: 1px solid #2196F3;
+      border-radius: 2px;
     }
 
     .checkmark {
@@ -45,11 +46,6 @@
         top: 65px;
       }
       */
-      &:hover {
-        color: rgba(0, 0, 0, 0.94);
-        background: #d1d3d3;
-      }
-
     }
     tr.header {
       border: 0 solid #BDC3C7;
@@ -162,6 +158,7 @@
   .container {
     input[type=checkbox]:checked ~ .checkmark {
       background-color: #2196F3;
+      border-radius: 2px;
     }
     .container:hover {
       input ~ .checkmark {
@@ -253,7 +250,6 @@ table.dataTable {
     position: absolute !important;
     right: 0;
     top: 0;
-    z-index: 888;
     height: 60%;
     margin: 4% 0;
     width: 2px;
@@ -296,6 +292,10 @@ table.dataTable {
 
       td {
         text-align: center;
+
+        &:focus{
+          outline: none;
+        }
       }
     }
   }
@@ -352,8 +352,9 @@ table.dataTable {
       }
       .filterDropdown {
         position: absolute;
-        width: 135px;
-        top: 10px;
+        min-width: 220px;
+        top: -7px;
+        z-index: 10;
       }
     }
   }
@@ -405,7 +406,7 @@ table.dataTable {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    line-height: 19px;
+    line-height: 13px;
     input[type=checkbox] {
       position: relative;
       opacity: 0;
@@ -417,13 +418,12 @@ table.dataTable {
       display: block;
     }
     .checkmark:after {
-      left: 6px;
-      top: 3px;
+      left: 4px;
+      top: 1px;
       width: 3px;
-      height: 6px;
-      border: solid white;
-
-      border-width: 0 2px 2px 0;
+      height: 7px;
+      border: solid #2196F3;
+      border-width: 0 1px 1px 0;
       -webkit-transform: rotate(45deg);
       -ms-transform: rotate(45deg);
       transform: rotate(45deg);
@@ -432,8 +432,8 @@ table.dataTable {
       position: absolute !important;
       top: 0;
       left: 0;
-      height: 16px;
-      width: 16px;
+      height: 12px;
+      width: 12px;
     }
 
   }
@@ -448,17 +448,30 @@ table.dataTable {
 .cdk-drag-preview {
   box-sizing: border-box;
   text-align: left;
-  font-size: 13px;
-  vertical-align: middle;
-  display: table-cell;
-  color: rgba(0, 0, 0, 0.87);
-  min-width: 300px;
-  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+  font-size: 12px;
+  font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-style: inherit;
+  line-height: 16px;
+  background: white;
+  width: fit-content;
+    // vertical-align: middle;
+  // display: table-cell;
+  color: rgba(0, 0, 0, 0.54);
+  //width: inherit;
+  // min-width: 100px;
+  border: 1px solid #BDC3C7;
+  /*box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
   0 8px 10px 1px rgba(0, 0, 0, 0.14),
-  0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  0 3px 14px 2px rgba(0, 0, 0, 0.12);*/
   i {
     display: none;
   }
+}
+
+.cdk-drag-placeholder{
+  background-color: white;
+  border: 1px solid #BDC3C7 !important;
 }
 
 .cdk-drag-preview div::before {
@@ -468,17 +481,17 @@ table.dataTable {
   font-style: normal;
   margin: 0 0 0 10px;
   text-decoration: none;
+  padding-right: 5px;
 
 }
 
 .cdk-drag-preview.light-theme-drag {
-  background-color: #f5f7f7;
   padding: 5px 10px;
   color: rgba(0, 0, 0, 0.54);
+  background-color: white;
 }
 
 .cdk-drag-preview.dark-theme-drag {
-
   background-color: #1c1f20;
   padding: 5px 10px;
   color: rgba(245, 245, 245, 0.64);

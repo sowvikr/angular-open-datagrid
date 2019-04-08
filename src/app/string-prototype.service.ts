@@ -8,6 +8,9 @@ interface String {
 }
 
 function equals(a:string):boolean {
+  if(typeof (a) !== "string"){
+    a = a.toString();
+  }
   return this.toLowerCase() == a.toLowerCase();
 }
 

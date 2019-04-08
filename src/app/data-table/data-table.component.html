@@ -48,6 +48,7 @@
         <app-column-filter (clickOutside)="item.showFilter=false" [exclude]="'.filter-icon'"
                            [FilterValues]="columnDefs[i].uniqueFilterValues" [Column]="i"
                            class="filterDropdown"
+                           [renderFunction]="item.cellRender"
                            (OnFilterChange)="checkedColumnFilter($event)" *ngIf="item.filter && item.columnFilter"
                            [hidden]="!item.showFilter" [theme]="theme" [ngStyle]="{'left.px': filterMenuX}">
         </app-column-filter>

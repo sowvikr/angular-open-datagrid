@@ -16,6 +16,7 @@ export class ColumnFilterComponent implements OnInit {
   @Input() FilterValues:Array<any> = [];
   @Input() Column;
   @Input() theme;
+  @Input() renderFunction;
   @Output() OnFilterChange = new EventEmitter<any>();
 
   private selectAll:boolean = false;
@@ -74,6 +75,7 @@ export class ColumnFilterComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.renderFunction)
   }
 
 }

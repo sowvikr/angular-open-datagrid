@@ -106,7 +106,7 @@ export class DarkThemeComponent implements OnInit {
           }
         },
         {
-          headerName: 'Bought', width: 220, field: 'symbol', filter: true, sort: true, isEdit: true, suppressMovable: true,
+          headerName: 'Bought', width: 220, field: 'symbol', filter: true, sort: true, isEdit: true, suppressMovable: true, columnFilter: true,
           cellRender: (row, column, data, def) => {
             let icon = 'check';
             if (!data) {

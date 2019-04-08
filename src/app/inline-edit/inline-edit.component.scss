@@ -3,6 +3,18 @@
 }
 
 .red-theme {
+  .cell.highlight {
+    background-color: #0091EA !important
+  }
+
+  .cell.cell-highlight-animation {
+    -webkit-transition: background-color 1s;
+    transition: background-color 1s;
+  }
+  .cell.selected-row {
+    background-color: rgba(0, 145, 234, 0.3);
+  }
+
   .container {
     input[type=checkbox]:checked ~ .checkmark {
       border: 1px solid #af0b1c;

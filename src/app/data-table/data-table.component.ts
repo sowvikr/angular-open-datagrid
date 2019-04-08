@@ -638,7 +638,7 @@ export class DataTableComponent implements OnInit {
   }
 
   onRowSizeChange($event, value) {
-    this.pageSize = parseInt(value);
+    this.pageSize = (parseInt(value) > this.rowData.length)? this.rowData.length: this.rowSizes[0];
     this.tableDraw();
   }
 
@@ -657,7 +657,7 @@ export class DataTableComponent implements OnInit {
 
   ngOnInit() {
     this.dragTheme = this.theme + "-drag";
-    this.pageSize = this.rowSizes[0];
+    this.pageSize = (this.rowSizes[0] > this.rowData.length)? this.rowData.length: this.rowSizes[0];
     this.tableDraw();
     this.clipboardService.getPasteEvent().subscribe(data => this.pasteData(data));
     this.dataTableService.getOnDeleteEvent().subscribe(data => this.deleteData(data));

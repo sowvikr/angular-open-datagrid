@@ -1,94 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-material-theme',
-  templateUrl: './material-theme.component.html',
-  styleUrls: ['./material-theme.component.scss']
+  selector: 'app-standard-theme',
+  templateUrl: './blue-theme.component.html',
+  styleUrls: ['./blue-theme.component.scss']
 })
-export class MaterialThemeComponent implements OnInit {
+export class BlueThemeComponent implements OnInit {
   dataTables: Array<any> = [
     {
-      pagination: true, theme: 'metrial-theme',
-      /*columnDefs: [
-        {
-          headerName: 'Model',
-          field: 'model',
-          width: '40px',
-          sort: true,
-          isEdit: true,
-          filter: true/!*,
-          cellRender: (row, column, data, def) => {
-            return '<a href="#">' + data + '</a>';
-          }*!/
-        },
-        {headerName: 'Make', isEdit: true, field: 'make', width: '40px', filter: true, columnFilter: true},
-        {headerName: 'Price', isEdit: true, width: '40px', field: 'price'},
-        {headerName: 'Mileage (km/ltr)', isEdit: true, width: '10px', field: 'mileage', sort: true},
-        {headerName: 'Color', isEdit: true, field: 'color', width: '10px', filter: true, columnFilter: true}
-      ],
-      rowData: [
-        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'red'},
-        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 50, color: 'green'},
-        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 40, color: 'blue'},
-        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 330, color: 'bottle green'},
-        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 100, color: 'black'},
-        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 60, color: 'white'},
-        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 70, color: 'yellow'},
-        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 80, color: 'yellow'},
-        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 20, color: 'red'},
-        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 40, color: 'green'},
-        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'sky blue'},
-        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
-        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'white'},
-        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'yellow'},
-        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'yellow'},
-        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
-        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'green'},
-        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'sky blue'},
-        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
-        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'white'},
-        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'yellow'},
-        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'yellow'},
-        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
-        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'green'},
-        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'sky blue'},
-        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
-        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'white'},
-        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 50, color: 'yellow'},
-        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 60, color: 'yellow'},
-        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 70, color: 'red'},
-        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 40, color: 'green'},
-        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'sky blue'},
-        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
-        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'white'},
-        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'yellow'},
-        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'yellow'},
-        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
-        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'green'},
-        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'sky blue'},
-        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
-        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'white'},
-        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'yellow'},
-        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'yellow'},
-        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
-        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'green'},
-        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'sky blue'},
-        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
-        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'white'},
-        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'yellow'},
-        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'yellow'},
-        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
-        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'green'},
-        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'sky blue'},
-        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
-        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'white'},
-        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'yellow'},
-        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'yellow'},
-        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
-        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'green'},
-        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'sky blue'},
-        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'}
-      ]*/
+      pagination: true, theme: 'blue-theme',
       columnDefs: [
         {
           headerName: 'Trade Date', width: 220, field: 'tradeDate', filter: true, columnFilter: true,
@@ -131,6 +51,22 @@ export class MaterialThemeComponent implements OnInit {
           sort: true, isEdit: true, suppressMovable: true
         }
       ],
+      /*columnDefs: [
+        {
+          headerName: 'Model',
+          field: 'model',
+          width: '40px',
+          sort: true, isEdit: true,
+          filter: true/!*,
+          cellRender: (row, column, data, def) => {
+            return '<a href="#">' + data + '</a>';
+          }*!/
+        },
+        {headerName: 'Make', isEdit: true, field: 'make', width: '40px', filter: true, columnFilter: true},
+        {headerName: 'Price', isEdit: true, width: '40px', field: 'price'},
+        {headerName: 'Mileage (km/ltr)', isEdit: true, width: '10px', field: 'mileage', sort: true},
+        {headerName: 'Color', isEdit: true, field: 'color', width: '10px', filter: true, columnFilter: true}
+      ],*/
       rowData: [
         {
           tradeDate: '01/01/2019',
@@ -496,9 +432,73 @@ export class MaterialThemeComponent implements OnInit {
           commission: ' $2,500'
         },
       ]
-    }
+    }/*rowData: [
+        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'red'},
+        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 50, color: 'green'},
+        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 40, color: 'blue'},
+        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 330, color: 'bottle green'},
+        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 100, color: 'black'},
+        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 60, color: 'white'},
+        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 70, color: 'yellow'},
+        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 80, color: 'yellow'},
+        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 20, color: 'red'},
+        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 40, color: 'green'},
+        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'sky blue'},
+        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
+        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'white'},
+        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'yellow'},
+        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'yellow'},
+        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
+        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'green'},
+        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'sky blue'},
+        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
+        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'white'},
+        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'yellow'},
+        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'yellow'},
+        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
+        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'green'},
+        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'sky blue'},
+        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
+        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'white'},
+        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 50, color: 'yellow'},
+        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 60, color: 'yellow'},
+        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 70, color: 'red'},
+        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 40, color: 'green'},
+        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'sky blue'},
+        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
+        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'white'},
+        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'yellow'},
+        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'yellow'},
+        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
+        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'green'},
+        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'sky blue'},
+        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
+        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'white'},
+        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'yellow'},
+        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'yellow'},
+        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
+        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'green'},
+        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'sky blue'},
+        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
+        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'white'},
+        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'yellow'},
+        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'yellow'},
+        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
+        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'green'},
+        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'sky blue'},
+        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
+        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'white'},
+        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'yellow'},
+        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'yellow'},
+        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'},
+        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'green'},
+        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 30, color: 'sky blue'},
+        {make: 'Porsche', model: 'Boxter', price: 72000, 'mileage': 30, color: 'red'}
+      ]*/
   ];
-  constructor() { }
+
+  constructor() {
+  }
 
   ngOnInit() {
   }

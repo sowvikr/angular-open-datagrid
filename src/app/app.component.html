@@ -2,13 +2,14 @@
 <!--
 <app-data-table [pagination]="pagination1" [pageSize]="pageSize1" [theme]="theme1" [columnDefs]="columnDefs1" [rowData]="rowData1"></app-data-table>
 -->
-<p>Grid Themes</p>
-<div class="theme-links">
-  <a [routerLink]="''">Standard</a>
-  <a [routerLink]="'dark'">Dark</a>
-  <a [routerLink]="'material'">Material</a>
-  <a [routerLink]="'all'">All Themes</a>
+<div class="page-container">
+  <div class="theme-links">
+    <a [routerLink]="''">Standard</a>
+    <a [routerLink]="'dark'">Dark</a>
+    <a [routerLink]="'blue'">New Bootstrap</a>
+    <a [routerLink]="'material'">Material</a>
+    <a [routerLink]="'all'">All Themes</a>
+  </div>
+  <router-outlet></router-outlet>
+
 </div>
-<router-outlet></router-outlet>
-
-

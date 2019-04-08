@@ -4,6 +4,7 @@ import {DarkThemeComponent} from './pages/dark-theme/dark-theme.component';
 import {StandardThemeComponent} from './pages/standard-theme/standard-theme.component';
 import {MaterialThemeComponent} from './pages/material-theme/material-theme.component';
 import {AllThemeComponent} from './pages/all-theme/all-theme.component';
+import {BlueThemeComponent} from './pages/blue-theme/blue-theme.component';
 
 
 const routes: Routes = [
@@ -22,6 +23,10 @@ const routes: Routes = [
   {
     path: 'all',
     component: AllThemeComponent,
+  },
+  {
+    path: 'blue',
+    component: BlueThemeComponent,
   },
 ];
 

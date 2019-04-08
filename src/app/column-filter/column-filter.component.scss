@@ -1,4 +1,4 @@
-.light-theme.filterPanel {
+.light-theme.filterPanel, .blue-theme.filterPanel {
   background: white;
   border: 1px solid #BDC3C7;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
@@ -48,10 +48,14 @@
   }
   .filterFooter {
     border-top: 1px solid #424242;
+
+    .clear-all{
+      background: #424242;
+    }
   }
   .container {
     input[type=checkbox]:checked ~ .checkmark {
-      background-color: #2196F3;
+      border: 1px solid #2196F3;
       border-radius: 2px;
     }
     .container:hover {
@@ -60,7 +64,18 @@
       }
     }
     .checkmark {
-      background-color: #eee;
+      background-color: #262c2e;
+      border: 1px solid white;
+    }
+  }
+
+  .filter-icon-box{
+    background: #1c1f20;
+    border-color: #424242;
+
+    i {
+      background: #2d3436;
+      border-color: #424242;
     }
   }
 }
@@ -81,16 +96,29 @@
       border: 0;
       color: #3f51b5;
       font-family: inherit;
-      font-size: inherit;
+      font-size: 12px;
       margin: 0;
-      padding: 0;
-      text-transform: uppercase;
+      padding: 2px;
     }
   }
   .container {
     input[type=checkbox]:checked ~ .checkmark {
       background-color: #fe5991;
       border: 1px solid #fe5991;
+    }
+    input[type=checkbox]:checked ~ .checkmark:after {
+      //border: 1px solid white;
+    }
+    .checkmark:after {
+      left: 4px;
+      top: 1px;
+      width: 3px;
+      height: 7px;
+      border: solid white;
+      border-width: 0 1px 1px 0;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
     }
     .checkmark {
       background-color: #fff;

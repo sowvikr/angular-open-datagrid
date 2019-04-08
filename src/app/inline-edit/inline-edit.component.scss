@@ -12,6 +12,18 @@
       background-color: #fff;
       border: 1px solid black;
     }
+
+    .checkmark:after {
+      left: 4px;
+      top: 1px;
+      width: 3px;
+      height: 7px;
+      border: solid white;
+      border-width: 0 1px 1px 0;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
   }
   .cell {
     border: 1px solid transparent;
@@ -87,7 +99,7 @@
 .dark-theme {
   .container {
     input[type=checkbox]:checked ~ .checkmark {
-      background-color: #2196F3;
+      border: 1px solid #2196F3;
       border-radius: 2px;
     }
     .container:hover {
@@ -96,7 +108,8 @@
       }
     }
     .checkmark {
-      background-color: #eee;
+      background-color: #262c2e;
+      border: 1px solid #f5f7f7;
     }
   }
 
@@ -132,8 +145,8 @@
   }
 
   .cell:hover, .cell:focus {
-    border: 1px solid #0091EA;
-    outline: initial;
+    /*border: 1px solid #0091EA;
+    outline: initial;*/
   }
 
 }

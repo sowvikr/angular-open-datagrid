@@ -453,6 +453,7 @@ export class DataTableComponent implements OnInit {
         this.PagedRows[rowCount].rowSelect = false;
       }
       this.contextMenuData[rowCount][columnCount] = this.PagedRows[rowCount].data[columnCount];
+      this.selectedRowsColumns();
     }
   }
 

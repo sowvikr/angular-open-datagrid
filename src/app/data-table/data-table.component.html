@@ -99,7 +99,7 @@
         oncontextmenu="return false;">
       <app-inline-edit
         [theme]="theme"
-        [isSelected]="contextMenuData && contextMenuData[rowCount] && !!contextMenuData[rowCount][columnCount]"
+        [isSelected]="contextMenuData && contextMenuData[rowCount] && !(contextMenuData[rowCount][columnCount] === undefined)"
         [renderer]="row.cellRender"
         (rightClicked)="showContextMenu($event)"
         (changed)="valueChanged($event)"

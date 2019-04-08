@@ -105,6 +105,7 @@ export class DataTableComponent implements OnInit {
   // Convert row data to a 2D array.
   createTableData(filteredData?:Array<any>, currentPage?:number) {
     this.TableRows = new Array<any>();
+    this.contextMenuData = [];
     if (!(this.rowData && this.rowData.length)) {
       this.rowData = [];
     }
@@ -281,6 +282,7 @@ export class DataTableComponent implements OnInit {
     this.pagedRows();
     this.setPagedRow(1);
     this.updateTotalPageCount();
+    this.contextMenuData = [];
   }
 
   checkedColumnFilter(filterEventArgs) {
@@ -371,7 +373,7 @@ export class DataTableComponent implements OnInit {
     this.TableRows.sort((a, b) => that.sortFunction(a, b, column, sortState));
     this.pagedRows();
     this.setPagedRow(this.CurrentPage);
-
+    this.contextMenuData = [];
   }
 
 // Sort function

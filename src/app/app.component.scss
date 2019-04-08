@@ -1,8 +1,17 @@
+.page-container{
+  margin: 0 60px;
+}
 .theme-links{
   display: inline-block;
-  margin-bottom: 15px;
+  margin: 15px 0;
+  float: right;
   a{
-    padding-right: 20px;
-    color: #0091EA;
+    display: inline-block;
+    margin-left: 20px;
+    color: white;
+    padding: 15px;
+    background: #424242;
+    border: 1px solid #BDC3C7;
+    text-decoration: none;
   }
 }

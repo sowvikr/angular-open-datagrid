@@ -218,12 +218,17 @@ table.dataTable {
       &.even {
         background-color: white;
       }
-
       td {
         text-align: center;
 
         &:focus{
           outline: none;
+        }
+
+        ::ng-deep a{
+          color: inherit;
+          font-weight: bold;
+          text-decoration: none;
         }
       }
     }

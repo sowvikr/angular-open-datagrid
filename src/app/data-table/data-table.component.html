@@ -8,7 +8,8 @@
 -->
 <table class="dataTable" (click)="onContextMenuOff()" [ngClass]="theme">
   <thead>
-  <tr class="header" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)">
+  <tr class="header" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)"
+      (cdkDropListSorted)="swapped($event)">
     <th style="width: 5px">
 
     </th>

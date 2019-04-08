@@ -467,7 +467,11 @@ table.dataTable {
   background-color: white;
   border: 1px solid #BDC3C7 !important;
 }
-
+.cdk-drag-preview{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .cdk-drag-preview div::before {
   content: "\f047";
   font-family: FontAwesome;
@@ -483,6 +487,7 @@ table.dataTable {
   padding: 5px 10px;
   color: rgba(0, 0, 0, 0.54);
   background-color: white;
+  overflow: hidden;
 }
 
 .cdk-drag-preview.dark-theme-drag {

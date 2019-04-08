@@ -604,10 +604,11 @@ export class DataTableComponent implements OnInit {
     }
     for (let i = 0; i < pasteData.length; ++i) {
       for (let j = 0; j < pasteData[i].length; ++j) {
-        if (j === (this.columnDefs.length - 1)) {
+        let columnToBeFilled = startColumn + j;
+        if (columnToBeFilled >= (this.columnDefs.length )) {
           continue;
         }
-        this.PagedRows[startRow + i].data[startColumn + j] = pasteData[i][j];
+        this.PagedRows[startRow + i].data[columnToBeFilled] = pasteData[i][j];
       }
     }
   }

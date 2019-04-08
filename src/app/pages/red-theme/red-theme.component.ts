@@ -2,13 +2,13 @@ import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-standard-theme',
-  templateUrl: './blue-theme.component.html',
-  styleUrls: ['./blue-theme.component.scss']
+  templateUrl: './red-theme.component.html',
+  styleUrls: ['./red-theme.component.scss']
 })
-export class BlueThemeComponent implements OnInit {
+export class RedThemeComponent implements OnInit {
   dataTables: Array<any> = [
     {
-      pagination: true, theme: 'blue-theme',
+      pagination: true, theme: 'red-theme',
       columnDefs: [
         {
           headerName: 'Trade Date', width: 220, field: 'tradeDate', filter: true, columnFilter: true,

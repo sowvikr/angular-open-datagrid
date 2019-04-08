@@ -124,7 +124,9 @@
         top: 65px;
       }
       */
-
+      .col-resize{
+        border: none;
+      }
       &:hover {
         color: rgba(0, 0, 0, 0.94);
         background: #d1d3d3;
@@ -221,11 +223,11 @@ table.dataTable {
       td {
         text-align: center;
 
-        &:focus{
+        &:focus {
           outline: none;
         }
 
-        ::ng-deep a{
+        ::ng-deep a {
           color: inherit;
           font-weight: bold;
           text-decoration: none;
@@ -235,7 +237,7 @@ table.dataTable {
   }
 
   thead {
-    .headerText{
+    .headerText {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -382,30 +384,44 @@ table.dataTable {
     display: none;
   }
 }
-.blue-theme.dataTable {
-  @extend .light-theme.dataTable;
 
-  thead{
+.red-theme.dataTable {
+  thead {
     color: white;
-    background: #407AE5;
+    background: #af0b1c;
+    .container {
+      input[type=checkbox]:checked ~ .checkmark {
+        // background-color: #2196F3;
+        border: 1px solid #af0b1c;
+        border-radius: 2px;
+      }
 
-    th{
+      .checkmark {
+        background-color: #fff;
+        border: 1px solid #af0b1c;
+
+      }
+    }
+    th {
       color: white;
 
-      .col-resize{
+      .col-resize {
         border-right: 1px solid rgba(251, 248, 248, 0.45);
       }
     }
   }
 
-  tbody{
-    tr{
-      &.odd{
+  tbody {
+    tr {
+      &.odd {
         background: #F1F1F1;
       }
     }
   }
+
+  @extend .light-theme.dataTable;
 }
+
 .cdk-drag-preview {
   box-sizing: border-box;
   text-align: left;
@@ -416,7 +432,7 @@ table.dataTable {
   line-height: 16px;
   background: white;
   width: fit-content;
-    // vertical-align: middle;
+  // vertical-align: middle;
   // display: table-cell;
   color: rgba(0, 0, 0, 0.54);
   //width: inherit;
@@ -430,7 +446,13 @@ table.dataTable {
   }
 }
 
-.cdk-drag-placeholder{
+.dark-theme {
+  .cdk-drag-placeholder {
+    background-color: #1c1f20;
+  }
+}
+
+.cdk-drag-placeholder {
   background-color: white;
   border: 1px solid #BDC3C7 !important;
 }

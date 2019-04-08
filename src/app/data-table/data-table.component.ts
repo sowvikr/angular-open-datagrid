@@ -473,12 +473,70 @@ export class DataTableComponent implements OnInit {
     }
   }
 
-  onDragStart($event) {
-    this.isDragging = true;
+
+  onDragStart(row, column, $event) {
+
+    //For left click only
+    if ($event.button === 0) {
+      this.contextMenuData = [];
+      this.isDragging = true;
+    }
   }
 
-  onDragEnd($event) {
-    this.isDragging = false;
+  private selectedRowsColumns() {
+    let selectionRowStart = null;
+    let selectionRowEnd = null;
+    let selectionColStart = null;
+    let selectionColEnd = null;
+    for (let i = 0; i < this.contextMenuData.length; ++i) {
+      let col = this.contextMenuData[i];
+      if (!(col && col.length)) {
+        continue;
+      }
+      if (selectionColStart === null) {
+        selectionRowEnd = i;
+        selectionRowStart = i;
+      }
+      if (i > selectionRowEnd) {
+        selectionRowEnd = i;
+      }
+      for (let j = 0; j < col.length; ++j) {
+        if (!col[j]) {
+          continue;
+        }
+        if (selectionColStart === null) {
+          selectionColStart = j;
+          selectionColEnd = j;
+        }
+        if (j < selectionColStart) {
+          selectionColStart = j;
+        }
+        if (j > selectionColEnd) {
+          selectionColEnd = j;
+        }
+      }
+    }
+    console.log(this.contextMenuData);
+    console.log("startRow:" + selectionRowStart + " " + "StartCol: " + selectionColStart + " endtRow:" + selectionRowEnd + " " + "endCol: " + selectionColEnd);
+    if (selectionRowStart === null || selectionRowEnd === null
+      || selectionColEnd === null || selectionColStart === null) {
+      return;
+    }
+    for (let i = selectionRowStart; i <= selectionRowEnd; ++i) {
+      for (let j = selectionColStart; j <= selectionColEnd; ++j) {
+        if (!this.contextMenuData[i])
+          this.contextMenuData[i] = [];
+        this.contextMenuData[i][j] = this.TableRows[i].data[j];
+      }
+    }
+  }
+
+  onDragEnd(row, column, $event) {
+//For left click only
+    if ($event.button === 0) {
+      this.selectedRowsColumns();
+      this.isDragging = false;
+    }
   }
 
   onContextMenuOff() {

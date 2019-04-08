@@ -474,12 +474,70 @@ export class DataTableComponent implements OnInit {
     }
   }
 
-  onDragStart($event) {
-    this.isDragging = true;
+
+  onDragStart(row, column, $event) {
+
+    //For left click only
+    if ($event.button === 0) {
+      this.contextMenuData = [];
+      this.isDragging = true;
+    }
   }
 
-  onDragEnd($event) {
-    this.isDragging = false;
+  private selectedRowsColumns() {
+    let selectionRowStart = null;
+    let selectionRowEnd = null;
+    let selectionColStart = null;
+    let selectionColEnd = null;
+    for (let i = 0; i < this.contextMenuData.length; ++i) {
+      let col = this.contextMenuData[i];
+      if (!(col && col.length)) {
+        continue;
+      }
+      if (selectionColStart === null) {
+        selectionRowEnd = i;
+        selectionRowStart = i;
+      }
+      if (i > selectionRowEnd) {
+        selectionRowEnd = i;
+      }
+      for (let j = 0; j < col.length; ++j) {
+        if (!col[j]) {
+          continue;
+        }
+        if (selectionColStart === null) {
+          selectionColStart = j;
+          selectionColEnd = j;
+        }
+        if (j < selectionColStart) {
+          selectionColStart = j;
+        }
+        if (j > selectionColEnd) {
+          selectionColEnd = j;
+        }
+      }
+    }
+    console.log(this.contextMenuData);
+    console.log("startRow:" + selectionRowStart + " " + "StartCol: " + selectionColStart + " endtRow:" + selectionRowEnd + " " + "endCol: " + selectionColEnd);
+    if (selectionRowStart === null || selectionRowEnd === null
+      || selectionColEnd === null || selectionColStart === null) {
+      return;
+    }
+    for (let i = selectionRowStart; i <= selectionRowEnd; ++i) {
+      for (let j = selectionColStart; j <= selectionColEnd; ++j) {
+        if (!this.contextMenuData[i])
+          this.contextMenuData[i] = [];
+        this.contextMenuData[i][j] = this.TableRows[i].data[j];
+      }
+    }
+  }
+
+  onDragEnd(row, column, $event) {
+//For left click only
+    if ($event.button === 0) {
+      this.selectedRowsColumns();
+      this.isDragging = false;
+    }
   }
 
   onContextMenuOff() {
@@ -546,10 +604,11 @@ export class DataTableComponent implements OnInit {
     }
     for (let i = 0; i < pasteData.length; ++i) {
       for (let j = 0; j < pasteData[i].length; ++j) {
-        if (j === (this.columnDefs.length - 1)) {
+        let columnToBeFilled = startColumn + j;
+        if (columnToBeFilled >= (this.columnDefs.length )) {
           continue;
         }
-        this.PagedRows[startRow + i].data[startColumn + j] = pasteData[i][j];
+        this.PagedRows[startRow + i].data[columnToBeFilled] = pasteData[i][j];
       }
     }
   }
@@ -579,7 +638,7 @@ export class DataTableComponent implements OnInit {
   }
 
   onRowSizeChange($event, value) {
-    this.pageSize = parseInt(value);
+    this.pageSize = (parseInt(value) > this.rowData.length)? this.rowData.length: this.rowSizes[0];
     this.tableDraw();
   }
 
@@ -598,7 +657,7 @@ export class DataTableComponent implements OnInit {
 
   ngOnInit() {
     this.dragTheme = this.theme + "-drag";
-    this.pageSize = this.rowSizes[0];
+    this.pageSize = (this.rowSizes[0] > this.rowData.length)? this.rowData.length: this.rowSizes[0];
     this.tableDraw();
     this.clipboardService.getPasteEvent().subscribe(data => this.pasteData(data));
     this.dataTableService.getOnDeleteEvent().subscribe(data => this.deleteData(data));

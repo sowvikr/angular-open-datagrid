@@ -445,7 +445,7 @@ export class DataTableComponent implements OnInit {
 
   }
   dragMoved($event){
-    console.log("Hello");
+    debugger;
   }
   dropRow(event){
     moveItemInArray(this.PagedRows, event.previousIndex, event.currentIndex);

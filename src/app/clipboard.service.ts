@@ -23,14 +23,14 @@ export class ClipboardService {
   }
 
   private sanitize(data):string {
-    return data.replace(/^,*(.+),*$/, "$1")
+    return data.replace(/^\t*(.+)\t*$/, "$1")
   }
 
   private get2DArray(data):Array<Array<any>> {
     let array:Array<any> = data.split(/\r?\n/);
     let array2D = [[]];
     for (let i = 0; i < array.length; ++i) {
-      let row = array[i].split(",");
+      let row = array[i].split("\t");
       if (row.length === 1 && row.indexOf("") >= 0)
         continue;
       array2D[i] = [].concat(row);
@@ -45,7 +45,7 @@ export class ClipboardService {
       if (!data[i]) {
         continue;
       }
-      let row = data[i].join(",");
+      let row = data[i].join("\t");
       if (row === "") {
         continue;
       }

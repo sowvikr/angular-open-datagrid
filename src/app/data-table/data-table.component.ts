@@ -444,8 +444,12 @@ export class DataTableComponent implements OnInit {
     this.createTableData(this.FilterData, this.CurrentPage);
 
   }
-
-
+  dragMoved($event){
+    console.log("Hello");
+  }
+  dropRow(event){
+    moveItemInArray(this.PagedRows, event.previousIndex, event.currentIndex);
+  }
   valueChanged(changeValue:any) {
     this.TableRows[changeValue.row].data[changeValue.column] = changeValue.value;
     this.pagedRows();

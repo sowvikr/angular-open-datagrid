@@ -212,7 +212,7 @@ table.dataTable {
 
     tr {
       border-bottom: 1px solid #d9dcde;
-
+      display: table-row!important;
       &.odd {
         background-color: #fcfdfe;
       }
@@ -508,7 +508,9 @@ table.dataTable {
 .cdk-drag-animating {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
-
+.cdk-drag {
+  transition: transform 300ms ease;
+}
 .cdk-drop-list-dragging th:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }

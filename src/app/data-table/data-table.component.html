@@ -10,6 +10,7 @@
   <thead>
   <tr class="header" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)">
     <th style="width: 5px"></th>
+    <th style="width: 5px"></th>
     <th *ngIf="rowSelection" style="width: 5px"></th>
     <th *ngFor="let item of columnDefs ; let i = index" cdkDrag
         (cdkDragEnded)="dragEnded($event)"
@@ -29,6 +30,9 @@
   <tr class="filter">
     <th style="width: 5px">
       #
+    </th>
+    <th style="width: 5px">
+
     </th>
     <th style="width: 5px" *ngIf="rowSelection">
       <label class="container">
@@ -58,9 +62,13 @@
   </thead>
   <tbody (click)="onContextMenuOff()" tabindex="0" ctrlKeys
          (ctrlC)="onCtrlC($event)"
-         (ctrlV)="onCtrlV($event)">
+         (ctrlV)="onCtrlV($event)" cdkDropList (cdkDropListDropped)="dropRow($event)" (cdkDropListSorted)="dragMoved($event)" >
   <tr *ngFor="let row of PagedRows; let rowCount = index" [hidden]="row.filteredOut" [@enterAnimation]
+      cdkDrag
       [ngClass]="{'odd': rowCount%2 !== 0, 'even': rowCount%2===0}">
+    <div [ngClass]="dragTheme" *cdkDragPreview >
+      <div [innerHTML]="row.cellRender(rowCount, 0,row.data[0], columnDefs)"></div>
+    </div>
     <td style="width: 5px" oncontextmenu="return false;" *ngIf="rowSelection" class="checkBoxRow">
       <app-inline-edit
         [theme]="theme"
@@ -85,6 +93,20 @@
         [isEditable]="false"
         [columnDefs]="columnDefs" [row]="rowCount"
         [column]="-1" [cellValue]="row.rowSelect"
+        [cellData]="[]">
+
+      </app-inline-edit>
+    </td>
+    <td cdkDragHandle style="width: 5px; cursor: grab" oncontextmenu="return false;" *ngIf="rowSelection" class="checkBoxRow">
+      <app-inline-edit
+        [theme]="theme"
+        [isSelected]="false"
+        [renderer]="null"
+        (rightClicked)="showContextMenu($event)"
+        (changed)="checkedRowSelection($event)"
+        [isEditable]="false"
+        [columnDefs]="columnDefs" [row]="rowCount"
+        [column]="-3" [cellValue]=""
         [cellData]="[]">
 
       </app-inline-edit>

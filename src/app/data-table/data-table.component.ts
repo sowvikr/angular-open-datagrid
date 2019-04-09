@@ -401,6 +401,7 @@ export class DataTableComponent implements OnInit {
 
 
   drop(event) {
+/*
     this.Moved = [];
     let moveLeft = (this.offset) + 'px';
     let moveRight = (this.offset + this.clientWidth) + 'px';
@@ -437,6 +438,10 @@ export class DataTableComponent implements OnInit {
       that.isMoving = false;
       //that.moveLeft = 0;
     }, 500);
+*/
+    moveItemInArray(this.columnDefs, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.FilterData, event.previousIndex, event.currentIndex);
+    this.createTableData(this.FilterData, this.CurrentPage);
 
   }
 

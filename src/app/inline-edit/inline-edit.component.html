@@ -25,7 +25,7 @@
     </option>
   </select>
   <input #name *ngIf="!isCombobox" type="text" [value]="cellValue" (focusout)="onFocusOut()"
-         (change)="onChange($event.target.value)"/>
+         (keydown)="handleEnterKey($event)" (change)="onChange($event.target.value)"/>
 </span>
     </div>
   </div>

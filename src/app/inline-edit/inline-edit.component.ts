@@ -46,6 +46,12 @@ export class InlineEditComponent implements OnInit {
   private contextMenuArgs:ContextMenuArgs = {x: 0, y: 0, isEdit: false, column: 0, row: 0, mouseEvent: null};
   private isCoping:boolean;
 
+  handleEnterKey(event) {
+    if(event.keyCode === 13){
+      this.isEdit = false;
+    }
+  }
+
   onClick() {
     if (this.isEdit) {
       this.isEdit = false;
@@ -89,7 +95,7 @@ export class InlineEditComponent implements OnInit {
       this.isCombobox = false;
     }
     this.clipboardService.getCopyEvent().subscribe(data => {
-      if(this.isSelected) {
+      if (this.isSelected) {
         this.isCoping = true;
         let that = this;
         setTimeout(function () {

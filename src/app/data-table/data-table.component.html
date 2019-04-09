@@ -31,14 +31,14 @@
     <th style="width: 5px">
       #
     </th>
-    <th style="width: 5px">
-
-    </th>
     <th style="width: 5px" *ngIf="rowSelection">
       <label class="container">
         <input type="checkbox" (change)="checkedRowSelection($event, true);" [(ngModel)]="selectAllRows"/>
         <span class="checkmark"></span>
       </label>
+    </th>
+    <th style="width: 5px">
+
     </th>
     <th *ngFor="let item of columnDefs; let i = index" [ngStyle]="{'width':item.width}">
       <input *ngIf="item.filter" [disabled]="item.columnFilter" (keyup)="filter(i,$event.target.value)" type="text" width="calc(100% - 23px)"
@@ -145,7 +145,7 @@
   <tfoot *ngIf="pagination">
   <tr>
 
-    <td [attr.colspan]="columnDefs.length+2">
+    <td [attr.colspan]="columnDefs.length+3">
       <span class="rowCount">
         <label for="rowCount">Rows: </label>
         <select id="rowCount" class="page-number-selection"

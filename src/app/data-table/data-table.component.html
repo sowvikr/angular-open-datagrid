@@ -8,15 +8,12 @@
 -->
 <table class="dataTable" (click)="onContextMenuOff()" [ngClass]="theme">
   <thead>
-  <tr class="header" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)"
-      (cdkDropListSorted)="swapped($event)">
-    <th style="width: 5px">
-
-    </th>
-    <th *ngIf="rowSelection" style="width: 5px">
-
-    </th>
-    <th *ngFor="let item of columnDefs ; let i = index" cdkDrag [ngStyle]="{'width':item.width}" [ngClass]="dragTheme"
+  <tr class="header" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)">
+    <th style="width: 5px"></th>
+    <th *ngIf="rowSelection" style="width: 5px"></th>
+    <th *ngFor="let item of columnDefs ; let i = index" cdkDrag
+        (cdkDragEnded)="dragEnded($event)"
+        [ngStyle]="{'width':item.width}" [ngClass]="dragTheme"
         resizable>
       <div class="headerText" cdkDragHandle>
         <i (click)="sortColumn(i)" class="fa fa-sort" *ngIf="item.sortState == null && item.sort"
@@ -97,7 +94,8 @@
         (mousedown)="onDragStart(rowCount, columnCount,$event)"
         (mouseover)="onSelecting(rowCount, columnCount, cell, $event)"
         (mouseup)="onDragEnd(rowCount, columnCount, $event)"
-        [ngStyle]="{'width':columnDefs[columnCount].width}"
+        [ngStyle]="{'width':columnDefs[columnCount].width, transform:isMoving? Moved[columnCount]:inherit}"
+        [ngClass]="{'column-moving':(isMoving&&(Moved[columnCount]!==undefined))}"
         oncontextmenu="return false;">
       <app-inline-edit
         [theme]="theme"

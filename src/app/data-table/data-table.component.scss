@@ -489,6 +489,12 @@ table.dataTable {
   background-color: white;
   overflow: hidden;
 }
+.cdk-drag-preview.red-theme-drag {
+  padding: 5px 10px;
+  color: rgba(0, 0, 0, 0.54);
+  background-color: white;
+  overflow: hidden;
+}
 
 .cdk-drag-preview.dark-theme-drag {
   background-color: #1c1f20;

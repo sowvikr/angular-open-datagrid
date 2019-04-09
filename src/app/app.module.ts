@@ -15,11 +15,12 @@ import './string-prototype.service.ts';
 import { DarkThemeComponent } from './pages/dark-theme/dark-theme.component';
 import { StandardThemeComponent } from './pages/standard-theme/standard-theme.component';
 import { MaterialThemeComponent } from './pages/material-theme/material-theme.component';
-import { AllThemeComponent } from './pages/all-theme/all-theme.component'
+import { AllThemeComponent } from './pages/all-theme/all-theme.component';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ResizableDirective, GrabberDirective } from './resizeable';
 import {RedThemeComponent} from './pages/red-theme/red-theme.component';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import {RedThemeComponent} from './pages/red-theme/red-theme.component';
     DragDropModule,
     ClickOutsideModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

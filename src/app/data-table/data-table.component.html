@@ -8,12 +8,13 @@
 -->
 <table class="dataTable" (click)="onContextMenuOff()" [ngClass]="theme">
   <thead>
-  <tr class="header" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)">
+  <tr class="header" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)" (cdkDropListSorted)="swapped($event)">
     <th style="width: 5px"></th>
     <th style="width: 5px"></th>
     <th *ngIf="rowSelection" style="width: 5px"></th>
     <th *ngFor="let item of columnDefs ; let i = index" cdkDrag
         (cdkDragEnded)="dragEnded($event)"
+        (cdkDragStarted)="dragEnded($event)"
         [ngStyle]="{'width':item.width}" [ngClass]="dragTheme"
         resizable>
       <div class="headerText" cdkDragHandle>

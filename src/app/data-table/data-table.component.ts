@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, ChangeDetectorRef} from '@angular/core';
 import {trigger, style, animate, transition} from '@angular/animations';
 import {moveItemInArray} from '@angular/cdk/drag-drop';
 import {filter} from 'rxjs/internal/operators/filter';
@@ -401,55 +401,62 @@ export class DataTableComponent implements OnInit {
 
 
   drop(event) {
-/*
-    this.Moved = [];
-    let moveLeft = (this.offset) + 'px';
-    let moveRight = (this.offset + this.clientWidth) + 'px';
-    moveItemInArray(this.columnDefs, event.previousIndex, event.currentIndex);
-    moveItemInArray(this.FilterData, event.previousIndex, event.currentIndex);
-    if (event.currentIndex > event.previousIndex) {
+    /*
+     this.Moved = [];
+     let moveLeft = (this.offset) + 'px';
+     let moveRight = (this.offset + this.clientWidth) + 'px';
+     moveItemInArray(this.columnDefs, event.previousIndex, event.currentIndex);
+     moveItemInArray(this.FilterData, event.previousIndex, event.currentIndex);
+     if (event.currentIndex > event.previousIndex) {
 
-      let totalMove = event.currentIndex - event.previousIndex;
-      let previousIndexMove = this.clientWidth * totalMove + 'px';
-      let currentIndexMove = -1 * this.clientWidth + 'px';
+     let totalMove = event.currentIndex - event.previousIndex;
+     let previousIndexMove = this.clientWidth * totalMove + 'px';
+     let currentIndexMove = -1 * this.clientWidth + 'px';
 
-      this.Moved[event.previousIndex] = 'translate3d(' + previousIndexMove + ', 0px, 0px)';
+     this.Moved[event.previousIndex] = 'translate3d(' + previousIndexMove + ', 0px, 0px)';
 
-      for (let j = event.previousIndex + 1; j <= event.currentIndex; ++j) {
-        this.Moved[j] = 'translate3d(' + currentIndexMove + ', 0px, 0px)';
-      }
-    }
-    else {
-      let totalMove = event.previousIndex - event.currentIndex;
-      let previousIndexMove = this.clientWidth * totalMove + 'px';
-      let currentIndexMove = -1 * this.clientWidth + 'px';
+     for (let j = event.previousIndex + 1; j <= event.currentIndex; ++j) {
+     this.Moved[j] = 'translate3d(' + currentIndexMove + ', 0px, 0px)';
+     }
+     }
+     else {
+     let totalMove = event.previousIndex - event.currentIndex;
+     let previousIndexMove = this.clientWidth * totalMove + 'px';
+     let currentIndexMove = -1 * this.clientWidth + 'px';
 
-      this.Moved[event.currentIndex] = 'translate3d(' + previousIndexMove + ', 0px, 0px)';
+     this.Moved[event.currentIndex] = 'translate3d(' + previousIndexMove + ', 0px, 0px)';
 
-      for (let j = event.currentIndex + 1; j <= event.previousIndex; ++j) {
-        this.Moved[j] = 'translate3d(' + currentIndexMove + ', 0px, 0px)';
-      }
+     for (let j = event.currentIndex + 1; j <= event.previousIndex; ++j) {
+     this.Moved[j] = 'translate3d(' + currentIndexMove + ', 0px, 0px)';
+     }
 
-    }
-    this.isMoving = true;
-    let that = this;
-    setTimeout(function () {
-      that.createTableData(this.FilterData, this.CurrentPage);
-      that.isMoving = false;
-      //that.moveLeft = 0;
-    }, 500);
-*/
+     }
+     this.isMoving = true;
+     let that = this;
+     setTimeout(function () {
+     that.createTableData(this.FilterData, this.CurrentPage);
+     that.isMoving = false;
+     //that.moveLeft = 0;
+     }, 500);
+     */
+    //moveItemInArray(this.columnDefs, event.previousIndex, event.currentIndex);
+    //moveItemInArray(this.FilterData, event.previousIndex, event.currentIndex);
+    //this.createTableData(this.FilterData, this.CurrentPage);
+    this.previousIndex = undefined;
     moveItemInArray(this.columnDefs, event.previousIndex, event.currentIndex);
     moveItemInArray(this.FilterData, event.previousIndex, event.currentIndex);
     this.createTableData(this.FilterData, this.CurrentPage);
 
   }
-  dragMoved($event){
+
+  dragMoved($event) {
     debugger;
   }
-  dropRow(event){
+
+  dropRow(event) {
     moveItemInArray(this.PagedRows, event.previousIndex, event.currentIndex);
   }
+
   valueChanged(changeValue:any) {
     this.TableRows[changeValue.row].data[changeValue.column] = changeValue.value;
     this.pagedRows();
@@ -599,8 +606,42 @@ export class DataTableComponent implements OnInit {
     }
   }
 
+  private previousIndex;
+
   swapped(event:any) {
-    console.log('swapped', event.item.data);
+    this.Moved = [];
+    if (this.previousIndex === undefined)
+      this.previousIndex = event.previousIndex;
+    if (event.currentIndex > this.previousIndex) {
+
+      let totalMove = event.currentIndex - this.previousIndex;
+      let previousIndexMove = this.clientWidth * totalMove + 'px';
+      let currentIndexMove = -1 * this.clientWidth + 'px';
+      console.log(this.previousIndex, event.currentIndex);
+      this.Moved[this.previousIndex] = 'translate3d(' + previousIndexMove + ', 0px, 0px)';
+      for (let j = event.currentIndex; j >= this.previousIndex; --j) {
+        if (j === this.previousIndex) continue;
+        this.Moved[j] = 'translate3d(' + currentIndexMove + ', 0px, 0px)';
+      }
+    }
+    else {
+      let totalMove = this.previousIndex - event.currentIndex;
+      let previousIndexMove = this.clientWidth + 'px';
+      let currentIndexMove = -1 * this.clientWidth * totalMove + 'px';
+
+      this.Moved[this.previousIndex] = 'translate3d(' + currentIndexMove + ', 0px, 0px)';
+      for (let j = event.currentIndex; j <= this.previousIndex; ++j) {
+        if (j === this.previousIndex) continue;
+        this.Moved[j] = 'translate3d(' + previousIndexMove + ', 0px, 0px)';
+      }
+    }
+    this.isMoving = true;
+    this.ref.detectChanges();
+
+    let that = this;
+    setTimeout(function () {
+      that.isMoving = false;
+    }, 500)
   }
 
   onContextMenuOff() {
@@ -715,7 +756,7 @@ export class DataTableComponent implements OnInit {
 
   }
 
-  constructor(private clipboardService:ClipboardService, private filterService:FilterService, private dataTableService:DataTableUtilsService) {
+  constructor(private clipboardService:ClipboardService, private filterService:FilterService, private dataTableService:DataTableUtilsService, private ref:ChangeDetectorRef) {
   }
 
   ngOnInit() {

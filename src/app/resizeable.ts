@@ -53,7 +53,6 @@ export class GrabberDirective {
     document.addEventListener('mousemove', this._boundDragging);
     document.addEventListener('mouseup', this._boundDragEnd);
     this.resizable.dragStart();
-    console.log("sdfsf");
   };
 
   _startOffsetX = 0;

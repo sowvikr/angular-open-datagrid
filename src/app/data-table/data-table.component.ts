@@ -81,6 +81,7 @@ export class DataTableComponent implements OnInit {
   @Input() rowSelection:boolean = true;
 
   private isMoving:boolean = false;
+  private clientWidth;
   private Moved:Array<any> = [];
   private math = Math;
   private TableRows:TableRow[] = [];
@@ -96,6 +97,7 @@ export class DataTableComponent implements OnInit {
   private FilteredRows:TableRow[] = [];
   private contextmenu:boolean;
   private contextmenuX = 0;
+  private previousIndex;
   private contextmenuY = 0;
   private filterMenuX = 0;
   private filterMenuY = 0;
@@ -390,58 +392,13 @@ export class DataTableComponent implements OnInit {
     }
   }
 
-  private offset;
-  private clientWidth;
 
   dragEnded(event) {
-    this.offset = event.source.element.nativeElement.offsetLeft;
     this.clientWidth = event.source.element.nativeElement.offsetWidth;
-    //console.log(event.pointerPosition.x, event.pointerPosition.y);
   }
 
 
   drop(event) {
-    /*
-     this.Moved = [];
-     let moveLeft = (this.offset) + 'px';
-     let moveRight = (this.offset + this.clientWidth) + 'px';
-     moveItemInArray(this.columnDefs, event.previousIndex, event.currentIndex);
-     moveItemInArray(this.FilterData, event.previousIndex, event.currentIndex);
-     if (event.currentIndex > event.previousIndex) {
-
-     let totalMove = event.currentIndex - event.previousIndex;
-     let previousIndexMove = this.clientWidth * totalMove + 'px';
-     let currentIndexMove = -1 * this.clientWidth + 'px';
-
-     this.Moved[event.previousIndex] = 'translate3d(' + previousIndexMove + ', 0px, 0px)';
-
-     for (let j = event.previousIndex + 1; j <= event.currentIndex; ++j) {
-     this.Moved[j] = 'translate3d(' + currentIndexMove + ', 0px, 0px)';
-     }
-     }
-     else {
-     let totalMove = event.previousIndex - event.currentIndex;
-     let previousIndexMove = this.clientWidth * totalMove + 'px';
-     let currentIndexMove = -1 * this.clientWidth + 'px';
-
-     this.Moved[event.currentIndex] = 'translate3d(' + previousIndexMove + ', 0px, 0px)';
-
-     for (let j = event.currentIndex + 1; j <= event.previousIndex; ++j) {
-     this.Moved[j] = 'translate3d(' + currentIndexMove + ', 0px, 0px)';
-     }
-
-     }
-     this.isMoving = true;
-     let that = this;
-     setTimeout(function () {
-     that.createTableData(this.FilterData, this.CurrentPage);
-     that.isMoving = false;
-     //that.moveLeft = 0;
-     }, 500);
-     */
-    //moveItemInArray(this.columnDefs, event.previousIndex, event.currentIndex);
-    //moveItemInArray(this.FilterData, event.previousIndex, event.currentIndex);
-    //this.createTableData(this.FilterData, this.CurrentPage);
     this.previousIndex = undefined;
     moveItemInArray(this.columnDefs, event.previousIndex, event.currentIndex);
     moveItemInArray(this.FilterData, event.previousIndex, event.currentIndex);
@@ -583,8 +540,6 @@ export class DataTableComponent implements OnInit {
         }
       }
     }
-    console.log(this.contextMenuData);
-    console.log('startRow:' + selectionRowStart + ' ' + 'StartCol: ' + selectionColStart + ' endtRow:' + selectionRowEnd + ' ' + 'endCol: ' + selectionColEnd);
     if (selectionRowStart === null || selectionRowEnd === null
       || selectionColEnd === null || selectionColStart === null) {
       return;
@@ -606,7 +561,6 @@ export class DataTableComponent implements OnInit {
     }
   }
 
-  private previousIndex;
 
   swapped(event:any) {
     this.Moved = [];
@@ -617,7 +571,6 @@ export class DataTableComponent implements OnInit {
       let totalMove = event.currentIndex - this.previousIndex;
       let previousIndexMove = this.clientWidth * totalMove + 'px';
       let currentIndexMove = -1 * this.clientWidth + 'px';
-      console.log(this.previousIndex, event.currentIndex);
       this.Moved[this.previousIndex] = 'translate3d(' + previousIndexMove + ', 0px, 0px)';
       for (let j = event.currentIndex; j >= this.previousIndex; --j) {
         if (j === this.previousIndex) continue;

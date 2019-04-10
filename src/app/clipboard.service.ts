@@ -61,13 +61,12 @@ export class ClipboardService {
     try {
       const successful = document.execCommand('copy');
       const msg = successful ? 'successful' : 'unsuccessful';
-      console.log('Copying text command was ' + msg);
       if (successful) {
         this.onCopy.emit(true);
         return true;
       }
     } catch (err) {
-      console.log('Oops, unable to copy');
+      console.error('Oops, unable to copy');
     } finally {
       //document.body.removeChild(txtArea);
     }
@@ -92,9 +91,8 @@ export class ClipboardService {
       else {
         msg = 'unsuccessful';
       }
-      console.log('Copying text command was ' + msg);
     } catch (err) {
-      console.log('Oops, unable to paste!');
+      console.error('Oops, unable to paste!');
     } finally {
       this.onPaste.emit(this.get2DArray(result));
       return this.get2DArray(result);

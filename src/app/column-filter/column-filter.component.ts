@@ -75,7 +75,6 @@ export class ColumnFilterComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.renderFunction)
   }
 
 }

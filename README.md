@@ -1,6 +1,11 @@
 # Datatable
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.5.
+####Install 
+1. npm i angular-open-datagrid --save
+2. import { DataTableComponent } from 'angular-open-datagrid';
+
+
 
 ## Table Options
 ### Pagination

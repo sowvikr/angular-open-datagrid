@@ -74,7 +74,8 @@ rowData: [
 4. Nice animation for visualization.
 5. Edit Cell
 6. Copy paste like Microsoft Excel.
-
+# Preview
+![Preview](/Datatable.png)
 # Future Timeline
 1. Ability to render remote data.
 2. Make more fast and smooth.

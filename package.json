@@ -1,6 +1,12 @@
 {
   "name": "angular-open-datagrid",
-  "version": "0.0.2",
+  "version": "0.0.3",
+  "license": "(MIT)",
+  "homepage": "https://github.com/sowvikr/angular-open-datagrid#readme",
+  "bugs": {
+    "url": "https://github.com/sowvikr/angular-open-datagrid/issues",
+    "email": "sowvikr@gmail.com"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve -o --port 4211",

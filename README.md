@@ -2,26 +2,80 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.5.
 
-## Development server
+## Table Options
+### Pagination
+* **pagination [boolean]:** Enable pagination for the table.
+* **pageSize [boolean]:** Enable pagination for the table.
+### Themes
+* **theme [string]:** Themebased table. The available themes are as follows
+1. Matrial Theme (metrial-theme)
+2. Dark Theme (dark-theme)
+3. Standard Theme (standard-theme)
+4. Red Theme (red-theme)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### Column Definitions
+#### Mandatory Options
+* **headerName [string]:** Header name of the particular column
+* **field [string]:** Field name mapping to the data rows.
+* **width [number]:** Width of the column in pixel.
+* **sort [boolean]:** Column is sortable.
+* **filter [boolean]:** Can filter can be filtered.
 
-## Code scaffolding
+```javascript
+colunDefs[          
+          headerName: 'Model',
+          field: 'model',
+          width: '40px',
+          sort: true,
+          filter: true
+]
+```
+#### Optional Options
+* **columnFilter [boolean]:** This filter is group similar values and make a Special filter for the particular column.
+* **isEdit [boolean]:** Editable the prticular column.
+* **cellRender [function(row, column, data, colDef)]:** Custom column renderer.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
+**Column Definition Example**
+```javascript
+columnDefs[{
+          headerName: 'Model',
+          field: 'model',
+          width: '40',
+          sort: true,
+          filter: true,
+          cellRender: (row, column, data, def) => {
+            return '<a href="#">' + data + '</a>';
+          }
+        },
+        {headerName: 'Make', isEdit: true, field: 'make', width: '40px'......}]
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+### Rows
+Simply array of data.
+**Example:**
+```javascript
+rowData: [
+        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'red'},
+        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 50, color: 'green'},
+        .............................................................................
+        ]
+```
+### Binding data with table component
+```html
+  <app-data-table [pagination]=true [theme]="standard-theme"
+                  [columnDefs]="columns" [rowData]="data"></app-data-table>
+```
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Notable Features
+1. Theme based data table
+2. Column is re-arrangeable using drag-drop
+3. Row arrangable.
+4. Nice animation for visualization.
+5. Edit Cell
+6. Copy paste like Microsoft Excel.
+# Preview
+![Preview](/Datatable.png)
+# Future Timeline
+1. Ability to render remote data.
+2. Make more fast and smooth.

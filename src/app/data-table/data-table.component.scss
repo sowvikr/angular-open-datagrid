@@ -468,6 +468,12 @@ table.dataTable {
   }
 }
 
+.red-theme {
+  .cdk-drag-placeholder {
+    background-color: rgba(175, 11, 28, 0.53);
+  }
+}
+
 .cdk-drag-placeholder {
   background-color: white;
   border: 1px solid #BDC3C7 !important;
@@ -496,8 +502,8 @@ table.dataTable {
 }
 .cdk-drag-preview.red-theme-drag {
   padding: 5px 10px;
-  color: rgba(0, 0, 0, 0.54);
-  background-color: white;
+  color: white;
+  background-color: rgba(175, 11, 28, 0.8);
   overflow: hidden;
 }
 

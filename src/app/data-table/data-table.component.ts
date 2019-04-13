@@ -399,6 +399,7 @@ export class DataTableComponent implements OnInit {
 
 
   drop(event) {
+    this.isMoving = false;
     this.previousIndex = undefined;
     moveItemInArray(this.columnDefs, event.previousIndex, event.currentIndex);
     moveItemInArray(this.FilterData, event.previousIndex, event.currentIndex);
@@ -562,39 +563,38 @@ export class DataTableComponent implements OnInit {
   }
 
 
-  swapped(event:any) {
-    this.Moved = [];
-    if (this.previousIndex === undefined)
-      this.previousIndex = event.previousIndex;
-    if (event.currentIndex > this.previousIndex) {
+  private animateRows(currentIndex:number, previousIndex:number, width:number) {
+    this.isMoving = true;
+    if (currentIndex > previousIndex) {
 
-      let totalMove = event.currentIndex - this.previousIndex;
-      let previousIndexMove = this.clientWidth * totalMove + 'px';
-      let currentIndexMove = -1 * this.clientWidth + 'px';
-      this.Moved[this.previousIndex] = 'translate3d(' + previousIndexMove + ', 0px, 0px)';
-      for (let j = event.currentIndex; j >= this.previousIndex; --j) {
-        if (j === this.previousIndex) continue;
+      let totalMove = currentIndex - previousIndex;
+      let previousIndexMove = width * totalMove + 'px';
+      let currentIndexMove = -1 * width + 'px';
+      this.Moved[previousIndex] = 'translate3d(' + previousIndexMove + ', 0px, 0px)';
+      for (let j = currentIndex; j >= previousIndex; --j) {
+        if (j === previousIndex) continue;
         this.Moved[j] = 'translate3d(' + currentIndexMove + ', 0px, 0px)';
       }
     }
     else {
-      let totalMove = this.previousIndex - event.currentIndex;
-      let previousIndexMove = this.clientWidth + 'px';
-      let currentIndexMove = -1 * this.clientWidth * totalMove + 'px';
+      let totalMove = previousIndex - currentIndex;
+      let previousIndexMove = width + 'px';
+      let currentIndexMove = -1 * width * totalMove + 'px';
 
-      this.Moved[this.previousIndex] = 'translate3d(' + currentIndexMove + ', 0px, 0px)';
-      for (let j = event.currentIndex; j <= this.previousIndex; ++j) {
-        if (j === this.previousIndex) continue;
+      this.Moved[previousIndex] = 'translate3d(' + currentIndexMove + ', 0px, 0px)';
+      for (let j = currentIndex; j <= previousIndex; ++j) {
+        if (j === previousIndex) continue;
         this.Moved[j] = 'translate3d(' + previousIndexMove + ', 0px, 0px)';
       }
     }
-    this.isMoving = true;
     this.ref.detectChanges();
+  }
 
-    let that = this;
-    setTimeout(function () {
-      that.isMoving = false;
-    }, 500)
+  swapped(event:any) {
+    this.Moved = [];
+    if (this.previousIndex === undefined)
+      this.previousIndex = event.previousIndex;
+    this.animateRows(event.currentIndex, this.previousIndex, this.clientWidth);
   }
 
   onContextMenuOff() {

@@ -13,10 +13,12 @@
     <th style="width: 5px"></th>
     <th *ngIf="rowSelection" style="width: 5px"></th>
     <th *ngFor="let item of columnDefs ; let i = index" cdkDrag
-        (cdkDragEnded)="dragEnded($event)"
-        (cdkDragStarted)="dragEnded($event)"
         [ngStyle]="{'width':item.width}" [ngClass]="dragTheme"
         resizable>
+      <div [ngClass]="dragTheme" *cdkDragPreview >
+        <div >{{item.headerName}}</div>
+      </div>
+
       <div class="headerText" cdkDragHandle>
         <i (click)="sortColumn(i)" class="fa fa-sort" *ngIf="item.sortState == null && item.sort"
            aria-hidden="true"> </i>
@@ -63,7 +65,7 @@
   </thead>
   <tbody (click)="onContextMenuOff()" tabindex="0" ctrlKeys
          (ctrlC)="onCtrlC($event)"
-         (ctrlV)="onCtrlV($event)" cdkDropList (cdkDropListDropped)="dropRow($event)" (cdkDropListSorted)="dragMoved($event)" >
+         (ctrlV)="onCtrlV($event)" cdkDropList (cdkDropListDropped)="dropRow($event)" >
   <tr *ngFor="let row of PagedRows; let rowCount = index" [hidden]="row.filteredOut" [@enterAnimation]
       cdkDrag
       [ngClass]="{'odd': rowCount%2 !== 0, 'even': rowCount%2===0}">

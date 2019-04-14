@@ -407,10 +407,6 @@ export class DataTableComponent implements OnInit {
 
   }
 
-  dragMoved($event) {
-    debugger;
-  }
-
   dropRow(event) {
     moveItemInArray(this.PagedRows, event.previousIndex, event.currentIndex);
   }
@@ -591,10 +587,11 @@ export class DataTableComponent implements OnInit {
   }
 
   swapped(event:any) {
+    let clientWidth = (event.container.element.nativeElement.clientWidth / this.columnDefs.length) - 10
     this.Moved = [];
     if (this.previousIndex === undefined)
       this.previousIndex = event.previousIndex;
-    this.animateRows(event.currentIndex, this.previousIndex, this.clientWidth);
+    this.animateRows(event.currentIndex, this.previousIndex, clientWidth);
   }
 
   onContextMenuOff() {

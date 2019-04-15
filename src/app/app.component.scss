@@ -1,5 +1,8 @@
 .page-container{
   margin: 0 60px;
+  @media only screen and (max-width: 600px) {
+    margin: 0;
+  }
 }
 .theme-links{
   display: inline-block;

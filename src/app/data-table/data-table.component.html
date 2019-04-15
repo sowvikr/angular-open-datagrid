@@ -8,15 +8,16 @@
 -->
 <table class="dataTable" (click)="onContextMenuOff()" [ngClass]="theme">
   <thead>
-  <tr class="header" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)" (cdkDropListSorted)="swapped($event)">
+  <tr class="header" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)"
+      (cdkDropListSorted)="swapped($event)">
     <th style="width: 5px"></th>
     <th style="width: 5px"></th>
     <th *ngIf="rowSelection" style="width: 5px"></th>
     <th *ngFor="let item of columnDefs ; let i = index" cdkDrag
         [ngStyle]="{'width':item.width}" [ngClass]="dragTheme"
         resizable>
-      <div [ngClass]="dragTheme" *cdkDragPreview >
-        <div >{{item.headerName}}</div>
+      <div [ngClass]="dragTheme" *cdkDragPreview>
+        <div>{{item.headerName}}</div>
       </div>
 
       <div class="headerText" cdkDragHandle>
@@ -44,9 +45,10 @@
       </label>
     </th>
     <th *ngFor="let item of columnDefs; let i = index" [ngStyle]="{'width':item.width}">
-      <input *ngIf="item.filter" [disabled]="item.columnFilter" (keyup)="filter(i,$event.target.value)" type="text" width="calc(100% - 23px)"
+      <input *ngIf="item.filter" [disabled]="item.columnFilter" (keyup)="filter(i,$event.target.value)" type="text"
+             width="calc(100% - 23px)"
              height="10"/>
-        <span>
+      <span>
           <i class="feather icon-filter filter-icon" *ngIf="item.filter && item.columnFilter"
              (click)="toggleFilter(i, $event)">
           </i>
@@ -65,11 +67,11 @@
   </thead>
   <tbody (click)="onContextMenuOff()" tabindex="0" ctrlKeys
          (ctrlC)="onCtrlC($event)"
-         (ctrlV)="onCtrlV($event)" cdkDropList (cdkDropListDropped)="dropRow($event)" >
+         (ctrlV)="onCtrlV($event)" cdkDropList (cdkDropListDropped)="dropRow($event)">
   <tr *ngFor="let row of PagedRows; let rowCount = index" [hidden]="row.filteredOut" [@enterAnimation]
       cdkDrag
       [ngClass]="{'odd': rowCount%2 !== 0, 'even': rowCount%2===0}">
-    <div [ngClass]="dragTheme" *cdkDragPreview >
+    <div [ngClass]="dragTheme" *cdkDragPreview>
       <div [innerHTML]="row.cellRender(rowCount, 0,row.data[0], columnDefs)"></div>
     </div>
     <td style="width: 5px" oncontextmenu="return false;" *ngIf="rowSelection" class="checkBoxRow">
@@ -86,7 +88,8 @@
 
       </app-inline-edit>
     </td>
-    <td cdkDragHandle style="width: 5px; cursor: grab" oncontextmenu="return false;" *ngIf="rowSelection" class="checkBoxRow row-drag">
+    <td cdkDragHandle style="width: 5px; cursor: grab" oncontextmenu="return false;" *ngIf="rowSelection"
+        class="checkBoxRow row-drag">
       <app-inline-edit
         [theme]="theme"
         [isSelected]="false"

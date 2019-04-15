@@ -200,7 +200,9 @@ div.filterPanel {
     padding-right: 9px;
     input[type=text] {
       width: 100%;
-
+      @media only screen and (max-width: 600px) {
+        width: 95%;
+      }
       &::placeholder {
         font-size: 12px;
         padding-left: 5px;

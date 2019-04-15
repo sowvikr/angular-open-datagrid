@@ -1,13 +1,14 @@
 .dataTable {
-  margin-bottom: 40px;
-  width: 100%;
+  /*width: 100%;
   display: block;
-  overflow-x: auto;
+  overflow-x: auto;*/
+  min-width: 1044px;
 }
 
 .table-container{
-  /*width: 100%;
-  max-width: 100vw;*/
+  width: 100%;
+  overflow-x: auto;
+  margin-bottom: 40px;
 }
 
 .light-theme.dataTable {

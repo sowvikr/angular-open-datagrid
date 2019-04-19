@@ -2,7 +2,7 @@
   /*width: 100%;
   display: block;
   overflow-x: auto;*/
-  min-width: 1044px;
+  min-width: 1400px;
 }
 
 .table-container{
@@ -272,6 +272,9 @@ table.dataTable {
       i.filter-icon {
         padding-left: 10px;
         cursor: pointer;
+        @media only screen and (max-width: 600px) {
+          padding-left: 4px;
+        }
       }
     }
 

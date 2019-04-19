@@ -22,7 +22,7 @@ export class FilterService {
     }
     for (let i = 0; i < filterOptions[column].values.length; ++i) {
       if (filterOptions[column].operator == 'or') {
-        filtered = filtered || filterOptions[column].comparator.call(data, filterOptions[column].values[i])
+        filtered = filtered || filterOptions[column].comparator.call(this, data, filterOptions[column].values[i])
       }
     }
     return filtered;

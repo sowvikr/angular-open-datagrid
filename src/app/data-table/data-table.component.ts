@@ -4,6 +4,7 @@ import {moveItemInArray} from '@angular/cdk/drag-drop';
 import {filter} from 'rxjs/internal/operators/filter';
 import {ClipboardService} from '../clipboard.service';
 import {FilterService} from '../filter.service';
+import {StringUtilsService} from '../string-utils.service';
 import {sequenceEqual} from 'rxjs/internal/operators/sequenceEqual';
 import {DataTableUtilsService} from '../data-table-utils.service';
 import {CdkDragEnter} from '@angular/cdk/typings/esm5/drag-drop';
@@ -214,7 +215,7 @@ export class DataTableComponent implements OnInit {
         uniqueItems.push(columnValue);
         column.uniqueFilterValues.push({checked: false, filteredOut: false, data: [columnValue]});
         if (!this.FilterData[columnNumber]) {
-          this.FilterData[columnNumber] = {comparator: String.prototype.includes, operator: 'or', values: []};
+          this.FilterData[columnNumber] = {comparator:StringUtilsService.includes , operator: 'or', values: []};
         }
         this.FilterData[columnNumber].values.push(columnValue);
       }
@@ -263,7 +264,7 @@ export class DataTableComponent implements OnInit {
 
 // Filters data based on CONTAINS.
   filter(column, text) {
-    this.FilterData[column] = {operator: 'or', values: [text], comparator: String.prototype.includes};
+    this.FilterData[column] = {operator: 'or', values: [text], comparator: StringUtilsService.includes};
     this.applyFilter(this.FilterData, this.TableRows);
   }
 
@@ -293,7 +294,7 @@ export class DataTableComponent implements OnInit {
   checkedColumnFilter(filterEventArgs) {
 
     this.FilterData[filterEventArgs.column].values = [];
-    this.FilterData[filterEventArgs.column].comparator = String.prototype.equals;
+    this.FilterData[filterEventArgs.column].comparator = StringUtilsService.equals;
     for (let i = 0; i < filterEventArgs.filteredData.length; ++i) {
       this.FilterData[filterEventArgs.column].values.push(filterEventArgs.filteredData[i]);
     }

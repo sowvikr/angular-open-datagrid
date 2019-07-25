@@ -1,0 +1,52 @@
+[    
+    {
+        "price": "85,000",
+        "symbol": "WES.AX",
+        "shares": 7
+    },
+    {
+        "price": "6,000",
+        "symbol": "HPQ",
+        "shares": 11
+    },
+    {
+        "price": "55,000",
+        "symbol": "INTC",
+        "shares": 26
+    },    
+	{
+        "price": "1,00,000",
+        "symbol": "AXJIO",
+        "shares": 10
+    },
+    {
+        "price": "30,000",
+        "symbol": "NAB.AX",
+        "shares": 5
+    },
+    {
+        "price": "12,000",
+        "symbol": "IBM",
+        "shares": 10
+    },
+    {
+        "price": "1,500",
+        "symbol": "JBX.AX",
+        "shares": 15
+    },
+	{
+        "price": "800",
+        "symbol": "RACE",
+        "shares": 90
+    },
+    {
+        "price": "8000",
+        "symbol": "TM",
+        "shares": 100
+    },
+	{
+        "price": "12,000",
+        "symbol": "AAPL",
+        "shares": 8
+    }
+]

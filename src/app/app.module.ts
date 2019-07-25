@@ -13,7 +13,7 @@ import { ColumnFilterComponent } from './column-filter/column-filter.component';
 import { ClickOutsideModule } from 'ng4-click-outside';
 import './string-prototype.service.ts';
 import { DarkThemeComponent } from './pages/dark-theme/dark-theme.component';
-import { StandardThemeComponent } from './pages/standard-theme/standard-theme.component';
+import { StandardThemeComponent } from './pages/dataset/standard-theme.component';
 import { MaterialThemeComponent } from './pages/material-theme/material-theme.component';
 import { AllThemeComponent } from './pages/all-theme/all-theme.component';
 import { FormsModule } from '@angular/forms';

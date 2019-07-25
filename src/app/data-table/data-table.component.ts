@@ -75,10 +75,17 @@ export class DataTableComponent implements OnInit {
   @Input() pagination;
   private pageSize;
   private dragTheme;
+  private rowData;
 
   @Input() theme;
   @Input() columnDefs:Column[];
-  @Input() rowData;
+  get rows():Array<any>{
+    return this.rowData;
+  }
+  @Input() set rows(data:Array<any>){
+    this.rowData = data;
+    this.init();
+  }
   @Input() rowSelection:boolean = true;
 
   private isMoving:boolean = false;
@@ -714,13 +721,16 @@ export class DataTableComponent implements OnInit {
 
   }
 
+  private init(){
+    this.dragTheme = this.theme + '-drag';
+    this.pageSize = (this.rowSizes[0] > this.rowData.length) ? this.rowData.length : this.rowSizes[0];
+    this.tableDraw();
+  }
   constructor(private clipboardService:ClipboardService, private filterService:FilterService, private dataTableService:DataTableUtilsService, private ref:ChangeDetectorRef) {
   }
 
   ngOnInit() {
-    this.dragTheme = this.theme + '-drag';
-    this.pageSize = (this.rowSizes[0] > this.rowData.length) ? this.rowData.length : this.rowSizes[0];
-    this.tableDraw();
+    this.init();
     this.clipboardService.getPasteEvent().subscribe(data => this.pasteData(data));
     this.dataTableService.getOnDeleteEvent().subscribe(data => this.deleteData(data));
   }

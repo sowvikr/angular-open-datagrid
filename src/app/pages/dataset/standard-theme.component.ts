@@ -360,7 +360,7 @@ export class StandardThemeComponent implements OnInit {
       this.dataTables[0].rowData = rowData;
       // this.tableDraw();
       this.ref.detectChanges();
-    }, 500);
+    }, 5000);
   }
 
 }

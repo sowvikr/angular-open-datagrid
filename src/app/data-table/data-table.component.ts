@@ -11,7 +11,7 @@ import {CdkDragEnter} from '@angular/cdk/typings/esm5/drag-drop';
 
 // Cell renderer interface.
 interface CellRenderer {
-  cellRender?(row:number, column:number, data:any, columnDefs:Column[]): string;
+  cellRender?(row: number, column: number, data: any, columnDefs: Column[]): string;
 }
 
 // interface for columns
@@ -33,6 +33,7 @@ interface Column extends CellRenderer {
 interface FilterOptions {
   operator: string;
   values: string[];
+  filterApplied: boolean;
   comparator: any;
 }
 
@@ -78,45 +79,48 @@ export class DataTableComponent implements OnInit {
   private rowData;
 
   @Input() theme;
-  @Input() columnDefs:Column[];
-  get rows():Array<any>{
+  @Input() columnDefs: Column[];
+
+  get rows(): Array<any> {
     return this.rowData;
   }
-  @Input() set rows(data:Array<any>){
+
+  @Input() set rows(data: Array<any>) {
     this.rowData = data;
     this.init();
   }
-  @Input() rowSelection:boolean = true;
 
-  private isMoving:boolean = false;
+  @Input() rowSelection: boolean = true;
+
+  private isMoving: boolean = false;
   private clientWidth;
-  private Moved:Array<any> = [];
+  private Moved: Array<any> = [];
   private math = Math;
-  private TableRows:TableRow[] = [];
-  private FilterRowCount:number;
-  private TotalPages:number;
-  private PagedRows:TableRow[] = [];
+  private TableRows: TableRow[] = [];
+  private FilterRowCount: number;
+  private TotalPages: number;
+  private PagedRows: TableRow[] = [];
   private CurrentPage = 1;
   private InvalidPage = 0;
   private FromRecord = 1;
-  private ToRecord:number = 0;
-  private FilterData:Array<FilterOptions>;
-  private TotalRows:number;
-  private FilteredRows:TableRow[] = [];
-  private contextmenu:boolean;
+  private ToRecord: number = 0;
+  private FilterData: Array<FilterOptions>;
+  private TotalRows: number;
+  private FilteredRows: TableRow[] = [];
+  private contextmenu: boolean;
   private contextmenuX = 0;
   private previousIndex;
   private contextmenuY = 0;
   private filterMenuX = 0;
   private filterMenuY = 0;
-  private contextMenuData:Array<Array<any>> = [];
-  private contextMenuIsEdit:boolean;
-  private isDragging:boolean;
+  private contextMenuData: Array<Array<any>> = [];
+  private contextMenuIsEdit: boolean;
+  private isDragging: boolean;
   private rowSizes = [25, 50, 75, 100];
-  private selectAllRows:boolean = false;
+  private selectAllRows: boolean = false;
 
   // Convert row data to a 2D array.
-  createTableData(filteredData?:Array<any>, currentPage?:number) {
+  createTableData(filteredData?: Array<any>, currentPage?: number) {
     this.TableRows = new Array<any>();
     this.contextMenuData = [];
     if (!(this.rowData && this.rowData.length)) {
@@ -127,7 +131,7 @@ export class DataTableComponent implements OnInit {
         + Object.keys(this.rowData[0]).length);
     }
     for (let j = 0; j < this.rowData.length; ++j) {
-      const row:TableRow = {data: [], filteredOut: false};
+      const row: TableRow = {data: [], filteredOut: false};
       for (let i = 0; i < this.columnDefs.length; ++i) {
         if (!(filteredData && filteredData.length !== 0 && currentPage > 0)) {
           this.columnDefs[i].sortState = null;
@@ -175,7 +179,7 @@ export class DataTableComponent implements OnInit {
   }
 
 
-  private selectRows(selected:boolean, rowNumber:number, isAll?:boolean) {
+  private selectRows(selected: boolean, rowNumber: number, isAll?: boolean) {
     let row = this.PagedRows[rowNumber];
     if (isAll) {
       this.allRows(selected);
@@ -197,7 +201,7 @@ export class DataTableComponent implements OnInit {
       this.selectRows(event.target.checked, null, true);
       return;
     }
-    if(!event.value){
+    if (!event.value) {
       this.selectAllRows = false;
     }
     this.PagedRows[event.row].rowSelect = event.value;
@@ -206,12 +210,14 @@ export class DataTableComponent implements OnInit {
 
   private generateUniqueFilters() {
     for (let i = 0; i < this.columnDefs.length; ++i) {
-      this.createColumnFilter(this.columnDefs[i], this.TableRows, i);
+      if (this.FilterData && this.FilterData[i] && !this.FilterData[i].filterApplied) {
+        this.createColumnFilter(this.columnDefs[i], this.TableRows, i);
+      }
     }
   }
 
-  private createColumnFilter(column:Column, rows:Array<TableRow>, columnNumber:number) {
-    const uniqueItems:Array<any> = [];
+  private createColumnFilter(column: Column, rows: Array<TableRow>, columnNumber: number) {
+    const uniqueItems: Array<any> = [];
     column.uniqueFilterValues = [];
     if (!column.columnFilter) {
       return;
@@ -225,7 +231,7 @@ export class DataTableComponent implements OnInit {
         uniqueItems.push(columnValue);
         column.uniqueFilterValues.push({checked: false, filteredOut: false, data: [columnValue]});
         if (!this.FilterData[columnNumber]) {
-          this.FilterData[columnNumber] = {comparator:StringUtilsService.includes , operator: 'or', values: []};
+          this.FilterData[columnNumber] = {comparator: StringUtilsService.includes, operator: 'or', values: []};
         }
         this.FilterData[columnNumber].values.push(columnValue);
       }
@@ -237,7 +243,7 @@ export class DataTableComponent implements OnInit {
   private pagedRows() {
     let j = 0;
     for (let i = 0; i < this.TableRows.length; ++i) {
-      const row:TableRow = this.TableRows[i];
+      const row: TableRow = this.TableRows[i];
       if (row.filteredOut) {
         row.pageNo = 0;
         continue;
@@ -251,10 +257,10 @@ export class DataTableComponent implements OnInit {
     }
   }
 
-  private setPagedRow(pageNo:number) {
+  private setPagedRow(pageNo: number) {
     this.PagedRows = [];
     for (let j = 0; j < this.TableRows.length; ++j) {
-      const row:TableRow = this.TableRows[j];
+      const row: TableRow = this.TableRows[j];
       if (row.pageNo === this.InvalidPage) {
         continue;
       }
@@ -264,7 +270,7 @@ export class DataTableComponent implements OnInit {
     }
   }
 
-  private cellRenderer(row:number, column:number, data:any, columnDefs:Column[]) {
+  private cellRenderer(row: number, column: number, data: any, columnDefs: Column[]) {
     if (columnDefs[column].cellRender === undefined && (typeof (columnDefs[column].cellRender) !== 'function')) {
       return data;
     } else {
@@ -278,7 +284,7 @@ export class DataTableComponent implements OnInit {
     this.applyFilter(this.FilterData, this.TableRows);
   }
 
-  private getFilteredValue(column:number, filterOptions:Array<FilterOptions>, data:string) {
+  private getFilteredValue(column: number, filterOptions: Array<FilterOptions>, data: string) {
     let filtered = false;
     if (!filterOptions[column].values.length) {
       return true;
@@ -291,7 +297,7 @@ export class DataTableComponent implements OnInit {
     return filtered;
   }
 
-  private applyFilter(filterData:Array<FilterOptions>, tableRows:Array<any>) {
+  private applyFilter(filterData: Array<FilterOptions>, tableRows: Array<any>) {
     let result = this.filterService.filter(filterData, tableRows);
     this.FilterRowCount = result.FilteredRowCount;
     tableRows = result.tableRows;
@@ -305,6 +311,7 @@ export class DataTableComponent implements OnInit {
 
     this.FilterData[filterEventArgs.column].values = [];
     this.FilterData[filterEventArgs.column].comparator = StringUtilsService.equals;
+    this.FilterData[filterEventArgs.column].filterApplied = true;
     for (let i = 0; i < filterEventArgs.filteredData.length; ++i) {
       this.FilterData[filterEventArgs.column].values.push(filterEventArgs.filteredData[i]);
     }
@@ -372,7 +379,7 @@ export class DataTableComponent implements OnInit {
     }
 
     // cache the sort state
-    let sortState:boolean = this.columnDefs[column].sortState;
+    let sortState: boolean = this.columnDefs[column].sortState;
     if (sortState == null) {
       this.columnDefs[column].sortState = true;
     } else {
@@ -383,8 +390,8 @@ export class DataTableComponent implements OnInit {
   }
 
   //
-  private applySort(column:number, sortState:boolean) {
-    const that:this = this;
+  private applySort(column: number, sortState: boolean) {
+    const that: this = this;
     // Sort te table.
     this.TableRows.sort((a, b) => that.sortFunction(a, b, column, sortState));
     this.pagedRows();
@@ -426,14 +433,14 @@ export class DataTableComponent implements OnInit {
 
   }
 
-  valueChanged(changeValue:any) {
+  valueChanged(changeValue: any) {
     this.TableRows[changeValue.row].data[changeValue.column] = changeValue.value;
     this.pagedRows();
     this.setPagedRow(this.CurrentPage);
 
   }
 
-  private selectedRowsCount():number {
+  private selectedRowsCount(): number {
     let rowCount = 0;
     for (let i = 0; i < this.contextMenuData.length; ++i) {
       if (!this.contextMenuData[i]) continue;
@@ -574,7 +581,7 @@ export class DataTableComponent implements OnInit {
   }
 
 
-  private animateRows(currentIndex:number, previousIndex:number, width:number) {
+  private animateRows(currentIndex: number, previousIndex: number, width: number) {
     this.isMoving = true;
     if (currentIndex > previousIndex) {
 
@@ -601,7 +608,7 @@ export class DataTableComponent implements OnInit {
     this.ref.detectChanges();
   }
 
-  swapped(event:any) {
+  swapped(event: any) {
     let clientWidth = (event.container.element.nativeElement.clientWidth / this.columnDefs.length) - 10
     this.Moved = [];
     if (this.previousIndex === undefined)
@@ -614,7 +621,7 @@ export class DataTableComponent implements OnInit {
   }
 
 
-  deleteData(data:Array<Array<any>>) {
+  deleteData(data: Array<Array<any>>) {
     for (let i = 0; i < data.length; ++i) {
       if (data[i] && data[i].length) {
         if (this.TableRows[i].rowSelect)
@@ -631,7 +638,7 @@ export class DataTableComponent implements OnInit {
     this.tableDraw();
   }
 
-  pasteData(pasteData:Array<Array<any>>) {
+  pasteData(pasteData: Array<Array<any>>) {
     let pasteRow = 0, pasteColumn = 0, prevCol;
     /*
      for (let i = 0; i < this.contextMenuData.length; ++i) {
@@ -683,7 +690,7 @@ export class DataTableComponent implements OnInit {
   }
 
   onCtrlV() {
-    let pasteData:Array<Array<any>> = this.clipboardService.getClipboardData();
+    let pasteData: Array<Array<any>> = this.clipboardService.getClipboardData();
   }
 
   onCtrlC() {
@@ -714,19 +721,20 @@ export class DataTableComponent implements OnInit {
   private tableDraw() {
     this.FilterRowCount = this.rowData.length;
     this.TotalRows = this.rowData.length;
-    this.FilterData = new Array<FilterOptions>(this.columnDefs.length);
-    this.createTableData();
+    this.FilterData = this.FilterData || new Array<FilterOptions>(this.columnDefs.length);
+    this.createTableData(this.FilterData, this.CurrentPage || 0);
     this.TotalPages = Math.ceil(this.rowData.length / this.pageSize);
     this.ToRecord = this.pageSize;
 
   }
 
-  private init(){
+  private init() {
     this.dragTheme = this.theme + '-drag';
     this.pageSize = (this.rowSizes[0] > this.rowData.length) ? this.rowData.length : this.rowSizes[0];
     this.tableDraw();
   }
-  constructor(private clipboardService:ClipboardService, private filterService:FilterService, private dataTableService:DataTableUtilsService, private ref:ChangeDetectorRef) {
+
+  constructor(private clipboardService: ClipboardService, private filterService: FilterService, private dataTableService: DataTableUtilsService, private ref: ChangeDetectorRef) {
   }
 
   ngOnInit() {

@@ -69,7 +69,7 @@
   <tbody (click)="onContextMenuOff()" tabindex="0" ctrlKeys
          (ctrlC)="onCtrlC($event)"
          (ctrlV)="onCtrlV($event)" cdkDropList (cdkDropListDropped)="dropRow($event)">
-  <tr *ngFor="let row of PagedRows; let rowCount = index" [hidden]="row.filteredOut" [@enterAnimation]
+  <tr *ngFor="let row of PagedRows; let rowCount = index" [hidden]="row.filteredOut"
       cdkDrag
       [ngClass]="{'odd': rowCount%2 !== 0, 'even': rowCount%2===0}">
     <div [ngClass]="dragTheme" *cdkDragPreview>

@@ -1,5 +1,5 @@
 
-<div *ngFor="let dataTable of dataTables">
+<div *ngFor="let dataTable of dataTables" class="standard-page">
   <app-data-table [pagination]="dataTable.pagination" [theme]="dataTable.theme"
                   [columnDefs]="dataTable.columnDefs" [rows]="dataTable.rowData"></app-data-table>
 </div>

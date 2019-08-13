@@ -175,16 +175,16 @@ export class StandardThemeComponent implements OnInit {
     },
     {
       'price': '35,500',
-      'symbol': 'NAB.AX',
+      'symbol': 'IBM',
       'shares': 5
     },
     {
-      'price': '12,000',
+      'price': '35,500',
       'symbol': 'IBM',
       'shares': 10
     },
     {
-      'price': '83,000',
+      'price': '35,500',
       'symbol': 'WES.AX',
       'shares': 7
     },
@@ -353,14 +353,14 @@ export class StandardThemeComponent implements OnInit {
 
   ngOnInit() {
     setInterval(() => {
-      const rowData = this['rowData' + Math.floor((Math.random() * 5) + 1)];
-      if (rowData) {
+      // const rowData = this['rowData' + Math.floor((Math.random() * 5) + 1)];
+      /*if (rowData) {
         console.log(rowData);
-      }
-      this.dataTables[0].rowData = rowData;
+      }*/
+      this.dataTables[0].rowData = this['rowData' + Math.floor((Math.random() * 5) + 1)];
       // this.tableDraw();
-      this.ref.detectChanges();
-    }, 5000);
+      // this.ref.detectChanges();
+    }, 3000);
   }
 
 }

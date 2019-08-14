@@ -33,7 +33,7 @@ interface Column extends CellRenderer {
 interface FilterOptions {
   operator: string;
   values: string[];
-  filterApplied: boolean;
+  filterApplied?: boolean;
   comparator: any;
 }
 
@@ -210,7 +210,12 @@ export class DataTableComponent implements OnInit {
 
   private generateUniqueFilters() {
     for (let i = 0; i < this.columnDefs.length; ++i) {
-      if (this.FilterData && this.FilterData[i] && !this.FilterData[i].filterApplied) {
+      if(this.FilterData && this.FilterData[i]){
+        if(!this.FilterData[i].filterApplied){
+          this.createColumnFilter(this.columnDefs[i], this.TableRows, i);
+        }
+      }
+      else{
         this.createColumnFilter(this.columnDefs[i], this.TableRows, i);
       }
     }
